@@ -191,7 +191,7 @@ if ($LASTEXITCODE -eq 0) {
         Write-Host "🚀 Next steps:" -ForegroundColor Cyan
         Write-Host "   1. Manually deploy the GPT-4.1 model in the Azure AI Foundry portal" -ForegroundColor White
         Write-Host "   2. Copy the values above to your .env file at the root of the repo" -ForegroundColor White
-        Write-Host "   3. Reference the README.md (../README.md) for instructions on running the local development environment" -ForegroundColor
+        Write-Host "   3. Reference the README.md (../README.md) for instructions on running the local development environment" -ForegroundColor White
         Write-Host ""
     }
     catch {
