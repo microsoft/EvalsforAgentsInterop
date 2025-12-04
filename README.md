@@ -91,7 +91,29 @@ nano .env
 - Cosmos DB credentials (used by API)
 - MCP server URL (used by Agent)
 
-### 2. Load Sample Data (Optional)
+### 2. Install Dependencies
+
+**Optional: Create a virtual environment**
+
+```bash
+# Create virtual environment
+python -m venv .venv
+
+# Activate virtual environment (Linux/macOS)
+source .venv/bin/activate
+
+# Activate virtual environment (Windows)
+.venv\Scripts\activate
+```
+
+**Install required packages:**
+
+```bash
+pip install -r src/api/requirements.txt
+pip install -r src/agents/requirements.txt
+```
+
+### 3. Load Sample Data (Optional)
 
 Upload sample datasets to Cosmos DB:
 
@@ -100,7 +122,7 @@ cd src/api
 python cosmos_preload.py
 ```
 
-### 3. Run Services Locally
+### 4. Run Services Locally
 
 #### Option A: Run Locally Without Docker
 
@@ -117,13 +139,11 @@ To use: Open the Run and Debug panel (Ctrl+Shift+D), select a profile, and press
 
 **API**
 ```bash
-pip install -r src/api/requirements.txt
 python -m uvicorn src.api.main:app --host 0.0.0.0 --port 8000 --reload
 ```
 
 **Agent**
 ```bash
-pip install -r src/agents/requirements.txt
 python -m uvicorn src.agents.agent_server:app --host 0.0.0.0 --port 8001 --reload
 ```
 
@@ -176,7 +196,7 @@ docker-compose logs -f api
 docker-compose down
 ```
 
-### 4. Access the Application
+### 5. Access the Application
 
 - **Frontend**: http://localhost:5000
 - **API Docs**: http://localhost:8000/api/docs
