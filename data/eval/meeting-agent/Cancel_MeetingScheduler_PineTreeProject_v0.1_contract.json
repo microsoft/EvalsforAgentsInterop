@@ -1,0 +1,1438 @@
+{
+	"id": "dataset_9361f6019e7145e9",
+	"metadata": {
+		"generator_id": "generator-service",
+		"suite_id": "Cancel_MeetingScheduler_PineTreeProject_v0.2",
+		"created_at": "2025-11-19T07:08:49.545675+00:00",
+		"version": "1.0",
+		"schema_hash": "355aba397922c7152aff24023a9c6d95366c87702f07bc8660f98de677a00771"
+	},
+	"seed": {
+		"name": "Cancel_MeetingScheduler_PineTreeProject_v0.2",
+		"goal": "Your agent receives a short internal instruction from the manager: Cancel all Pine Tree project meetings and notify the Pine Tree team that the project has been shelved due to global warming concerns.The agent must interpret this directive, gather context from email history, identify the correct set of recipients, and execute two distinct email-based tasks.",
+		"synthetic_domain": "Cancel all Pine Tree project meetings and notify the Pine Tree team that the project has been shelved due to global warming concerns.The agent must interpret this directive, gather context from email history, identify the correct set of recipients, and execute two distinct email-based tasks.\n\nExpanded scenario and context (for synthetic data generation and downstream evaluation):\n\nA. Scenario framing\n\nYou are an AI operations assistant embedded within the Environmental Initiatives Office at Northwind Traders, a global retail distribution company that manages major supply chains and partners with numerous outdoor brands. The company has an internal cross-functional project called “Pine Tree,” focused on developing sustainable packaging aligned with Northwind Traders’ green commitments. Leadership has recently decided to shelve the Pine Tree project due to concerns that the underlying business model cannot adapt to stricter global warming regulations anticipated next quarter. The agent’s core responsibility is to act on a short, unambiguous directive from a manager: cancel all scheduled Pine Tree project meetings (immediately and going forward) and email the Pine Tree project team to formally notify them of the project’s suspension, citing global warming concerns. The agent must carry this out efficiently and with sensitivity, as the project has high visibility internally and involves contributors from multiple teams.\n\nB. High-level task:\n- Parse the manager’s internal email/directive to extract the cancellation and notification requirements.\n- Gather historical context from previous email threads and distribution lists to identify the full set of Pine Tree project participants.\n- Locate and cancel all meetings (recurring and one-off) related to the Pine Tree project in the company’s centralized calendar system.\n- Draft and send a clear, sensitive email notification to the entire Pine Tree project team, explaining the project cessation and its cause.\n- Optionally, notify meeting invitees about the cancellations if not covered by the main project notification email.\n- Ensure all relevant stakeholders are updated, avoiding duplicate/conflicting communication.\n- Success is judged by thorough cancellation (no project meetings remain); all stakeholders are appropriately and diplomatically notified with no one left uninformed or blindsided.\n\nC. Organizations and environment:\n- Primary organization: Northwind Traders\n  - Industry: Global supply chain and retail distribution; 2,500+ employees across North America, Europe, and APAC (main time zones: America/New_York, Europe/Berlin, Asia/Singapore).\n  - Primary products: Retail distribution logistics, sustainable packaging R&D, supply chain consulting.\n  - Markets: Worldwide logistics and retail.\n- No direct external organization involved for this scenario (purely internal); Pine Tree project is cross-team within Northwind Traders.\n- Business context:\n  - Northwind Traders launched Pine Tree six months ago, investing significant resources. However, sudden regulatory shifts regarding global warming have forced suspension—potential job impacts, morale shifts, and resource reallocation at stake. Notifying staff sensitively is paramount to maintain trust.\n- Core systems involved:\n  - Corporate email system.\n  - Centralized calendar/meeting scheduling platform.\n  - Internal distribution lists, project channel archives, and document repository for Pine Tree context.\n\nD. Personas and stakeholders:\n- Angela Chow (angela.chow@northwindtraders.com)\n  - Sustainability Program Manager, Environmental Initiatives (Primary, America/New_York)\n  - Values clarity and empathy; prefers direct communication with rich context.\n- Martin Fischer (martin.fischer@northwindtraders.com)\n  - Head of Strategy, Pine Tree Project (Primary, Europe/Berlin)\n  - Early riser, prefers early-morning meetings, values comprehensive overviews.\n- Julia Patel (julia.patel@northwindtraders.com)\n  - Senior Research Analyst, R&D (Secondary, Asia/Singapore)\n  - Often traveling; prefers asynchronous, concise updates.\n- Gregor Weiss (gregor.weiss@northwindtraders.com)\n  - Operations Supervisor, Distribution (Secondary, Europe/Berlin)\n  - Respects formal protocols, dislikes informal/sloppy emails.\n- Emily Carter (emily.carter@northwindtraders.com)\n  - Executive Assistant, Environmental Initiatives (Optional, America/New_York)\n  - Follows up on calendar logistics and administrivia.\n- David Lee (david.lee@northwindtraders.com)\n  - Junior Sustainability Analyst, Pine Tree Team (Optional, America/New_York)\n  - New to company, unsure of project distribution list conventions.\n- Dana Griffin (dana.griffin@northwindtraders.com)\n  - Manager, HR Business Partner (Optional, America/New_York)\n  - May need to support impacted staff; values early heads up.\n- Rafael Russo (rafael.russo@northwindtraders.com)\n  - IT Systems Admin (Optional, Europe/Berlin)\n  - Supports calendaring/email group management; rarely involved unless there is a delivery failure or bounced message.\n\nE. Data sources and artifacts for synthetic data:\n- Internal directive email: single, succinct instruction from the manager (less than 100 words), referencing \"Pine Tree project\" and global warming.\n- Historical Pine Tree project email threads (formal subject lines, distributed to \"Pine Tree Team\" group alias and direct members); sometimes ambiguous participant lists as people come and go.\n- Meeting invitations: calendar objects with title, agenda, description, recurrence, participant list, and attached docs/links; some meetings recurring, some one-off.\n- Project distribution list records: access-controlled CSV/roster files sometimes referenced in emails; not always up-to-date—people sometimes missed or erroneously included.\n- Notification email(s): drafts for communicating cancellation; must balance formality and empathy; may require translation for APAC/EMEA if relevant.\n\nF. Operational constraints and requirements:\n- Business rules:\n  - Only Pine Tree-related meetings to be cancelled; do not touch unrelated meetings.\n  - Notify all who are currently or recently active; consult last 60 days of project threads to catch recent additions.\n- Time constraints:\n  - Notification must happen today; all meetings must be cancelled with at least 24 hours’ notice if possible.\n  - Follow office hours for each region; do not send middle-of-the-night notifications.\n- Quality constraints:\n  - Tone should be professional, empathetic, and clear—avoid blame. Use inclusive language about next steps.\n  - Ensure no recipients outside Pine Tree project are included.\n  - Project distribution list must be updated if obvious out-of-date members are detected.\n- Compliance:\n  - Do not include sensitive personnel details in emails.\n- Tie-breaking/prioritization:\n  - If recipient ambiguity, err on notifying more people, not less (within internal confidentiality bounds).\n  - If cancellation/notification might overlap, combine into a single message to minimize inbox clutter.\n\nG. Edge and negative cases to include in synthetic data:\n- Meetings without “Pine Tree” in the title but clearly about Pine Tree (based on agenda or invite list).\n- Overlapping or duplicate calendar invites sent to different subsets of team members.\n- Former team members still present on distribution lists, or missing recent joiners.\n- Stakeholders out of office (auto-replies), with whom follow-up is required.\n- Meetings already cancelled previously but still showing as recurring on some attendees’ calendars.\n- Recipients who reply-all asking for clarification, clarification requests about next steps or alternative assignments.\n- Cross-timezone confusion (recipients confused about meeting local times, or getting notification at odd local hours).\n- Distribution list aliases that bounce or return \"unknown recipient\" errors.\n- A stakeholder objects to the “global warming” rationale and requests a more technical explanation.\n- Ambiguous requests to “forward to the broader Sustainability group” without list details.\n- Internal note referencing regulatory documents or leadership decisions not attached or linked properly.\n- Notification email draft is accidentally sent to the entire company (must not occur).\n\nH. Input characteristics for synthetic data:\n- Variability in tone: Some emails are formal and template-driven, others are informal (e.g., colleagues using \"Hey team\" openings).\n- Occasional typos, corporate acronyms, and jargon (“PT Q4 standup”, “EIO sync”, “DL-PineTree”).\n- Some messages concise and to-the-point, others lengthy with background.\n- Occasional greetings/closings in German (“Guten Morgen”, “Mit freundlichen Grüßen”) or Mandarin (“谢谢”, “祝好”).\n- Sample meeting invite subject lines:\n  - “Pine Tree Weekly Stakeholder Sync”\n  - “URGENT: Pine Tree—Packaging Sustainability Review”\n  - “Pine Tree: Research & Compliance Sprint”\n  - “EIO | Pine Tree Project Check-in”\n  - “Q2 Pine Tree Wrap-Up – All Hands”\n- Template for meetings: title includes “Pine Tree”, but sometimes descriptive-only (e.g., “Sustainability Packaging Review” refers to Pine Tree in body).\n- Occasional violations: invites without clear agendas, ad-hoc calendar invites from different assistants.\n\nI. Expected outputs (conceptual, for evaluation and synthetic data alignment):\n- Structured outputs:\n  - List of cancelled meetings (title, datetime, recurrence, affected attendees, calendar ID/reference).\n  - Notification email object: recipients (distribution list/addressed individuals), subject, body, send timestamps, delivery status.\n  - Update logs: record of actions (for audit), including relevant email/cancellation traces.\n- Human-readable:\n  - Email notifications (clear subject lines, paragraph explanation, optional bullet summary of next steps/channels for questions).\n  - Individual meeting cancellation notices if not combined in the notification.\n  - Tone: neutral to positive, constructive, offering contacts for further discussion.\n- Outputs should be consistent: emails sent to those whose meetings are cancelled, content reflects meeting/action status accurately, no mismatches.\n\nJ. Behavioral expectations (for downstream evaluation, not tool prescription):\n- Correctly identify all Pine Tree-related meetings and relevant team members, even with ambiguous naming/aliasing.\n- Gather and reconcile attendee information from emails, meeting invites, and recent context within the last 60 days.\n- Cancel all relevant meetings promptly, prioritizing those happening soonest.\n- Draft and send empathetic, professional notifications explaining the decision; avoid insensitive or abrupt language.\n- Respect working-hour windows by time zone for notifications and cancellations.\n- Alert (not silently skip) if the distribution list appears out of date or a cancellation fails to deliver.\n- Avoid cancelling unrelated meetings or over-notifying those not involved.\n- Absorb and integrate context from multiple noisy sources, resolving discrepancies sensibly.\n- When uncertain about attendance or aliasing, opt for inclusive notification consistent with privacy constraints.\n- Do not hallucinate causes; use only facts in the directive plus supplied rationale.\n- Escalate or annotate ambiguous or risky cases (e.g., suspected data drift in recipient list).\n\nK. Content guidelines for synthetic data:\n- CRITICAL: Use ONLY company names and domains from the provided fictional companies list.\n  - All companies, distribution lists, and email addresses must use the “northwindtraders.com” domain.\n  - Do NOT invent new company names or domains.\n- Use realistic corporate email formats (firstname.lastname@northwindtraders.com).\n- All personas, organizations, emails, and time zones should be internally consistent with this scenario (Northwind Traders, Pine Tree project, global time zones).\n- Use contextually plausible numbers, project dates, and regulatory details.\n- Mix formal and semi-casual English styles, with occasional minor typos or informal language in example artifacts.\n- Avoid real-world tool/naming references—generic “company calendar system”, “email”, “project channel”.\n- Ensure enough messiness (typos, missing data, ambiguous aliases, cross-timezone complexity) to enable robust synthetic data and evaluation.",
+		"input": {}
+	},
+	"test_cases": [
+		{
+			"id": "tc_a469c719c0014a4b",
+			"dataset_id": "dataset_9361f6019e7145e9",
+			"name": "Identify All Pine Tree Project Meetings to Cancel",
+			"description": "Identify all Pine Tree project meetings that need to be cancelled because the project is suspended for now.",
+			"input": "Identify all Pine Tree project meetings that need to be cancelled because the project is suspended for now.",
+			"minimal_tool_set": ["mcp_CalendarTools_graph_listEvents"],
+			"tool_expectations": [
+				{
+					"name": "mcp_CalendarTools_graph_listEvents",
+					"arguments": [
+						{
+							"name": "filter",
+							"assertion": ["Argument 'filter' is shows the agent is searching for meetings related to the Pine Tree project."],
+							"rubrics": [
+								{
+									"id": "rubric_bc31a3081f5048e7",
+									"name": "task_compliance",
+									"azure_foundry_id": "azureai://built-in/evaluators/task_adherence",
+									"payload": {
+										"response": "<$response$>",
+										"ground_truth": "<$expected_response$>"
+									},
+									"threshold": 0.7
+								},
+								{
+									"id": "rubric_7704723b2fbe45d3",
+									"name": "output_coherence",
+									"azure_foundry_id": "azureai://built-in/evaluators/coherence",
+									"payload": {
+										"response": "<$response$>",
+										"ground_truth": "<$expected_response$>"
+									},
+									"threshold": 0.7
+								},
+								{
+									"id": "rubric_e2a1ee19ddac4144",
+									"name": "content_relevance",
+									"azure_foundry_id": "azureai://built-in/evaluators/relevance",
+									"payload": {
+										"response": "<$response$>",
+										"ground_truth": "<$expected_response$>"
+									},
+									"threshold": 0.7
+								}
+							]
+						}
+					]
+				}
+			],
+			"expected_response": "I've identified all meetings related to the Pine Tree project that should be cancelled.",
+			"response_quality_expectation": {
+				"assertion": "The agent identifies meetings that need to be cancelled, including 'Pine Tree Weekly Stakeholder Sync', 'Monthly Sustainability Review Meeting', 'PineTree: Ops + Partner Alignment', 'Stakeholder Debrief', 'Q2 Risk Mitigation Working Session', and 'Weekly Project Lead 1:1' organized by sophie.nguyen@northwindtraders.com.",
+				"rubrics": [
+					{
+						"id": "rubric_44376fb2b79443e2",
+						"name": "task_compliance",
+						"azure_foundry_id": "azureai://built-in/evaluators/task_adherence",
+						"payload": {
+							"response": "<$response$>",
+							"ground_truth": "<$expected_response$>"
+						},
+						"threshold": 0.7
+					},
+					{
+						"id": "rubric_15814a48523740c7",
+						"name": "output_coherence",
+						"azure_foundry_id": "azureai://built-in/evaluators/coherence",
+						"payload": {
+							"response": "<$response$>",
+							"ground_truth": "<$expected_response$>"
+						},
+						"threshold": 0.7
+					},
+					{
+						"id": "rubric_b9ea1cbdbe9047cf",
+						"name": "content_relevance",
+						"azure_foundry_id": "azureai://built-in/evaluators/relevance",
+						"payload": {
+							"response": "<$response$>",
+							"ground_truth": "<$expected_response$>"
+						},
+						"threshold": 0.7
+					}
+				]
+			},
+			"references_seed": {
+				"tc_tc-collaboration-email-1_mock_0": {
+					"to": ["ai.operations@northwindtraders.com"],
+					"subject": "Action Required: Cancel All Pine Tree Project Meetings Due to Global Warming",
+					"body_md": "Dear Operations Team,\n\nEffective immediately, please cancel all upcoming and scheduled meetings related to the Pine Tree project. This action is required due to new global warming regulations and significant environmental concerns impacting our business model. Ensure the entire project team is notified today of the project's suspension and the rationale behind this decision.\n\nThank you for your prompt attention to this important matter.\n\nBest regards,\nEmma Clark\nEnvironmental Initiatives Office",
+					"status": "ok",
+					"cc": null,
+					"bcc": null,
+					"kind": "email"
+				},
+				"tc_tc-collaboration-email-1_mock_1": {
+					"to": ["pine.tree.project@northwindtraders.com"],
+					"subject": "Pine Tree Project – Immediate Suspension of Activities",
+					"body_md": "Hallo Pine Tree Team,\n\nI want to inform you that, following yesterday’s leadership review and in response to significant regulatory changes and the evolving global warming situation, the Pine Tree project is being suspended effective immediately.\n\n**Key points:**\n- All Pine Tree project meetings—recurring and one-offs—are now canceled.\n- No further project activities should be conducted until further notice.\n- This decision does *not* reflect on the team's outstanding commitment and professionalism; the circumstances are unfortunately beyond our control.\n\n**Background:**\nThe Northwind Traders Environmental Initiatives Office has continuously monitored the latest climate science and compliance needs. Given the new legal frameworks in our core markets (Europe/Berlin, Asia/Singapore, US East), it is no longer feasible to continue under the current operational model. Global warming risk factors have accelerated sooner than projections.\n\n**Next steps:**\n- Please stand down on all in-progress work and notify any external partners accordingly (cc comms if unclear).\n- If you have unaddressed deliverables, park these for now—do *not* delete or archive files until further guidance is given.\n- Any questions or feedback, reach out directly to myself or Martin Fischer (cc’d).\n\n**Danke und谢谢大家 for your dedication over the last quarters!**\n\nLet’s discuss next week in a short team huddle (invite to follow for those affected by additional transitions). For those who joined Pine Tree recently or just wrapped up previous deliverables: thank you again – your contributions are recognized and will inform upcoming Northwind projects.\n\nBest regards,\n\nAngela Chow  \nManager, Environmental Initiatives Office  \nNorthwind Traders",
+					"status": "ok",
+					"cc": ["martin.fischer@northwindtraders.com"],
+					"bcc": null,
+					"kind": "email"
+				},
+				"tc_tc-collaboration-email-1_mock_2": {
+					"title": "Northwind Traders Pine Tree Project Meeting Calendar (Last 60 Days)",
+					"content_md": "{\n  \"events\": [\n    {\n      \"id\": \"evt_839652\",\n      \"subject\": \"Pine Tree Weekly Stakeholder Sync\",\n      \"startDateTime\": \"2024-05-06T15:00:00\",\n      \"endDateTime\": \"2024-05-06T16:00:00\",\n      \"timeZone\": \"America/New_York\",\n      \"attendees\": [\n        \"sophie.nguyen@northwindtraders.com\",\n        \"angela.chow@northwindtraders.com\",\n        \"pine-tree-team@northwindtraders.com\"\n      ],\n      \"organizer\": \"sophie.nguyen@northwindtraders.com\",\n      \"isCancelled\": false,\n      \"recurrence\": {\n        \"frequency\": \"weekly\",\n        \"daysOfWeek\": [\"Monday\"],\n        \"until\": \"2024-06-24T16:00:00\"\n      },\n      \"body_md\": \"## Agenda\\n- Progress updates: Pine Tree initiative review\\n- Review latest carbon emissions data and regulatory alignment\\n- Discuss feedback from European offices (Berlin, Singapore references)\\n- Next steps for stakeholder engagement\\n\\n### Note\\nMeeting may run over by 10 mins. \\n\\n_Gru\u000fe aus dem Berliner Team!_\"\n    },\n    {\n      \"id\": \"evt_839653\",\n      \"subject\": \"Monthly Sustainability Review Meeting\",\n      \"startDateTime\": \"2024-05-16T10:00:00\",\n      \"endDateTime\": \"2024-05-16T11:30:00\",\n      \"timeZone\": \"Europe/Berlin\",\n      \"attendees\": [\n        \"jonas.meyer@northwindtraders.com\",\n        \"pine-tree-team@northwindtraders.com\",\n        \"environmental-initiatives@northwindtraders.com\"\n      ],\n      \"organizer\": \"jonas.meyer@northwindtraders.com\",\n      \"isCancelled\": true,\n      \"recurrence\": {\n        \"frequency\": \"monthly\",\n        \"daysOfWeek\": [\"Thursday\"],\n        \"until\": \"2024-07-16T11:30:00\"\n      },\n      \"body_md\": \"# Pine Tree Project section\\n1. Status review and action items for regulatory adaptation.\\n2. Presentation: Learning from Singapore pilot.\\n3. Inter-departmental feedback session.\\n\\n_Attendance incomplete: some invitees missing confirmation at scheduling._\"\n    },\n    {\n      \"id\": \"evt_839654\",\n      \"subject\": \"PineTree: Ops + Partner Alignment\",\n      \"startDateTime\": \"2024-05-20T09:30:00\",\n      \"endDateTime\": \"2024-05-20T10:15:00\",\n      \"timeZone\": \"Asia/Singapore\",\n      \"attendees\": [\n        \"meilin.tan@northwindtraders.com\",\n        \"angela.chow@northwindtraders.com\",\n        \"ops-partners@northwindtraders.com\"\n      ],\n      \"organizer\": \"meilin.tan@northwindtraders.com\",\n      \"isCancelled\": false,\n      \"recurrence\": null,\n      \"body_md\": \"Operations check-in for Pine Tree: Partner transition impact assessment.\\nQuick updates from regional managers. Some attendee emails were updated post scheduling.\\n\\nMandarin: \\n\\nThanks all,\\n_Operations Team_\"\n    },\n    {\n      \"id\": \"evt_839655\",\n      \"subject\": \"Stakeholder Debrief (project delay discussion)\",\n      \"startDateTime\": \"2024-06-03T14:00:00\",\n      \"endDateTime\": \"2024-06-03T15:00:00\",\n      \"timeZone\": \"America/New_York\",\n      \"attendees\": [\n        \"mariana.oliveira@northwindtraders.com\",\n        \"angela.chow@northwindtraders.com\",\n        \"pine-tree-team@northwindtraders.com\",\n        \"environmental-initiatives@northwindtraders.com\"\n      ],\n      \"organizer\": \"mariana.oliveira@northwindtraders.com\",\n      \"isCancelled\": false,\n      \"recurrence\": null,\n      \"body_md\": \"Debrief on timeline updates for Pine Tree. Regulatory risk assessment due to recent climate policies.\\nAgenda reference was vague during scheduling -- see attached notes!\\n\\nClosing: Danke sch\u0006n an alle Beteiligten.\"\n    },\n    {\n      \"id\": \"evt_839656\",\n      \"subject\": \"Q2 Risk Mitigation Working Session\",\n      \"startDateTime\": \"2024-06-10T11:00:00\",\n      \"endDateTime\": \"2024-06-10T12:30:00\",\n      \"timeZone\": \"Europe/Berlin\",\n      \"attendees\": [\n        \"jonas.meyer@northwindtraders.com\",\n        \"sophie.nguyen@northwindtraders.com\",\n        \"regulatory-affairs@northwindtraders.com\",\n        \"angela.chow@northwindtraders.com\"\n      ],\n      \"organizer\": \"jonas.meyer@northwindtraders.com\",\n      \"isCancelled\": true,\n      \"recurrence\": null,\n      \"body_md\": \"Risk mitigation for business model compliance on Pine Tree. Meeting cancelled due to evolving regulatory proposals. Please check email for official update regarding project status.\"\n    },\n    {\n      \"id\": \"evt_839657\",\n      \"subject\": \"Weekly Project Lead 1:1\",\n      \"startDateTime\": \"2024-05-29T16:30:00\",\n      \"endDateTime\": \"2024-05-29T17:00:00\",\n      \"timeZone\": \"America/New_York\",\n      \"attendees\": [\n        \"sophie.nguyen@northwindtraders.com\",\n        \"angela.chow@northwindtraders.com\"\n      ],\n      \"organizer\": \"sophie.nguyen@northwindtraders.com\",\n      \"isCancelled\": false,\n      \"recurrence\": {\n        \"frequency\": \"weekly\",\n        \"daysOfWeek\": [\"Wednesday\"],\n        \"until\": \"2024-06-26T17:00:00\"\n      },\n      \"body_md\": \"Personal 1:1 for Pine Tree status updates and risk scenario brainstorming. Subject line does not reference Pine Tree explicitly, but all agenda items deal with project scope. Scheduled invite list incomplete; additional PMs cc'd by request.\"\n    }  \n  ]\n}",
+					"status": "ok",
+					"metadata": {
+						"path": "output\\mocks\\tc-collaboration-email-1-calendar_meeting_data-doc.json",
+						"sha256": "72625898f3b6304cab14fb4361b25a213a5dcafde0004c44653a94309b10fbfd"
+					},
+					"sections": null,
+					"kind": "docx"
+				},
+				"tc_tc-collaboration-email-1_mock_3": {
+					"title": "Pine Tree Project Distribution List – Northwind Traders",
+					"content_md": "{\n  \"distributionListName\": \"pine.tree.project@northwindtraders.com\",\n  \"members\": [\n    {\n      \"name\": \"Angela Chow\",\n      \"email\": \"angela.chow@northwindtraders.com\",\n      \"role\": \"Sustainability Program Manager\",\n      \"joinedDate\": \"2024-01-10\",\n      \"isActive\": true,\n      \"timeZone\": \"America/New_York\"\n    },\n    {\n      \"name\": \"Martin Fischer\",\n      \"email\": \"martin.fischer@northwindtraders.com\",\n      \"role\": \"Junior Analyst\",\n      \"joinedDate\": \"2024-03-15\",\n      \"isActive\": true,\n      \"timeZone\": \"Europe/Berlin\"\n    },\n    {\n      \"name\": \"Priya Raman\",\n      \"email\": \"priya.raman@northwindtraders.com\",\n      \"role\": \"Environmental Initiatives Office - Manager\",\n      \"joinedDate\": \"2024-01-22\",\n      \"isActive\": true,\n      \"timeZone\": \"Asia/Singapore\"\n    },\n    {\n      \"name\": \"Angela Chow\",\n      \"email\": \"angela.chow@northwindtraders.com\",\n      \"role\": \"Sustainability Program Manager\",\n      \"joinedDate\": \"2024-01-10\",\n      \"isActive\": true,\n      \"timeZone\": \"America/New_York\"\n    },\n    {\n      \"name\": \"Marta Rodriguez\",\n      \"email\": \"marta.rodriguez@northwindtraders.com\",\n      \"role\": \"Temporary Project Consultant\",\n      \"joinedDate\": \"2024-04-29\",\n      \"isActive\": false,\n      \"timeZone\": \"Europe/Berlin\"\n    },\n    {\n      \"name\": \"Samuel Koh\",\n      \"email\": \"samuel.koh@northwindtraders.com\",\n      \"role\": \"Field Investigator\",\n      \"joinedDate\": \"2024-05-01\",\n      \"isActive\": true,\n      \"timeZone\": \"Asia/Singapore\"\n    },\n    {\n      \"name\": \"Elena Petrova\",\n      \"email\": \"elena.petrova@northwindtraders.com\",\n      \"role\": \"Senior Data Scientist\",\n      \"joinedDate\": \"2024-03-20\",\n      \"isActive\": true,\n      \"timeZone\": \"Europe/Berlin\"\n    },\n    {\n      \"name\": \"James Wu\",\n      \"email\": \"james.wu@northwindtraders.com\",\n      \"role\": \"Data Engineer\",\n      \"joinedDate\": \"2024-05-19\",\n      \"isActive\": false,\n      \"timeZone\": \"America/New_York\"\n    },\n    {\n      \"name\": \"Nicole Hwang\",\n      \"email\": \"nicole.hwang@northwindtraders.com\",\n      \"role\": \"Project Intern\",\n      \"joinedDate\": \"2024-06-03\",\n      \"isActive\": true,\n      \"timeZone\": \"Asia/Singapore\"\n    },\n    {\n      \"name\": \"Avi Cohen\",\n      \"email\": \"avi.cohen@northwindtraders.com\",\n      \"role\": \"Traveling Research Specialist\",\n      \"joinedDate\": \"2024-05-26\",\n      \"isActive\": true,\n      \"timeZone\": \"Europe/London\"\n    },\n    {\n      \"name\": \"Julia Weber\",\n      \"email\": \"julia.weber@northwindtraders.com\",\n      \"role\": \"Sustainability Communications\",\n      \"joinedDate\": \"2024-04-10\",\n      \"isActive\": false,\n      \"timeZone\": \"Europe/Berlin\"\n    },\n    {\n      \"name\": \"Sebastian Lee\",\n      \"email\": \"sebastian.lee@northwindtraders.com\",\n      \"role\": \"Regulatory Affairs Associate\",\n      \"joinedDate\": \"2024-03-29\",\n      \"isActive\": true,\n      \"timeZone\": \"America/New_York\"\n    },\n    {\n      \"name\": \"Rashida Patel\",\n      \"email\": \"rashida.patel@northwindtraders.com\",\n      \"role\": \"Project Stakeholder (Finance Dept)\",\n      \"joinedDate\": \"2024-02-13\",\n      \"isActive\": true,\n      \"timeZone\": \"Europe/Berlin\"\n    },\n    {\n      \"name\": \"Taro Saito\",\n      \"email\": \"taro.saito@northwindtraders.com\",\n      \"role\": \"Environmental Impact Analyst\",\n      \"joinedDate\": \"2024-05-22\",\n      \"isActive\": true,\n      \"timeZone\": \"Asia/Tokyo\"\n    },\n    {\n      \"name\": \"Sunita Sharma\",\n      \"email\": \"sunita.sharma@northwindtraders.com\",\n      \"role\": \"Recently Added Contributor\",\n      \"joinedDate\": \"2024-06-10\",\n      \"isActive\": true,\n      \"timeZone\": \"Asia/Singapore\"\n    },\n    {\n      \"name\": \"Thomas Beck\",\n      \"email\": \"thomas.beck@northwindtraders.com\",\n      \"role\": \"Ambiguous Join Date - Analyst\",\n      \"joinedDate\": \"2024-05-20\",\n      \"isActive\": false,\n      \"timeZone\": \"Europe/Berlin\"\n    },\n    {\n      \"name\": \"Mei Lin\",\n      \"email\": \"mei.lin@northwindtraders.com\",\n      \"role\": \"Temporary Researcher\",\n      \"joinedDate\": \"2024-06-01\",\n      \"isActive\": false,\n      \"timeZone\": \"Asia/Singapore\"\n    }\n  ]\n}",
+					"status": "ok",
+					"metadata": {
+						"path": "output\\mocks\\tc-collaboration-email-1-project_distribution_list_roster-doc.json",
+						"sha256": "c702ae859ec8319e1e0cffe6791f8106a682773f0bb79d9c9d4cba0c6f25ca73"
+					},
+					"sections": null,
+					"kind": "docx"
+				}
+			}
+		},
+		{
+			"id": "tc_4070062c1cfa46d5",
+			"dataset_id": "dataset_9361f6019e7145e9",
+			"name": "Identify All Pine Tree Related Meetings to Cancel and Email Team Announcement",
+			"description": "Identify all Pine Tree project meetings that need to be cancelled and send an email to ai.pinetree@northwindtraders.com informing them the project is suspended.",
+			"input": "Identify all Pine Tree project meetings that need to be cancelled and send an email to ai.pinetree@northwindtraders.com informing them the project is suspended.",
+			"minimal_tool_set": ["mcp_CalendarTools_graph_listEvents", "sendMail"],
+			"tool_expectations": [
+				{
+					"name": "mcp_CalendarTools_graph_listEvents",
+					"arguments": [
+						{
+							"name": "filter",
+							"assertion": ["Argument 'filter' shows the agent is searching for Pine Tree related meetings."],
+							"rubrics": [
+								{
+									"id": "rubric_ee317d9f30754d48",
+									"name": "task_compliance",
+									"azure_foundry_id": "azureai://built-in/evaluators/task_adherence",
+									"payload": {
+										"response": "<$response$>",
+										"ground_truth": "<$expected_response$>"
+									},
+									"threshold": 0.7
+								},
+								{
+									"id": "rubric_1a42f0c0a50c45d1",
+									"name": "content_completeness",
+									"azure_foundry_id": "azureai://built-in/evaluators/response_completeness",
+									"payload": {
+										"response": "<$response$>",
+										"ground_truth": "<$expected_response$>"
+									},
+									"threshold": 0.7
+								},
+								{
+									"id": "rubric_824b10b10525419e",
+									"name": "output_coherence",
+									"azure_foundry_id": "azureai://built-in/evaluators/coherence",
+									"payload": {
+										"response": "<$response$>",
+										"ground_truth": "<$expected_response$>"
+									},
+									"threshold": 0.7
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "sendMail",
+					"arguments": [
+						{
+							"name": "to",
+							"assertion": [
+								"sendMail 'to' argument includes ai.pinetree@northwindtraders.com or recipients from the team such as julia.patel@northwindtraders.com, samuel.wu@northwindtraders.com, heidi.koenig@northwindtraders.com, angela.chow@northwindtraders.com, martin.fischer@northwindtraders.com, or julia.patel@northwindtraders.com"
+							],
+							"rubrics": [
+								{
+									"id": "rubric_ee317d9f30754d48",
+									"name": "task_compliance",
+									"azure_foundry_id": "azureai://built-in/evaluators/task_adherence",
+									"payload": {
+										"response": "<$response$>",
+										"ground_truth": "<$expected_response$>"
+									},
+									"threshold": 0.7
+								},
+								{
+									"id": "rubric_1a42f0c0a50c45d1",
+									"name": "content_completeness",
+									"azure_foundry_id": "azureai://built-in/evaluators/response_completeness",
+									"payload": {
+										"response": "<$response$>",
+										"ground_truth": "<$expected_response$>"
+									},
+									"threshold": 0.7
+								},
+								{
+									"id": "rubric_824b10b10525419e",
+									"name": "output_coherence",
+									"azure_foundry_id": "azureai://built-in/evaluators/coherence",
+									"payload": {
+										"response": "<$response$>",
+										"ground_truth": "<$expected_response$>"
+									},
+									"threshold": 0.7
+								}
+							]
+						},
+						{
+							"name": "subject",
+							"assertion": ["sendMail 'subject' alludes to the Pine Tree Project being suspended."],
+							"rubrics": [
+								{
+									"id": "rubric_ee317d9f30754d48",
+									"name": "task_compliance",
+									"azure_foundry_id": "azureai://built-in/evaluators/task_adherence",
+									"payload": {
+										"response": "<$response$>",
+										"ground_truth": "<$expected_response$>"
+									},
+									"threshold": 0.7
+								},
+								{
+									"id": "rubric_1a42f0c0a50c45d1",
+									"name": "content_completeness",
+									"azure_foundry_id": "azureai://built-in/evaluators/response_completeness",
+									"payload": {
+										"response": "<$response$>",
+										"ground_truth": "<$expected_response$>"
+									},
+									"threshold": 0.7
+								},
+								{
+									"id": "rubric_824b10b10525419e",
+									"name": "output_coherence",
+									"azure_foundry_id": "azureai://built-in/evaluators/coherence",
+									"payload": {
+										"response": "<$response$>",
+										"ground_truth": "<$expected_response$>"
+									},
+									"threshold": 0.7
+								}
+							]
+						},
+						{
+							"name": "body",
+							"assertion": ["sendMail 'body' argument tells the receiver that the Pine Tree project is suspended."],
+							"rubrics": [
+								{
+									"id": "rubric_ee317d9f30754d48",
+									"name": "task_compliance",
+									"azure_foundry_id": "azureai://built-in/evaluators/task_adherence",
+									"payload": {
+										"response": "<$response$>",
+										"ground_truth": "<$expected_response$>"
+									},
+									"threshold": 0.7
+								},
+								{
+									"id": "rubric_1a42f0c0a50c45d1",
+									"name": "content_completeness",
+									"azure_foundry_id": "azureai://built-in/evaluators/response_completeness",
+									"payload": {
+										"response": "<$response$>",
+										"ground_truth": "<$expected_response$>"
+									},
+									"threshold": 0.7
+								},
+								{
+									"id": "rubric_824b10b10525419e",
+									"name": "output_coherence",
+									"azure_foundry_id": "azureai://built-in/evaluators/coherence",
+									"payload": {
+										"response": "<$response$>",
+										"ground_truth": "<$expected_response$>"
+									},
+									"threshold": 0.7
+								}
+							]
+						}
+					]
+				}
+			],
+			"expected_response": "To: assistant@northwindtraders.com\nSubject: Suspend Pine Tree Project – Urgent: Meeting Cancellations Required\n\nEffective immediately, all meetings related to the Pine Tree project must be cancelled in compliance with updated global warming regulations. Please review the last 60 days of project correspondence to identify every PT-associated meeting—including those without explicit titles—and notify all active participants and stakeholders of the project's suspension. Ensure distribution lists are current and inclusive.\n\nKindly action these cancellations today, providing a combined notification to minimize email volume. If possible, offer at least 24 hours’ notice for affected invitees. Confirm completion once all Pine Tree-related activities are suspended.\n\nThanks for your prompt attention.",
+			"response_quality_expectation": {
+				"assertion": "The agent identifies meetings that need to be cancelled such as 'Stakeholder Roundtable: Adaptation Strategies', 'Q2 Pine Tree Wrap-Up – All Hands', 'Weekly Project Operations Sync', 'Environmental Policy Regulatory Review', 'Pine Tree Lead Sync', and 'Monthly Environmental Initiatives Review', and confirms an email has been sent to ai.pinetree@northwindtraders.com or team members including angela.chow@northwindtraders.com, martin.fischer@northwindtraders.com, julia.patel@northwindtraders.com, and priya.anand@northwindtraders.com to inform them of the project suspension.",
+				"rubrics": [
+					{
+						"id": "rubric_c9c7ea4bf8cd4693",
+						"name": "task_compliance",
+						"azure_foundry_id": "azureai://built-in/evaluators/task_adherence",
+						"payload": {
+							"response": "<$response$>",
+							"ground_truth": "<$expected_response$>"
+						},
+						"threshold": 0.7
+					},
+					{
+						"id": "rubric_d3a813c6ff794532",
+						"name": "content_completeness",
+						"azure_foundry_id": "azureai://built-in/evaluators/response_completeness",
+						"payload": {
+							"response": "<$response$>",
+							"ground_truth": "<$expected_response$>"
+						},
+						"threshold": 0.7
+					},
+					{
+						"id": "rubric_0fc4023467c94556",
+						"name": "output_coherence",
+						"azure_foundry_id": "azureai://built-in/evaluators/coherence",
+						"payload": {
+							"response": "<$response$>",
+							"ground_truth": "<$expected_response$>"
+						},
+						"threshold": 0.7
+					}
+				]
+			},
+			"references_seed": {
+				"tc_tc-collaboration-email-2_mock_0": {
+					"to": ["assistant@northwindtraders.com"],
+					"subject": "Suspend Pine Tree Project – Urgent: Meeting Cancellations Required",
+					"body_md": "Effective immediately, all meetings related to the Pine Tree project must be cancelled in compliance with updated global warming regulations. Please review the last 60 days of project correspondence to identify every PT-associated meeting—including those without explicit titles—and notify all active participants and stakeholders of the project's suspension. Ensure distribution lists are current and inclusive.\n\nKindly action these cancellations today, providing a combined notification to minimize email volume. If possible, offer at least 24 hours’ notice for affected invitees. Confirm completion once all Pine Tree-related activities are suspended.\n\nThanks for your prompt attention.",
+					"status": "ok",
+					"cc": null,
+					"bcc": null,
+					"kind": "email"
+				},
+				"tc_tc-collaboration-email-2_mock_1": {
+					"to": [
+						"pine.tree.team@northwindtraders.com",
+						"julia.patel@northwindtraders.com",
+						"samuel.wu@northwindtraders.com",
+						"heidi.koenig@northwindtraders.com"
+					],
+					"subject": "URGENT: Pine Tree Project Suspension & Meeting Cancellations",
+					"body_md": "Hey team,\n\nI’m writing with some difficult news. Due to the latest global warming regulations and executive guidance, the **Pine Tree project is being suspended effective immediately**. All associated meetings, standups, and syncs over the next month (including \"PT Q4 Stakeholder Sync,\" \"DL-PineTree Connect,\" and any meetings referenced in recent agendas) are hereby canceled. Please ensure you update your calendars to avoid confusion.\n\nFor clarity:\n- **All Pine Tree meetings scheduled after today are canceled.**\n- If you received invites under aliases like \"DL-PineTree\" or see your name on attached agendas (see agenda.docx), assume you’re included—err on the side of attending brief check-ins ONLY if explicitly prompted. \n- Distribution lists will be reconciled by EIO to reflect roster changes. If you notice wrong recipients (recent leavers/joiners), reply to update. \n\n### Next steps\n- **No further Pine Tree work should proceed until future notice**. If you’re unsure about project boundaries (some workstreams may overlap with \"Packaging Sustainability,\" \"PT Regulatory,\" etc.), reply for clarification or check with EIO.\n- All hands originally planned for next Friday is canceled.\n- If you have documentation or open questions, send to environmental.office@northwindtraders.com for archiving.\n\n_Guten Morgen_, and apologies for abrupt change—regulatory landscape is evolving fast. Let’s stay connected and support each other through the transition.\n\nBest,\nAngela\nEnvironmental Initiatives Office\n\n**Attachment referenced:** agenda.docx",
+					"status": "ok",
+					"cc": ["environmental.office@northwindtraders.com", "gregor.weiss@northwindtraders.com"],
+					"bcc": ["sophie.ma@northwindtraders.com"],
+					"kind": "email"
+				},
+				"tc_tc-collaboration-email-2_mock_2": {
+					"title": "Environmental Initiatives Office Calendar Events: Pine Tree Project - April to June 2024",
+					"content_md": "{\n  \"events\": [\n    {\n      \"id\": \"event_598401\",\n      \"subject\": \"Stakeholder Roundtable: Adaptation Strategies\",\n      \"body\": \"Quarterly stakeholder roundtable focused on adaptation strategies following recent global warming regulations. Discussions include impact assessment and Pine Tree project adjustments.\",\n      \"agenda\": \"- Review new regulatory requirements\\n- Impact on existing Pine Tree deliverables\\n- Brainstorm adaptation strategies\",\n      \"startDateTime\": \"2024-04-12T10:00:00\",\n      \"endDateTime\": \"2024-04-12T11:30:00\",\n      \"recurrence\": {\"type\": \"none\"},\n      \"attendees\": [\n        {\"name\": \"Angela Chow\", \"email\": \"angela.chow@northwindtraders.com\", \"responseStatus\": \"accepted\"},\n        {\"name\": \"Martin Fischer\", \"email\": \"martin.fischer@northwindtraders.com\", \"responseStatus\": \"accepted\"},\n        {\"name\": \"Julia Patel\", \"email\": \"julia.patel@northwindtraders.com\", \"responseStatus\": \"tentative\"}\n      ],\n      \"organizer\": \"angela.chow@northwindtraders.com\",\n      \"isCancelled\": false,\n      \"location\": \"Northwind HQ - Conference Room 3B\",\n      \"attachments\": [\"PineTree-impact-analysis.pdf\"],\n      \"timeZone\": \"America/New_York\"\n    },\n    {\n      \"id\": \"event_523054\",\n      \"subject\": \"Q2 Pine Tree Wrap-Up – All Hands\",\n      \"body\": \"Reviewing final Pine Tree deliverables in light of new global warming regulations. Feedback and reallocation planning.\",\n      \"agenda\": \"1. Project review 2. Next steps for affected teams\",\n      \"startDateTime\": \"2024-06-07T10:00:00\",\n      \"endDateTime\": \"2024-06-07T11:00:00\",\n      \"recurrence\": {\"type\": \"none\"},\n      \"attendees\": [\n        {\"name\": \"Martin Fischer\", \"email\": \"martin.fischer@northwindtraders.com\", \"responseStatus\": \"accepted\"},\n        {\"name\": \"Julia Patel\", \"email\": \"julia.patel@northwindtraders.com\", \"responseStatus\": \"tentative\"}\n      ],\n      \"organizer\": \"angela.chow@northwindtraders.com\",\n      \"isCancelled\": false,\n      \"location\": \"Teams\",\n      \"attachments\": [\"Q2-pine-summary.pdf\"],\n      \"timeZone\": \"Europe/Berlin\"\n    },\n    {\n      \"id\": \"event_602371\",\n      \"subject\": \"Weekly Project Operations Sync\",\n      \"body\": \"Regular project operations sync. Key points this week: Pine Tree team progress and regulatory compliance updates. Attendees include Pine Tree project manager.\",\n      \"agenda\": \"- Pine Tree compliance update\\n- Q2 project deliverables\\n- Operations workflow\",\n      \"startDateTime\": \"2024-05-14T09:30:00\",\n      \"endDateTime\": \"2024-05-14T10:15:00\",\n      \"recurrence\": {\"type\": \"weekly\", \"interval\": 1, \"daysOfWeek\": [\"Tuesday\"], \"endDateTime\": \"2024-06-04T10:15:00\"},\n      \"attendees\": [\n        {\"name\": \"Angela Chow\", \"email\": \"angela.chow@northwindtraders.com\", \"responseStatus\": \"accepted\"},\n        {\"name\": \"Julia Patel\", \"email\": \"julia.patel@northwindtraders.com\", \"responseStatus\": \"declined\"},\n        {\"name\": \"Priya Anand\", \"email\": \"priya.anand@northwindtraders.com\", \"responseStatus\": \"none\"}\n      ],\n      \"organizer\": \"priya.anand@northwindtraders.com\",\n      \"isCancelled\": false,\n      \"location\": \"Zoom\",\n      \"attachments\": [],\n      \"timeZone\": \"Asia/Singapore\"\n    },\n    {\n      \"id\": \"event_619312\",\n      \"subject\": \"Environmental Policy Regulatory Review\",\n      \"body\": \"Review of regulatory policy changes impacting active projects, with special note on project code PT-2024 (Pine Tree). Possible suspension/realignment discussed.\",\n      \"agenda\": \"- Regulation summary\\n- Project PT-2024 impact assessment\\n- Communication plans\",\n      \"startDateTime\": \"2024-05-20T15:00:00\",\n      \"endDateTime\": \"2024-05-20T16:00:00\",\n      \"recurrence\": {\"type\": \"none\"},\n      \"attendees\": [\n        {\"name\": \"Angela Chow\", \"email\": \"angela.chow@northwindtraders.com\", \"responseStatus\": \"accepted\"},\n        {\"name\": \"Martin Fischer\", \"email\": \"martin.fischer@northwindtraders.com\", \"responseStatus\": \"accepted\"},\n        {\"name\": \"Lina Koenig\", \"email\": \"lina.koenig@northwindtraders.com\", \"responseStatus\": \"tentative\"},\n        {\"name\": \"Julia Patel\", \"email\": \"julia.patel@northwindtraders.com\", \"responseStatus\": \"accepted\"}\n      ],\n      \"organizer\": \"martin.fischer@northwindtraders.com\",\n      \"isCancelled\": false,\n      \"location\": \"Northwind HQ - Meeting Room 1A\",\n      \"attachments\": [\"PT-2024-regulatory-review.docx\"],\n      \"timeZone\": \"America/New_York\"\n    },\n    {\n      \"id\": \"event_636725\",\n      \"subject\": \"Pine Tree Lead Sync (Duplicate Invite)\",\n      \"body\": \"Weekly internal sync for Pine Tree project team leads. Overlaps with roundtable on adaptation strategies. Conflicting attendee status noted in invite distribution.\",\n      \"agenda\": \"- Team lead check-in\\n- Upcoming deliverables\\n- Schedule adjustments\",\n      \"startDateTime\": \"2024-04-12T10:00:00\",\n      \"endDateTime\": \"2024-04-12T10:45:00\",\n      \"recurrence\": {\"type\": \"weekly\", \"interval\": 1, \"daysOfWeek\": [\"Friday\"], \"endDateTime\": \"2024-05-10T10:45:00\"},\n      \"attendees\": [\n        {\"name\": \"Martin Fischer\", \"email\": \"martin.fischer@northwindtraders.com\", \"responseStatus\": \"accepted\"},\n        {\"name\": \"Julia Patel\", \"email\": \"julia.patel@northwindtraders.com\", \"responseStatus\": \"declined\"},\n        {\"name\": \"Angela Chow\", \"email\": \"angela.chow@northwindtraders.com\", \"responseStatus\": \"none\"}\n      ],\n      \"organizer\": \"martin.fischer@northwindtraders.com\",\n      \"isCancelled\": false,\n      \"location\": \"Teams\",\n      \"attachments\": [\"PineTree-lead-actions.xlsx\"],\n      \"timeZone\": \"Europe/Berlin\"\n    },\n    {\n      \"id\": \"event_641002\",\n      \"subject\": \"Suspension Notice: Pine Tree Consultations\",\n      \"body\": \"Announcement meeting only: For immediate action, Pine Tree consultations to be suspended. Project team members to receive individual updates following regulatory changes.\",\n      \"agenda\": \"- Inform team of suspension\\n- Next steps\\n- Feedback collection\",\n      \"startDateTime\": \"2024-06-08T13:00:00\",\n      \"endDateTime\": \"2024-06-08T13:30:00\",\n      \"recurrence\": {\"type\": \"none\"},\n      \"attendees\": [\n        {\"name\": \"Angela Chow\", \"email\": \"angela.chow@northwindtraders.com\", \"responseStatus\": \"accepted\"},\n        {\"name\": \"Priya Anand\", \"email\": \"priya.anand@northwindtraders.com\", \"responseStatus\": \"accepted\"},\n        {\"name\": \"Julia Patel\", \"email\": \"julia.patel@northwindtraders.com\", \"responseStatus\": \"tentative\"}\n      ],\n      \"organizer\": \"angela.chow@northwindtraders.com\",\n      \"isCancelled\": false,\n      \"location\": \"Zoom\",\n      \"attachments\": [\"PineTree-suspension-notice.pdf\"],\n      \"timeZone\": \"Asia/Singapore\"\n    },\n    {\n      \"id\": \"event_651103\",\n      \"subject\": \"Monthly Environmental Initiatives Review\",\n      \"body\": \"Review all ongoing environmental projects including Pine Tree. Agenda references compliance milestones and project risk assessment per recent global warming directives.\",\n      \"agenda\": \"- Project status: Pine Tree\\n- Compliance milestones\\n- Risk assessment\",\n      \"startDateTime\": \"2024-05-09T16:00:00\",\n      \"endDateTime\": \"2024-05-09T17:00:00\",\n      \"recurrence\": {\"type\": \"monthly\", \"interval\": 1, \"daysOfWeek\": [], \"endDateTime\": \"2024-06-09T17:00:00\"},\n      \"attendees\": [\n        {\"name\": \"Lina Koenig\", \"email\": \"lina.koenig@northwindtraders.com\", \"responseStatus\": \"accepted\"},\n        {\"name\": \"Priya Anand\", \"email\": \"priya.anand@northwindtraders.com\", \"responseStatus\": \"none\"}\n      ],\n      \"organizer\": \"lina.koenig@northwindtraders.com\",\n      \"isCancelled\": false,\n      \"location\": \"Teams\",\n      \"attachments\": [\"PineTree-compliance.xlsx\", \"MonthlyInitiatives-May24.pdf\"],\n      \"timeZone\": \"Europe/Berlin\"\n    },\n    {\n      \"id\": \"event_661925\",\n      \"subject\": \"Pine Tree Partner Input Session\",\n      \"body\": \"Session for external partners (Northwind stakeholders only). Pine Tree topic focused on partnership impacts. Attendee list shows outdated contacts; bouncebacks previously reported.\",\n      \"agenda\": \"- Partner input\\n- Distribution list verification\\n- Project impact discussion\",\n      \"startDateTime\": \"2024-05-30T11:00:00\",\n      \"endDateTime\": \"2024-05-30T12:30:00\",\n      \"recurrence\": {\"type\": \"none\"},\n      \"attendees\": [\n        {\"name\": \"Julia Patel\", \"email\": \"julia.patel@northwindtraders.com\", \"responseStatus\": \"declined\"},\n        {\"name\": \"Priya Anand\", \"email\": \"priya.anand@northwindtraders.com\", \"responseStatus\": \"accepted\"},\n        {\"name\": \"Martin Fischer\", \"email\": \"martin.fischer@northwindtraders.com\", \"responseStatus\": \"tentative\"}\n      ],\n      \"organizer\": \"priya.anand@northwindtraders.com\",\n      \"isCancelled\": false,\n      \"location\": \"Northwind HQ - Conference Room 2A\",\n      \"attachments\": [\"PineTree-partner-distribution.docx\"],\n      \"timeZone\": \"America/New_York\"\n    },\n    {\n      \"id\": \"event_671044\",\n      \"subject\": \"[Cancelled] Pine Tree Project Team Sync\",\n      \"body\": \"Cancelled team sync due to project suspension under new environmental regulations. Meeting remains visible in some calendars due to propagation delays.\",\n      \"agenda\": \"- Cancellation explaination\\n- Next steps for team\",\n      \"startDateTime\": \"2024-06-09T15:00:00\",\n      \"endDateTime\": \"2024-06-09T15:30:00\",\n      \"recurrence\": {\"type\": \"none\"},\n      \"attendees\": [\n        {\"name\": \"Angela Chow\", \"email\": \"angela.chow@northwindtraders.com\", \"responseStatus\": \"none\"},\n        {\"name\": \"Martin Fischer\", \"email\": \"martin.fischer@northwindtraders.com\", \"responseStatus\": \"declined\"},\n        {\"name\": \"Priya Anand\", \"email\": \"priya.anand@northwindtraders.com\", \"responseStatus\": \"accepted\"}\n      ],\n      \"organizer\": \"angela.chow@northwindtraders.com\",\n      \"isCancelled\": true,\n      \"location\": \"Teams\",\n      \"attachments\": [\"PineTree-team-cancellation.eml\"],\n      \"timeZone\": \"Europe/Berlin\"\n    }\n  ]\n}",
+					"status": "ok",
+					"metadata": {
+						"path": "output\\mocks\\tc-collaboration-email-2-calendar_events_pine_tree-doc.json",
+						"sha256": "a2d000733cf602226a794186d0b8d81e3c5801aa0b414ec63e8ef4aa63d052ba"
+					},
+					"sections": null,
+					"kind": "docx"
+				},
+				"tc_tc-collaboration-email-2_mock_3": {
+					"title": "Pine Tree Project Distribution Lists - Q2 2024 Review",
+					"content_md": "{\n  \"distribution_lists\": [\n    {\n      \"list_name\": \"Pine Tree Project Team\",\n      \"email\": \"pine.tree.team@northwindtraders.com\",\n      \"members\": [\n        {\"name\": \"Angela Chow\", \"email\": \"angela.chow@northwindtraders.com\", \"role\": \"Sustainability Program Manager\", \"status\": \"active\"},\n        {\"name\": \"Thomas Keller\", \"email\": \"thomas.keller@northwindtraders.com\", \"role\": \"Climate Policy Analyst\", \"status\": \"active\"},\n        {\"name\": \"Ming Zhao\", \"email\": \"ming.zhao@northwindtraders.com\", \"role\": \"Data Science Lead\", \"status\": \"active\"},\n        {\"name\": \"Elise Müller\", \"email\": \"elise.muller@northwindtraders.com\", \"role\": \"Project Coordinator\", \"status\": \"active\"},\n        {\"name\": \"Markus Lang\", \"email\": \"markus.lang@northwindtraders.com\", \"role\": \"Operations Supervisor\", \"status\": \"former\"},\n        {\"name\": \"Felicia Tan\", \"email\": \"felicia.tan@northwindtraders.com\", \"role\": \"Environmental Consultant\", \"status\": \"invited\"},\n        {\"name\": \"Julia Weiß\", \"email\": \"julia.weiss@northwindtraders.com\", \"role\": \"Regional Manager - Europe\", \"status\": \"active\"},\n        {\"name\": \"Noah Lim\", \"email\": \"noah.lim@northwindtraders.com\", \"role\": \"Compliance Specialist\", \"status\": \"active\"}\n      ],\n      \"last_updated_date\": \"2024-06-20\",\n      \"known_issues\": [\"member missing: recent joiner from Singapore office not included\", \"email bounce: markus.lang@northwindtraders.com\"]\n    },\n    {\n      \"list_name\": \"Pine Tree Project - Americas\",\n      \"email\": \"pine.tree.americas@northwindtraders.com\",\n      \"members\": [\n        {\"name\": \"Angela Chow\", \"email\": \"angela.chow@northwindtraders.com\", \"role\": \"Sustainability Program Manager\", \"status\": \"active\"},\n        {\"name\": \"Liam Bennett\", \"email\": \"liam.bennett@northwindtraders.com\", \"role\": \"Field Lead\", \"status\": \"active\"},\n        {\"name\": \"Camila Rodriguez\", \"email\": \"camila.rodriguez@northwindtraders.com\", \"role\": \"Environmental Analyst\", \"status\": \"active\"},\n        {\"name\": \"Sophie Tan\", \"email\": \"sophie.tan@northwindtraders.com\", \"role\": \"Community Liaison\", \"status\": \"invited\"},\n        {\"name\": \"Ryan Chu\", \"email\": \"ryan.chu@northwindtraders.com\", \"role\": \"Project Intern\", \"status\": \"former\"},\n        {\"name\": \"Emily Li\", \"email\": \"emily.li@northwindtraders.com\", \"role\": \"Operations Specialist\", \"status\": \"active\"}\n      ],\n      \"last_updated_date\": \"2024-06-17\",\n      \"known_issues\": []\n    },\n    {\n      \"list_name\": \"Pine Tree Project - Europe & APAC\",\n      \"email\": \"pine.tree.europe.apac@northwindtraders.com\",\n      \"members\": [\n        {\"name\": \"Ming Zhao\", \"email\": \"ming.zhao@northwindtraders.com\", \"role\": \"Data Science Lead\", \"status\": \"active\"},\n        {\"name\": \"Elise Müller\", \"email\": \"elise.muller@northwindtraders.com\", \"role\": \"Project Coordinator\", \"status\": \"active\"},\n        {\"name\": \"Julia Weiß\", \"email\": \"julia.weiss@northwindtraders.com\", \"role\": \"Regional Manager - Europe\", \"status\": \"active\"},\n        {\"name\": \"Felicia Tan\", \"email\": \"felicia.tan@northwindtraders.com\", \"role\": \"Environmental Consultant\", \"status\": \"active\"},\n        {\"name\": \"Karsten Li\", \"email\": \"karsten.li@northwindtraders.com\", \"role\": \"Sustainability Analyst\", \"status\": \"invited\"},\n        {\"name\": \"Matthias Schmidt\", \"email\": \"matthias.schmidt@northwindtraders.com\", \"role\": \"Local Operations Coordinator\", \"status\": \"active\"},\n        {\"name\": \"Amy Tan\", \"email\": \"amy.tan@northwindtraders.com\", \"role\": \"Regional Manager - Asia\", \"status\": \"active\"}\n      ],\n      \"last_updated_date\": \"2024-06-12\",\n      \"known_issues\": [\"recent departure: Karsten Li marked as invited but left company on 2024-05-30\", \"regional coverage ambiguous: Amy Tan role not reflected in previous quarter rosters\"]\n    },\n    {\n      \"list_name\": \"Pine Tree Ad Hoc Invitees\",\n      \"email\": \"pine.tree.invitees@northwindtraders.com\",\n      \"members\": [\n        {\"name\": \"Angela Chow\", \"email\": \"angela.chow@northwindtraders.com\", \"role\": \"Sustainability Program Manager\", \"status\": \"active\"},\n        {\"name\": \"Felicia Tan\", \"email\": \"felicia.tan@northwindtraders.com\", \"role\": \"Environmental Consultant\", \"status\": \"active\"},\n        {\"name\": \"Noah Lim\", \"email\": \"noah.lim@northwindtraders.com\", \"role\": \"Compliance Specialist\", \"status\": \"active\"},\n        {\"name\": \"Sophie Tan\", \"email\": \"sophie.tan@northwindtraders.com\", \"role\": \"Community Liaison\", \"status\": \"invited\"},\n        {\"name\": \"Dieter Schwarz\", \"email\": \"dieter.schwarz@northwindtraders.com\", \"role\": \"Legal Advisor\", \"status\": \"active\"}\n      ],\n      \"last_updated_date\": \"2024-06-06\",\n      \"known_issues\": []\n    },\n    {\n      \"list_name\": \"Pine Tree Decision Panel\",\n      \"email\": \"pine.tree.decisions@northwindtraders.com\",\n      \"members\": [\n        {\"name\": \"Angela Chow\", \"email\": \"angela.chow@northwindtraders.com\", \"role\": \"Sustainability Program Manager\", \"status\": \"active\"},\n        {\"name\": \"Markus Lang\", \"email\": \"markus.lang@northwindtraders.com\", \"role\": \"Operations Supervisor\", \"status\": \"former\"},\n        {\"name\": \"Matthias Schmidt\", \"email\": \"matthias.schmidt@northwindtraders.com\", \"role\": \"Local Operations Coordinator\", \"status\": \"active\"},\n        {\"name\": \"Dieter Schwarz\", \"email\": \"dieter.schwarz@northwindtraders.com\", \"role\": \"Legal Advisor\", \"status\": \"active\"},\n        {\"name\": \"Amy Tan\", \"email\": \"amy.tan@northwindtraders.com\", \"role\": \"Regional Manager - Asia\", \"status\": \"active\"}\n      ],\n      \"last_updated_date\": \"2024-06-14\",\n      \"known_issues\": [\"former member: markus.lang still present though removed from most recent team update\"]\n    }\n  ]\n}",
+					"status": "ok",
+					"metadata": {
+						"path": "output\\mocks\\tc-collaboration-email-2-distribution_list_roster_files-doc.json",
+						"sha256": "6f5d6f3fc9c106f992fee3cdd5afe6063372ae1bbd3174b8d6fe84bfe78d25fa"
+					},
+					"sections": null,
+					"kind": "docx"
+				}
+			}
+		},
+		{
+			"id": "tc_4d48ce3dd95d49f1",
+			"dataset_id": "dataset_9361f6019e7145e9",
+			"name": "Identify Pine Tree Meetings to Cancel and Notify Full Team by Email Using Inferred Membership",
+			"description": "Please identify all meetings related to the Pine Tree Project that need to be cancelled. Then please search for messages related to 'Pine Tree' and send an email to all relevant members notifying them the project is on suspension.",
+			"input": "Please identify all meetings related to the Pine Tree Project that need to be cancelled. Then please search for messages related to 'Pine Tree' and send an email to all relevant members notifying them the project is on suspension.",
+			"minimal_tool_set": ["SearchMessages", "mcp_CalendarTools_graph_listEvents", "sendMail"],
+			"tool_expectations": [
+				{
+					"name": "SearchMessages",
+					"arguments": [
+						{
+							"name": "queryString",
+							"assertion": ["SearchMessages 'queryString' shows agent is looking for messages related to 'Pine Tree'"],
+							"rubrics": [
+								{
+									"id": "rubric_11b864fcef464268",
+									"name": "task_compliance",
+									"azure_foundry_id": "azureai://built-in/evaluators/task_adherence",
+									"payload": {
+										"response": "<$response$>",
+										"ground_truth": "<$expected_response$>"
+									},
+									"threshold": 0.7
+								},
+								{
+									"id": "rubric_00a659f699ec47ce",
+									"name": "output_coherence",
+									"azure_foundry_id": "azureai://built-in/evaluators/coherence",
+									"payload": {
+										"response": "<$response$>",
+										"ground_truth": "<$expected_response$>"
+									},
+									"threshold": 0.7
+								},
+								{
+									"id": "rubric_0ae0ab5ae5aa491a",
+									"name": "content_relevance",
+									"azure_foundry_id": "azureai://built-in/evaluators/relevance",
+									"payload": {
+										"response": "<$response$>",
+										"ground_truth": "<$expected_response$>"
+									},
+									"threshold": 0.7
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "mcp_CalendarTools_graph_listEvents",
+					"arguments": [
+						{
+							"name": "filter",
+							"assertion": ["Argument 'filter' shows the agent is looking for calendar events related to 'Pine Tree'."],
+							"rubrics": [
+								{
+									"id": "rubric_11b864fcef464268",
+									"name": "task_compliance",
+									"azure_foundry_id": "azureai://built-in/evaluators/task_adherence",
+									"payload": {
+										"response": "<$response$>",
+										"ground_truth": "<$expected_response$>"
+									},
+									"threshold": 0.7
+								},
+								{
+									"id": "rubric_00a659f699ec47ce",
+									"name": "output_coherence",
+									"azure_foundry_id": "azureai://built-in/evaluators/coherence",
+									"payload": {
+										"response": "<$response$>",
+										"ground_truth": "<$expected_response$>"
+									},
+									"threshold": 0.7
+								},
+								{
+									"id": "rubric_0ae0ab5ae5aa491a",
+									"name": "content_relevance",
+									"azure_foundry_id": "azureai://built-in/evaluators/relevance",
+									"payload": {
+										"response": "<$response$>",
+										"ground_truth": "<$expected_response$>"
+									},
+									"threshold": 0.7
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "sendMail",
+					"arguments": [
+						{
+							"name": "to",
+							"assertion": [
+								"sendMail 'to' is non-empty and includes relevant Pine Tree team members such as angela.chow@northwindtraders.com, martin.fischer@northwindtraders.com, emily.carter@northwindtraders.com, wei.sun@northwindtraders.com, or the pine.tree@northwindtraders.com distribution list."
+							],
+							"rubrics": [
+								{
+									"id": "rubric_11b864fcef464268",
+									"name": "task_compliance",
+									"azure_foundry_id": "azureai://built-in/evaluators/task_adherence",
+									"payload": {
+										"response": "<$response$>",
+										"ground_truth": "<$expected_response$>"
+									},
+									"threshold": 0.7
+								},
+								{
+									"id": "rubric_00a659f699ec47ce",
+									"name": "output_coherence",
+									"azure_foundry_id": "azureai://built-in/evaluators/coherence",
+									"payload": {
+										"response": "<$response$>",
+										"ground_truth": "<$expected_response$>"
+									},
+									"threshold": 0.7
+								},
+								{
+									"id": "rubric_0ae0ab5ae5aa491a",
+									"name": "content_relevance",
+									"azure_foundry_id": "azureai://built-in/evaluators/relevance",
+									"payload": {
+										"response": "<$response$>",
+										"ground_truth": "<$expected_response$>"
+									},
+									"threshold": 0.7
+								}
+							]
+						},
+						{
+							"name": "subject",
+							"assertion": [
+								"sendMail 'subject' argument is provided and between 10-200 characters",
+								"sendMail 'subject' argument alludes to Pine Tree project suspension"
+							],
+							"rubrics": [
+								{
+									"id": "rubric_11b864fcef464268",
+									"name": "task_compliance",
+									"azure_foundry_id": "azureai://built-in/evaluators/task_adherence",
+									"payload": {
+										"response": "<$response$>",
+										"ground_truth": "<$expected_response$>"
+									},
+									"threshold": 0.7
+								},
+								{
+									"id": "rubric_00a659f699ec47ce",
+									"name": "output_coherence",
+									"azure_foundry_id": "azureai://built-in/evaluators/coherence",
+									"payload": {
+										"response": "<$response$>",
+										"ground_truth": "<$expected_response$>"
+									},
+									"threshold": 0.7
+								},
+								{
+									"id": "rubric_0ae0ab5ae5aa491a",
+									"name": "content_relevance",
+									"azure_foundry_id": "azureai://built-in/evaluators/relevance",
+									"payload": {
+										"response": "<$response$>",
+										"ground_truth": "<$expected_response$>"
+									},
+									"threshold": 0.7
+								}
+							]
+						},
+						{
+							"name": "body",
+							"assertion": ["sendMail 'body' explains that future meetings need to be cancelled due to project suspension"],
+							"rubrics": [
+								{
+									"id": "rubric_11b864fcef464268",
+									"name": "task_compliance",
+									"azure_foundry_id": "azureai://built-in/evaluators/task_adherence",
+									"payload": {
+										"response": "<$response$>",
+										"ground_truth": "<$expected_response$>"
+									},
+									"threshold": 0.7
+								},
+								{
+									"id": "rubric_00a659f699ec47ce",
+									"name": "output_coherence",
+									"azure_foundry_id": "azureai://built-in/evaluators/coherence",
+									"payload": {
+										"response": "<$response$>",
+										"ground_truth": "<$expected_response$>"
+									},
+									"threshold": 0.7
+								},
+								{
+									"id": "rubric_0ae0ab5ae5aa491a",
+									"name": "content_relevance",
+									"azure_foundry_id": "azureai://built-in/evaluators/relevance",
+									"payload": {
+										"response": "<$response$>",
+										"ground_truth": "<$expected_response$>"
+									},
+									"threshold": 0.7
+								}
+							]
+						}
+					]
+				}
+			],
+			"expected_response": "I've identified future Pine Tree meetings that need to be cancelled and notified all relevant team members about the project's suspension via email.",
+			"response_quality_expectation": {
+				"assertion": "The agent identifies meetings that need to be cancelled including 'Pine Tree Weekly Stakeholder Sync', 'Friday Project Update', 'Pine Tree EMEA Sync', 'Asia Pine Tree Governance Call', and 'Pine Tree Working Session', and confirms an email has been sent to relevant team members (such as angela.chow@northwindtraders.com, emily.carter@northwindtraders.com, wei.sun@northwindtraders.com, martin.fischer@northwindtraders.com, or the pine.tree@northwindtraders.com distribution list) to inform them of the project suspension.",
+				"rubrics": [
+					{
+						"id": "rubric_1a3d87f66b1d4cce",
+						"name": "task_compliance",
+						"azure_foundry_id": "azureai://built-in/evaluators/task_adherence",
+						"payload": {
+							"response": "<$response$>",
+							"ground_truth": "<$expected_response$>"
+						},
+						"threshold": 0.7
+					},
+					{
+						"id": "rubric_e726414cb1e7486c",
+						"name": "output_coherence",
+						"azure_foundry_id": "azureai://built-in/evaluators/coherence",
+						"payload": {
+							"response": "<$response$>",
+							"ground_truth": "<$expected_response$>"
+						},
+						"threshold": 0.7
+					},
+					{
+						"id": "rubric_dcee243d7e5c4df8",
+						"name": "content_relevance",
+						"azure_foundry_id": "azureai://built-in/evaluators/relevance",
+						"payload": {
+							"response": "<$response$>",
+							"ground_truth": "<$expected_response$>"
+						},
+						"threshold": 0.7
+					}
+				]
+			},
+			"references_seed": {
+				"tc_tc-collaboration-email-3_mock_0": {
+					"to": ["ai.assistant@northwindtraders.com"],
+					"subject": "Urgent: Cancel All Pine Tree Meetings – Project Shelved Due to Global Warming Concerns",
+					"body_md": "Please immediately cancel all upcoming meetings related to the Pine Tree project and ensure every team member is notified of this change. This directive is being issued as the Pine Tree project is now officially shelved due to global warming regulatory concerns.\n\nIt is essential that team notifications and all meeting cancellations are completed **today**. Include all active and recently involved project members in your notifications, and annotate any uncertainties regarding recipients for my review.\n\nLet me know once all actions are completed.",
+					"status": "ok",
+					"cc": null,
+					"bcc": null,
+					"kind": "email"
+				},
+				"tc_tc-collaboration-email-3_mock_1": {
+					"to": ["julia.patel@northwindtraders.com", "pine.tree@northwindtraders.com"],
+					"subject": "Pine Tree Project Distribution List: Recent Additions & Team Sync",
+					"body_md": "Hallo Team,\n\nHope everyone is doing well. Quick heads-up regarding the Pine Tree project team and our recent syncs. There've been a few updates to the distribution list (DL):\n\n- Added: **Anjali Desai** (anjali.desai@northwindtraders.com)\n- Added: **Lucas Tan** (lucas.tan@northwindtraders.com)\n- Unsure if on DL yet: **Megan Wolfe** (megan.wolfe@northwindtraders.com) – please clarify if included\n\nNext, our EIO sync on sustainability packaging is tentatively moved to Friday, 14:00 CET. PT Q4 standup (was Thursday 3pm) remains **on hold** pending project review (global warming impact).\n\nCan everyone confirm their team status? And please reply if you're not on the official Pine Tree alias _yet_—want to avoid missing anyone (especially recent joiners!).\n\nDanke für Euer Engagement!\n\nLG,\nMaximilian\n\n---\n\n**Note:** Some distribution list changes may not be fully reflected. If you know someone recently joined Pine Tree or was missed in earlier syncs, CC me so I can update.\n\n*Sent from Northwind Traders – Environmental Initiatives Office*",
+					"status": "ok",
+					"cc": ["anjali.desai@northwindtraders.com", "lucas.tan@northwindtraders.com", "megan.wolfe@northwindtraders.com"],
+					"bcc": null,
+					"kind": "email"
+				},
+				"tc_tc-collaboration-email-3_mock_2": {
+					"title": "Pine Tree Project Meeting Calendar Data Export - June 2024",
+					"content_md": "{\n  \"events\": [\n    {\n      \"id\": \"A3F7ACD1\",\n      \"subject\": \"Pine Tree Weekly Stakeholder Sync\",\n      \"startDateTime\": \"2024-06-07T09:30:00-04:00\",\n      \"endDateTime\": \"2024-06-07T10:30:00-04:00\",\n      \"isCancelled\": false,\n      \"attendees\": [\n        {\"name\": \"Angela Chow\", \"email\": \"angela.chow@northwindtraders.com\", \"responseStatus\": \"accepted\"},\n        {\"name\": \"Martin Fischer\", \"email\": \"martin.fischer@northwindtraders.com\", \"responseStatus\": \"accepted\"},\n        {\"name\": \"Emily Carter\", \"email\": \"emily.carter@northwindtraders.com\", \"responseStatus\": \"none\"},\n        {\"name\": \"Hanna Lindholm\", \"email\": \"hanna.lindholm@northwindtraders.com\", \"responseStatus\": \"outOfOffice\"}\n      ],\n      \"organizer\": \"emily.carter@northwindtraders.com\",\n      \"location\": \"Teams\",\n      \"description\": \"Weekly status update. Agenda: progress, blockers, new climate compliance requirements. Pine Tree focus.\",\n      \"recurrence\": {\"type\":\"weekly\", \"interval\":1, \"days\":[\"Friday\"], \"endDate\":\"2024-08-30\"},\n      \"timeZone\": \"America/New_York\"\n    },\n    {\n      \"id\": \"D92B17E8\",\n      \"subject\": \"Friday Project Update\",\n      \"startDateTime\": \"2024-06-07T09:30:00-04:00\",\n      \"endDateTime\": \"2024-06-07T10:15:00-04:00\",\n      \"isCancelled\": false,\n      \"attendees\": [\n        {\"name\": \"Angela Chow\", \"email\": \"angela.chow@northwindtraders.com\", \"responseStatus\": \"accepted\"},\n        {\"name\": \"Zak Hemphill\", \"email\": \"zak.hemphill@northwindtraders.com\", \"responseStatus\": \"accepted\"},\n        {\"name\": \"Emily Carter\", \"email\": \"emily.carter@northwindtraders.com\", \"responseStatus\": \"accepted\"},\n        {\"name\": \"Hann Lindholm\", \"email\": \"hann.lindholm@northwindtraders.com\", \"responseStatus\": \"none\"} \n      ],\n      \"organizer\": \"zak.hemphill@northwindtraders.com\",\n      \"location\": \"Teams\",\n      \"description\": \"General checkpoint. Pine Tree sub-topic: new regulatory guidance discussion.\",\n      \"recurrence\": null,\n      \"timeZone\": \"America/New_York\"\n    },\n    {\n      \"id\": \"B5E4C9A2\",\n      \"subject\": \"Pine Tree EMEA Sync\",\n      \"startDateTime\": \"2024-06-10T15:00:00+02:00\",\n      \"endDateTime\": \"2024-06-10T16:00:00+02:00\",\n      \"isCancelled\": true,\n      \"attendees\": [\n        {\"name\": \"Sven Müller\", \"email\": \"sven.mueller@northwindtraders.com\", \"responseStatus\": \"declined\"},\n        {\"name\": \"Hanna Lindholm\", \"email\": \"hanna.lindholm@northwindtraders.com\", \"responseStatus\": \"accepted\"},\n        {\"name\": \"Martin Fischer\", \"email\": \"martin.fischer@northwindtraders.com\", \"responseStatus\": \"accepted\"},\n        {\"name\": \"Ava Lim\", \"email\": \"ava.lim@northwindtraders.com\", \"responseStatus\": \"tentative\"} \n      ],\n      \"organizer\": \"sven.mueller@northwindtraders.com\",\n      \"location\": \"Conference Room C, Berlin\",\n      \"description\": \"Regional catch-up, project status. Pine Tree risks and phase-out plans.\",\n      \"recurrence\": {\"type\":\"weekly\", \"interval\":1, \"days\":[\"Monday\"], \"endDate\":\"2024-08-30\"},\n      \"timeZone\": \"Europe/Berlin\"\n    },\n    {\n      \"id\": \"E53D1FA3\",\n      \"subject\": \"Asia Pine Tree Governance Call\",\n      \"startDateTime\": \"2024-06-11T10:00:00+08:00\",\n      \"endDateTime\": \"2024-06-11T11:00:00+08:00\",\n      \"isCancelled\": false,\n      \"attendees\": [\n        {\"name\": \"Wei Sun\", \"email\": \"wei.sun@northwindtraders.com\", \"responseStatus\": \"accepted\"},\n        {\"name\": \"Angela Chow\", \"email\": \"angela.chow@northwindtraders.com\", \"responseStatus\": \"accepted\"},\n        {\"name\": \"Jie Tan\", \"email\": \"jie.tan@northwindtraders.com\", \"responseStatus\": \"none\"},\n        {\"name\": \"Emily Carter\", \"email\": \"emily.carter@northwindtraders.com\", \"responseStatus\": \"tentative\"} \n      ],\n      \"organizer\": \"wei.sun@northwindtraders.com\",\n      \"location\": \"Teams\",\n      \"description\": \"APAC stakeholder governance & Pine Tree strategic update.\",\n      \"recurrence\": null,\n      \"timeZone\": \"Asia/Singapore\"\n    },\n    {\n      \"id\": \"A3F7ACD2\",\n      \"subject\": \"Pine Tree Weekly Stakeholder Sync\",\n      \"startDateTime\": \"2024-06-14T09:30:00-04:00\",\n      \"endDateTime\": \"2024-06-14T10:30:00-04:00\",\n      \"isCancelled\": false,\n      \"attendees\": [\n        {\"name\": \"Angela Chow\", \"email\": \"angela.chow@northwindtraders.com\", \"responseStatus\": \"accepted\"},\n        {\"name\": \"Martin Fischer\", \"email\": \"martin.fischer@northwindtraders.com\", \"responseStatus\": \"accepted\"},\n        {\"name\": \"Emily Carter\", \"email\": \"emily.carter@northwindtraders.com\", \"responseStatus\": \"none\"},\n        {\"name\": \"Hanna Lindholm\", \"email\": \"hanna.lindholm@northwindtraders.com\", \"responseStatus\": \"outOfOffice\"},\n        {\"name\": \"Zak Hemphill\", \"email\": \"zak.hemphill@northwindtraders.com\", \"responseStatus\": \"accepted\"}\n      ],\n      \"organizer\": \"emily.carter@northwindtraders.com\",\n      \"location\": \"Teams\",\n      \"description\": \"Weekly status. Phase-out actions, Pine Tree team roles review.\",\n      \"recurrence\": {\"type\":\"weekly\", \"interval\":1, \"days\":[\"Friday\"], \"endDate\":\"2024-08-30\"},\n      \"timeZone\": \"America/New_York\"\n    },\n    {\n      \"id\": \"F11C2997\",\n      \"subject\": \"Pine Tree Working Session\",\n      \"startDateTime\": \"2024-06-12T14:00:00+02:00\",\n      \"endDateTime\": \"2024-06-12T15:30:00+02:00\",\n      \"isCancelled\": false,\n      \"attendees\": [\n        {\"name\": \"Martin Fischer\", \"email\": \"martin.fischer@northwindtraders.com\", \"responseStatus\": \"accepted\"},\n        {\"name\": \"Sven Müller\", \"email\": \"sven.mueller@northwindtraders.com\", \"responseStatus\": \"declined\"},\n        {\"name\": \"Ava Lim\", \"email\": \"ava.lim@northwindtraders.com\", \"responseStatus\": \"accepted\"},\n        {\"name\": \"Hanna Lindholm\", \"email\": \"hanna.lindholm@northwindtraders.com\", \"responseStatus\": \"none\"} \n      ],\n      \"organizer\": \"martin.fischer@northwindtraders.com\",\n      \"location\": \"Teams\",\n      \"description\": \"Open working session on Pine Tree planning. Documents and action items updated. Some ambiguity in attendee list.\",\n      \"recurrence\": null,\n      \"timeZone\": \"Europe/Berlin\"\n    },\n    {\n      \"id\": \"G77F9AA1\",\n      \"subject\": \"(Duplicate) Pine Tree Weekly Stakeholder Sync\",\n      \"startDateTime\": \"2024-06-14T09:30:00-04:00\",\n      \"endDateTime\": \"2024-06-14T10:00:00-04:00\",\n      \"isCancelled\": true,\n      \"attendees\": [\n        {\"name\": \"Angela Chow\", \"email\": \"angela.chow@northwindtraders.com\", \"responseStatus\": \"accepted\"},\n        {\"name\": \"Martin Fischer\", \"email\": \"martin.fischer@northwindtraders.com\", \"responseStatus\": \"accepted\"},\n        {\"name\": \"Zak Hemphill\", \"email\": \"zak.hemphill@northwindtraders.com\", \"responseStatus\": \"accepted\"},\n        {\"name\": \"Emily Carter\", \"email\": \"emily.carter@northwindtraders.com\", \"responseStatus\": \"declined\"}\n      ],\n      \"organizer\": \"emily.carter@northwindtraders.com\",\n      \"location\": \"Teams\",\n      \"description\": \"Duplicate invite mistakenly sent. Includes core team. Overlaps with Pine Tree main sync.\",\n      \"recurrence\": null,\n      \"timeZone\": \"America/New_York\"\n    }\n  ],\n  \"attendees\": [\n    {\"name\": \"Angela Chow\", \"email\": \"angela.chow@northwindtraders.com\", \"responseStatus\": \"accepted\"},\n    {\"name\": \"Martin Fischer\", \"email\": \"martin.fischer@northwindtraders.com\", \"responseStatus\": \"accepted\"},\n    {\"name\": \"Emily Carter\", \"email\": \"emily.carter@northwindtraders.com\", \"responseStatus\": \"none\"},\n    {\"name\": \"Hanna Lindholm\", \"email\": \"hanna.lindholm@northwindtraders.com\", \"responseStatus\": \"outOfOffice\"},\n    {\"name\": \"Zak Hemphill\", \"email\": \"zak.hemphill@northwindtraders.com\", \"responseStatus\": \"accepted\"},\n    {\"name\": \"Sven Müller\", \"email\": \"sven.mueller@northwindtraders.com\", \"responseStatus\": \"declined\"},\n    {\"name\": \"Ava Lim\", \"email\": \"ava.lim@northwindtraders.com\", \"responseStatus\": \"tentative\"},\n    {\"name\": \"Wei Sun\", \"email\": \"wei.sun@northwindtraders.com\", \"responseStatus\": \"accepted\"},\n    {\"name\": \"Jie Tan\", \"email\": \"jie.tan@northwindtraders.com\", \"responseStatus\": \"none\"},\n    {\"name\": \"Hann Lindholm\", \"email\": \"hann.lindholm@northwindtraders.com\", \"responseStatus\": \"none\"} \n  ],\n  \"timeZone\": \"America/New_York\"\n}",
+					"status": "ok",
+					"metadata": {
+						"path": "output\\mocks\\tc-collaboration-email-3-meeting_calendar_data-doc.json",
+						"sha256": "bd3fef907a2ee55eece0b3cef504cd349a0b2877908bb2d7c56cc7f48978f38e"
+					},
+					"sections": null,
+					"kind": "docx"
+				},
+				"tc_tc-collaboration-email-3_mock_3": {
+					"title": "Pine Tree Project Distribution Lists (Internal Only)",
+					"content_md": "{\n  \"distribution_lists\": [\n    {\n      \"list_name\": \"DL-PineTree\",\n      \"list_email\": \"pine.tree@northwindtraders.com\",\n      \"members\": [\n        {\n          \"name\": \"Julia Patel\",\n          \"email\": \"julia.patel@northwindtraders.com\",\n          \"role\": \"Senior Research Analyst, R&D\",\n          \"date_added\": \"2024-04-27\"\n        },\n        {\n          \"name\": \"Eliot R. Davis\",\n          \"email\": \"eliot.davis@northwindtraders.com\",\n          \"role\": \"Project Coordinator, Environmental Initiatives\",\n          \"date_added\": \"2024-05-10\"\n        },\n        {\n          \"name\": \"Samantha Leung\",\n          \"email\": \"samantha.leung@northwindtraders.com\",\n          \"role\": \"Operations Supervisor, Distribution\",\n          \"date_added\": \"2024-03-02\"\n        },\n        {\n          \"name\": \"Naomi Chee \",\n          \"email\": \"naomi.chee@northwindtraders.com\",\n          \"role\": \"Field Ecologist\",\n          \"date_added\": \"2024-02-19\"\n        },\n        {\n          \"name\": \"Benji Talbot\",\n          \"email\": \"benji.talbot@northwindtraders.com\",\n          \"role\": \"Logistics, Distribution\",\n          \"date_added\": \"2024-01-23\"\n        },\n        {\n          \"name\": \"Samantha Leung\",\n          \"email\": \"samantha.leung@northwindtraders.com\",\n          \"role\": \"Ops Suprvsr, Distribution\",\n          \"date_added\": \"2023-12-11\"\n        },\n        {\n          \"name\": \"Julia Patel\",\n          \"email\": \"julia.patel@northwindtraders.com\"\n          \n        }\n      ]\n    },\n    {\n      \"list_name\": \"PineTree-CC\",\n      \"list_email\": \"pinertree.cc@northwindtraders.com\",\n      \"members\": [\n        {\n          \"name\": \"Naomi Chee\",\n          \"email\": \"naomi.chee@northwindtraders.com\",\n          \"role\": \"Field Ecologist\",\n          \"date_added\": \"2024-02-19\"\n        },\n        {\n          \"name\": \"Greg Kemper\",\n          \"email\": \"gregory.kemper@northwindtraders.com\",\n          \"role\": \"Facilities Coordinator\",\n          \"date_added\": \"2023-11-07\"\n        },\n        {\n          \"name\": \"Miguel Roses\",\n          \"email\": \"miguel.roses@northwindtraders.com\",\n          \"role\": \"Research Associate\",\n          \"date_added\": \"2024-03-15\"\n        },\n        {\n          \"name\": \"Eliot Davis\",\n          \"email\": \"eliot.davis@northwindtraders.com\",\n          \"role\": \"Project Coordinate, Environmental Initiatives\",\n          \"date_added\": \"2024-04-03\"\n        },\n        {\n          \"name\": \"Anna-Marie Lopez\",\n          \"email\": \"anna-marie.lopez@northwindtraders.com\",\n          \"role\": \"Environmental Scientist\",\n          \"date_added\": \"2024-05-05\"\n        },\n        {\n          \"name\": \"Benji Talbot\",\n          \"email\": \"benji.talbot@northwindtraders.com\"\n          \n        }\n      ]\n    },\n    {\n      \"list_name\": \"DL-PineTree-Old\",\n      \"list_email\": \"pinetree.archive@northwindtraders.com\",\n      \"members\": [\n        {\n          \"name\": \"Samantha Leung\",\n          \"email\": \"samantha.leung@northwindtraders.com\",\n          \"role\": \"Operations Supervisor, Distribution\",\n          \"date_added\": \"2021-07-18\"\n        },\n        {\n          \"name\": \"Julia Patel\",\n          \"email\": \"julia.patel@northwindtraders.com\",\n          \"role\": \"Research Intern, Environmental Initiatives\",\n          \"date_added\": \"2022-09-01\"\n        },\n        {\n          \"name\": \"Gregory Kemper \",\n          \"email\": \"gregory.kemper@northwindtraders.com\",\n          \"role\": \"Facilities Coordinator\",\n          \"date_added\": \"2023-11-07\"\n        },\n        {\n          \"name\": \"Joe Lindquist\",\n          \"email\": \"joe.lindquist@northwindtraders.com\",\n          \"role\": \"Former Project Analyst\",\n          \"date_added\": \"2023-05-28\"\n        },\n        {\n          \"name\": \"Benji Talbot\",\n          \"email\": \"benji.talbot@northwindtraders.com\"\n        },\n        {\n          \"name\": \"Naomi Chee\",\n          \"email\": \"naomi.chee@northwindtraders.com\"\n        }\n      ]\n    }\n  ]\n}",
+					"status": "ok",
+					"metadata": {
+						"path": "output\\mocks\\tc-collaboration-email-3-distribution_list_records-doc.json",
+						"sha256": "668cd44f10eab96edd90d2221de967f7b2d21e299122f2ebd855f4355469ea12"
+					},
+					"sections": null,
+					"kind": "docx"
+				}
+			}
+		},
+		{
+			"id": "tc_0c029d41e1794600",
+			"dataset_id": "dataset_9361f6019e7145e9",
+			"name": "Identify Recurring Pine Tree Meetings to Cancel While Preserving One-Time Exceptions",
+			"description": "Test the agent's ability to identify all recurring Pine Tree project meetings that should be cancelled while recognizing that certain one-time sessions (like final budget reviews or closeout meetings) should remain scheduled despite the project suspension. The agent must distinguish between recurring series and standalone events, handle overlapping time slots, and communicate the selective identification strategy clearly.",
+			"input": "I need you to check my calendar for the next 60 days and identify all recurring Pine Tree project meetings that need to be cancelled immediately - the project has been suspended. However, any one-time meetings that are specifically about project closeout, final budget reviews, or wrap-up activities should be kept since we still need those to properly wind down the project. Can you review what's scheduled and let me know which meetings should be cancelled versus which ones should be kept?",
+			"minimal_tool_set": ["mcp_CalendarTools_graph_listEvents"],
+			"tool_expectations": [
+				{
+					"name": "mcp_CalendarTools_graph_listEvents",
+					"arguments": [
+						{
+							"name": "filter",
+							"assertion": ["Argument 'filter' contains search criteria for 'Pine Tree' related calendar events"],
+							"rubrics": [
+								{
+									"id": "rubric_7f3a21d8b9c54e89",
+									"name": "task_compliance",
+									"azure_foundry_id": "azureai://built-in/evaluators/task_adherence",
+									"payload": {
+										"response": "<$response$>",
+										"ground_truth": "<$expected_response$>"
+									},
+									"threshold": 0.7
+								},
+								{
+									"id": "rubric_2e8d93f7a4c14b92",
+									"name": "output_coherence",
+									"azure_foundry_id": "azureai://built-in/evaluators/coherence",
+									"payload": {
+										"response": "<$response$>",
+										"ground_truth": "<$expected_response$>"
+									},
+									"threshold": 0.7
+								},
+								{
+									"id": "rubric_9b5c47e2d8a34f17",
+									"name": "content_relevance",
+									"azure_foundry_id": "azureai://built-in/evaluators/relevance",
+									"payload": {
+										"response": "<$response$>",
+										"ground_truth": "<$expected_response$>"
+									},
+									"threshold": 0.7
+								}
+							]
+						},
+						{
+							"name": "startDateTime",
+							"assertion": ["Argument 'startDateTime' is provided and represents current or near-current date"],
+							"rubrics": [
+								{
+									"id": "rubric_7f3a21d8b9c54e89",
+									"name": "task_compliance",
+									"azure_foundry_id": "azureai://built-in/evaluators/task_adherence",
+									"payload": {
+										"response": "<$response$>",
+										"ground_truth": "<$expected_response$>"
+									},
+									"threshold": 0.7
+								},
+								{
+									"id": "rubric_2e8d93f7a4c14b92",
+									"name": "output_coherence",
+									"azure_foundry_id": "azureai://built-in/evaluators/coherence",
+									"payload": {
+										"response": "<$response$>",
+										"ground_truth": "<$expected_response$>"
+									},
+									"threshold": 0.7
+								},
+								{
+									"id": "rubric_9b5c47e2d8a34f17",
+									"name": "content_relevance",
+									"azure_foundry_id": "azureai://built-in/evaluators/relevance",
+									"payload": {
+										"response": "<$response$>",
+										"ground_truth": "<$expected_response$>"
+									},
+									"threshold": 0.7
+								}
+							]
+						},
+						{
+							"name": "endDateTime",
+							"assertion": [
+								"Argument 'endDateTime' is provided and represents approximately 60 days from startDateTime as specified in the user request"
+							],
+							"rubrics": [
+								{
+									"id": "rubric_7f3a21d8b9c54e89",
+									"name": "task_compliance",
+									"azure_foundry_id": "azureai://built-in/evaluators/task_adherence",
+									"payload": {
+										"response": "<$response$>",
+										"ground_truth": "<$expected_response$>"
+									},
+									"threshold": 0.7
+								},
+								{
+									"id": "rubric_2e8d93f7a4c14b92",
+									"name": "output_coherence",
+									"azure_foundry_id": "azureai://built-in/evaluators/coherence",
+									"payload": {
+										"response": "<$response$>",
+										"ground_truth": "<$expected_response$>"
+									},
+									"threshold": 0.7
+								},
+								{
+									"id": "rubric_9b5c47e2d8a34f17",
+									"name": "content_relevance",
+									"azure_foundry_id": "azureai://built-in/evaluators/relevance",
+									"payload": {
+										"response": "<$response$>",
+										"ground_truth": "<$expected_response$>"
+									},
+									"threshold": 0.7
+								}
+							]
+						}
+					]
+				}
+			],
+			"expected_response": "I've reviewed your Pine Tree project calendar for the next 60 days. Here's what I found:\n\n**Meetings to Cancel (Recurring Series):**\n- Pine Tree Weekly Stakeholder Sync (recurring every Friday at 9:00 AM)\n- Pine Tree EMEA Regional Sync (recurring every Monday at 3:00 PM)\n- Pine Tree Q4 Development Standup (recurring every Thursday at 10:00 AM)\n\n**Meetings to Keep (Project Closeout Activities):**\n- Pine Tree Final Budget Review and Reconciliation (June 15, 2:00 PM) - one-time meeting for financial closure\n- Pine Tree Project Closeout Meeting - Lessons Learned (June 20, 11:00 AM) - one-time retrospective session\n\nAll recurring series should be cancelled. The two wind-down meetings should remain on your calendar to ensure proper project closure.",
+			"response_quality_expectation": {
+				"assertion": "Response demonstrates the agent correctly distinguished between recurring meetings like 'Pine Tree Weekly Stakeholder Sync' (organized by emma.lake@northwindtraders.com), 'Pine Tree EMEA Regional Sync' (organized by markus.mueller@northwindtraders.com), and 'Pine Tree Q4 Development Standup' (organized by paolo.ricci@northwindtraders.com) which should be cancelled, and one-time closeout meetings like 'Pine Tree Final Budget Review and Reconciliation' and 'Pine Tree Project Closeout Meeting - Lessons Learned' which should be preserved. The agent provides a clear breakdown of meetings to cancel vs. meetings to keep with specific details (dates, times, recurrence patterns) and rationale, showing understanding of business continuity needs during project wind-down.",
+				"rubrics": [
+					{
+						"id": "rubric_4c6d89a2f7b14e53",
+						"name": "task_compliance",
+						"azure_foundry_id": "azureai://built-in/evaluators/task_adherence",
+						"payload": {
+							"response": "<$response$>",
+							"ground_truth": "<$expected_response$>"
+						},
+						"threshold": 0.7
+					},
+					{
+						"id": "rubric_8a2f93d6c5e14b81",
+						"name": "output_coherence",
+						"azure_foundry_id": "azureai://built-in/evaluators/coherence",
+						"payload": {
+							"response": "<$response$>",
+							"ground_truth": "<$expected_response$>"
+						},
+						"threshold": 0.7
+					},
+					{
+						"id": "rubric_5e7b21d9a8c34f26",
+						"name": "content_relevance",
+						"azure_foundry_id": "azureai://built-in/evaluators/relevance",
+						"payload": {
+							"response": "<$response$>",
+							"ground_truth": "<$expected_response$>"
+						},
+						"threshold": 0.7
+					}
+				]
+			},
+			"references_seed": {
+				"tc_selective_cancel_mock_0": {
+					"title": "Pine Tree Project - Extended Calendar View (June-August 2024)",
+					"content_md": "{\n  \"events\": [\n    {\n      \"id\": \"event_rec_weekly_001\",\n      \"subject\": \"Pine Tree Weekly Stakeholder Sync\",\n      \"start_datetime\": \"2024-06-07T09:00:00\",\n      \"end_datetime\": \"2024-06-07T10:00:00\",\n      \"is_recurring\": true,\n      \"recurrence_pattern\": \"Weekly on Friday at 09:00\",\n      \"description\": \"Weekly project status updates and blocker review for Pine Tree sustainability initiative.\",\n      \"attendees\": [\n        {\"name\": \"Emma Lake\", \"email\": \"emma.lake@northwindtraders.com\"},\n        {\"name\": \"Angela Chow\", \"email\": \"angela.chow@northwindtraders.com\"},\n        {\"name\": \"Paolo Ricci\", \"email\": \"paolo.ricci@northwindtraders.com\"}\n      ],\n      \"organizer\": \"emma.lake@northwindtraders.com\",\n      \"status\": \"scheduled\",\n      \"timeZone\": \"America/New_York\"\n    },\n    {\n      \"id\": \"event_onetime_001\",\n      \"subject\": \"Pine Tree Final Budget Review and Reconciliation\",\n      \"start_datetime\": \"2024-06-15T14:00:00\",\n      \"end_datetime\": \"2024-06-15T15:30:00\",\n      \"is_recurring\": false,\n      \"recurrence_pattern\": \"\",\n      \"description\": \"Final budget review session for Pine Tree project closure. Finance team will review all expenditures and close out remaining purchase orders.\",\n      \"attendees\": [\n        {\"name\": \"Emma Lake\", \"email\": \"emma.lake@northwindtraders.com\"},\n        {\"name\": \"Finance Team\", \"email\": \"finance@northwindtraders.com\"},\n        {\"name\": \"Angela Chow\", \"email\": \"angela.chow@northwindtraders.com\"}\n      ],\n      \"organizer\": \"emma.lake@northwindtraders.com\",\n      \"status\": \"scheduled\",\n      \"timeZone\": \"America/New_York\"\n    },\n    {\n      \"id\": \"event_rec_emea_001\",\n      \"subject\": \"Pine Tree EMEA Regional Sync\",\n      \"start_datetime\": \"2024-06-10T15:00:00\",\n      \"end_datetime\": \"2024-06-10T16:00:00\",\n      \"is_recurring\": true,\n      \"recurrence_pattern\": \"Weekly on Monday at 15:00\",\n      \"description\": \"EMEA region coordination meeting for Pine Tree logistics and compliance.\",\n      \"attendees\": [\n        {\"name\": \"Markus Müller\", \"email\": \"markus.mueller@northwindtraders.com\"},\n        {\"name\": \"Nina Schreiber\", \"email\": \"nina.schreiber@northwindtraders.com\"},\n        {\"name\": \"Angela Chow\", \"email\": \"angela.chow@northwindtraders.com\"}\n      ],\n      \"organizer\": \"markus.mueller@northwindtraders.com\",\n      \"status\": \"scheduled\",\n      \"timeZone\": \"Europe/Berlin\"\n    },\n    {\n      \"id\": \"event_onetime_002\",\n      \"subject\": \"Pine Tree Project Closeout Meeting - Lessons Learned\",\n      \"start_datetime\": \"2024-06-20T11:00:00\",\n      \"end_datetime\": \"2024-06-20T12:30:00\",\n      \"is_recurring\": false,\n      \"recurrence_pattern\": \"\",\n      \"description\": \"Final closeout session to document lessons learned, archive project materials, and conduct retrospective on Pine Tree initiative.\",\n      \"attendees\": [\n        {\"name\": \"Emma Lake\", \"email\": \"emma.lake@northwindtraders.com\"},\n        {\"name\": \"Angela Chow\", \"email\": \"angela.chow@northwindtraders.com\"},\n        {\"name\": \"Paolo Ricci\", \"email\": \"paolo.ricci@northwindtraders.com\"},\n        {\"name\": \"Markus Müller\", \"email\": \"markus.mueller@northwindtraders.com\"}\n      ],\n      \"organizer\": \"emma.lake@northwindtraders.com\",\n      \"status\": \"scheduled\",\n      \"timeZone\": \"America/New_York\"\n    },\n    {\n      \"id\": \"event_rec_standup_001\",\n      \"subject\": \"Pine Tree Q4 Development Standup\",\n      \"start_datetime\": \"2024-06-13T10:00:00\",\n      \"end_datetime\": \"2024-06-13T10:30:00\",\n      \"is_recurring\": true,\n      \"recurrence_pattern\": \"Weekly on Thursday at 10:00\",\n      \"description\": \"Daily standup for Pine Tree development team tracking Q4 deliverables.\",\n      \"attendees\": [\n        {\"name\": \"Paolo Ricci\", \"email\": \"paolo.ricci@northwindtraders.com\"},\n        {\"name\": \"Nina Schreiber\", \"email\": \"nina.schreiber@northwindtraders.com\"},\n        {\"name\": \"Emma Lake\", \"email\": \"emma.lake@northwindtraders.com\"}\n      ],\n      \"organizer\": \"paolo.ricci@northwindtraders.com\",\n      \"status\": \"scheduled\",\n      \"timeZone\": \"Europe/Berlin\"\n    }\n  ]\n}",
+					"status": "ok",
+					"metadata": {
+						"path": "output\\mocks\\tc-selective-cancel-calendar-doc.json",
+						"sha256": "a1b2c3d4e5f6789012345678901234567890abcdef1234567890abcdef123456"
+					},
+					"sections": null,
+					"kind": "docx"
+				}
+			}
+		},
+		{
+			"id": "tc_4d48ce3dd95d49f2",
+			"dataset_id": "dataset_9361f6019e7145e9",
+			"name": "Identify Ambiguously-Named Pine Tree Meetings to Cancel Through Context Analysis",
+			"description": "Test the agent's ability to identify Pine Tree project meetings that don't explicitly contain 'Pine Tree' in the title, requiring analysis of meeting descriptions, attendees, and email context to determine project affiliation. The agent must handle ambiguous meeting names like 'Weekly Project Operations Sync' or 'Environmental Policy Review' that only mention Pine Tree in descriptions or agendas, cross-reference with email threads for context, and make reasoned decisions about which meetings should be cancelled while documenting their reasoning for ambiguous cases.",
+			"input": "I need you to identify all Pine Tree project meetings for the next 90 days that should be cancelled. Be thorough - some meetings don't have 'Pine Tree' in the title but are definitely Pine Tree related based on the agenda or who's attending. Check my recent emails and meeting descriptions to figure out which ones are actually for Pine Tree, and let me know which meetings should be cancelled and why you determined they were Pine Tree-related, especially for the less obvious ones.",
+			"minimal_tool_set": ["SearchMessages", "mcp_CalendarTools_graph_listEvents"],
+			"tool_expectations": [
+				{
+					"name": "SearchMessages",
+					"arguments": [
+						{
+							"name": "queryString",
+							"assertion": ["SearchMessages 'queryString' contains terms related to 'Pine Tree' and/or meeting-related keywords to gather context"],
+							"rubrics": [
+								{
+									"id": "rubric_11b864fcef464268",
+									"name": "task_compliance",
+									"azure_foundry_id": "azureai://built-in/evaluators/task_adherence",
+									"payload": {
+										"response": "<$response$>",
+										"ground_truth": "<$expected_response$>"
+									},
+									"threshold": 0.7
+								},
+								{
+									"id": "rubric_00a659f699ec47ce",
+									"name": "output_coherence",
+									"azure_foundry_id": "azureai://built-in/evaluators/coherence",
+									"payload": {
+										"response": "<$response$>",
+										"ground_truth": "<$expected_response$>"
+									},
+									"threshold": 0.7
+								},
+								{
+									"id": "rubric_0ae0ab5ae5aa491a",
+									"name": "content_relevance",
+									"azure_foundry_id": "azureai://built-in/evaluators/relevance",
+									"payload": {
+										"response": "<$response$>",
+										"ground_truth": "<$expected_response$>"
+									},
+									"threshold": 0.7
+								}
+							]
+						},
+						{
+							"name": "size",
+							"assertion": ["SearchMessages 'size' argument is set to a reasonable value (50-100) for comprehensive context gathering"],
+							"rubrics": [
+								{
+									"id": "rubric_11b864fcef464268",
+									"name": "task_compliance",
+									"azure_foundry_id": "azureai://built-in/evaluators/task_adherence",
+									"payload": {
+										"response": "<$response$>",
+										"ground_truth": "<$expected_response$>"
+									},
+									"threshold": 0.7
+								},
+								{
+									"id": "rubric_00a659f699ec47ce",
+									"name": "output_coherence",
+									"azure_foundry_id": "azureai://built-in/evaluators/coherence",
+									"payload": {
+										"response": "<$response$>",
+										"ground_truth": "<$expected_response$>"
+									},
+									"threshold": 0.7
+								},
+								{
+									"id": "rubric_0ae0ab5ae5aa491a",
+									"name": "content_relevance",
+									"azure_foundry_id": "azureai://built-in/evaluators/relevance",
+									"payload": {
+										"response": "<$response$>",
+										"ground_truth": "<$expected_response$>"
+									},
+									"threshold": 0.7
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "mcp_CalendarTools_graph_listEvents",
+					"arguments": [
+						{
+							"name": "filter",
+							"assertion": ["Argument 'filter' shows the agent is searching for calendar events that may be Pine Tree-related"],
+							"rubrics": [
+								{
+									"id": "rubric_11b864fcef464268",
+									"name": "task_compliance",
+									"azure_foundry_id": "azureai://built-in/evaluators/task_adherence",
+									"payload": {
+										"response": "<$response$>",
+										"ground_truth": "<$expected_response$>"
+									},
+									"threshold": 0.7
+								},
+								{
+									"id": "rubric_00a659f699ec47ce",
+									"name": "output_coherence",
+									"azure_foundry_id": "azureai://built-in/evaluators/coherence",
+									"payload": {
+										"response": "<$response$>",
+										"ground_truth": "<$expected_response$>"
+									},
+									"threshold": 0.7
+								},
+								{
+									"id": "rubric_0ae0ab5ae5aa491a",
+									"name": "content_relevance",
+									"azure_foundry_id": "azureai://built-in/evaluators/relevance",
+									"payload": {
+										"response": "<$response$>",
+										"ground_truth": "<$expected_response$>"
+									},
+									"threshold": 0.7
+								}
+							]
+						},
+						{
+							"name": "startDateTime",
+							"assertion": ["Argument 'startDateTime' is provided and represents current or near-current date"],
+							"rubrics": [
+								{
+									"id": "rubric_11b864fcef464268",
+									"name": "task_compliance",
+									"azure_foundry_id": "azureai://built-in/evaluators/task_adherence",
+									"payload": {
+										"response": "<$response$>",
+										"ground_truth": "<$expected_response$>"
+									},
+									"threshold": 0.7
+								},
+								{
+									"id": "rubric_00a659f699ec47ce",
+									"name": "output_coherence",
+									"azure_foundry_id": "azureai://built-in/evaluators/coherence",
+									"payload": {
+										"response": "<$response$>",
+										"ground_truth": "<$expected_response$>"
+									},
+									"threshold": 0.7
+								},
+								{
+									"id": "rubric_0ae0ab5ae5aa491a",
+									"name": "content_relevance",
+									"azure_foundry_id": "azureai://built-in/evaluators/relevance",
+									"payload": {
+										"response": "<$response$>",
+										"ground_truth": "<$expected_response$>"
+									},
+									"threshold": 0.7
+								}
+							]
+						},
+						{
+							"name": "endDateTime",
+							"assertion": ["Argument 'endDateTime' is provided and represents approximately 90 days from startDateTime"],
+							"rubrics": [
+								{
+									"id": "rubric_11b864fcef464268",
+									"name": "task_compliance",
+									"azure_foundry_id": "azureai://built-in/evaluators/task_adherence",
+									"payload": {
+										"response": "<$response$>",
+										"ground_truth": "<$expected_response$>"
+									},
+									"threshold": 0.7
+								},
+								{
+									"id": "rubric_00a659f699ec47ce",
+									"name": "output_coherence",
+									"azure_foundry_id": "azureai://built-in/evaluators/coherence",
+									"payload": {
+										"response": "<$response$>",
+										"ground_truth": "<$expected_response$>"
+									},
+									"threshold": 0.7
+								},
+								{
+									"id": "rubric_0ae0ab5ae5aa491a",
+									"name": "content_relevance",
+									"azure_foundry_id": "azureai://built-in/evaluators/relevance",
+									"payload": {
+										"response": "<$response$>",
+										"ground_truth": "<$expected_response$>"
+									},
+									"threshold": 0.7
+								}
+							]
+						}
+					]
+				}
+			],
+			"expected_response": "I've completed a thorough search for Pine Tree project meetings over the next 90 days. Through email context analysis and calendar review, I identified the following meetings that should be cancelled:\n\n**Explicitly Named:**\n- Pine Tree Project Kickoff (1/15)\n- Pine Tree Weekly Status Update (recurring, all instances)\n\n**Identified Through Context Analysis:**\n- 'Weekly Project Operations Sync' - meeting description references Pine Tree environmental compliance initiatives and key Pine Tree stakeholders are attendees\n- 'Q1 Environmental Policy Review' - email threads confirm this meeting focuses on Pine Tree regulatory requirements\n\nThese meetings should be cancelled and a notification should be sent to stakeholders explaining the cancellations and the reasoning for including the less obvious meetings.",
+			"response_quality_expectation": {
+				"assertion": "The agent demonstrates analytical reasoning by identifying Pine Tree meetings including explicitly named ones like 'Pine Tree Project Kickoff' and 'Pine Tree Weekly Status Update', as well as ambiguously named ones like 'Weekly Project Operations Sync', 'Q1 Environmental Policy Review', and 'Sustainability Packaging Workshop' through contextual clues (descriptions showing they involve julia.patel@northwindtraders.com, naomi.chee@northwindtraders.com, eliot.davis@northwindtraders.com, or mention Pine Tree in meeting descriptions). The agent explains the reasoning for ambiguous classifications and provides a comprehensive list of meetings that should be cancelled with detailed explanation.",
+				"rubrics": [
+					{
+						"id": "rubric_1a3d87f66b1d4cce",
+						"name": "task_compliance",
+						"azure_foundry_id": "azureai://built-in/evaluators/task_adherence",
+						"payload": {
+							"response": "<$response$>",
+							"ground_truth": "<$expected_response$>"
+						},
+						"threshold": 0.7
+					},
+					{
+						"id": "rubric_e726414cb1e7486c",
+						"name": "output_coherence",
+						"azure_foundry_id": "azureai://built-in/evaluators/coherence",
+						"payload": {
+							"response": "<$response$>",
+							"ground_truth": "<$expected_response$>"
+						},
+						"threshold": 0.7
+					},
+					{
+						"id": "rubric_4f2e8d9aa3c84a1b",
+						"name": "response_completeness",
+						"azure_foundry_id": "azureai://built-in/evaluators/response_completeness",
+						"payload": {
+							"response": "<$response$>",
+							"ground_truth": "<$expected_response$>"
+						},
+						"threshold": 0.7
+					}
+				]
+			},
+			"references_seed": {
+				"tc_4d48ce3dd95d49f1_mock_0": {
+					"to": ["ai.assistant@northwindtraders.com"],
+					"subject": "Need comprehensive Pine Tree meeting cancellation - including less obvious ones",
+					"body_md": "Hi,\n\nI need you to find and cancel ALL meetings related to the Pine Tree environmental initiative project for the next 90 days. This includes not just meetings with 'Pine Tree' explicitly in the title, but also any meetings that are actually about Pine Tree even if they use different naming.\n\nSome context to help: Pine Tree is our sustainability/environmental compliance project, so meetings discussing environmental policy, regulatory compliance, or sustainability packaging that involve our Pine Tree team members are likely related. Also check meeting descriptions and attendee lists - if you see julia.patel@northwindtraders.com, naomi.chee@northwindtraders.com, or eliot.davis@northwindtraders.com (our core Pine Tree team), that's a strong indicator.\n\nPlease be thorough in your search and explain your reasoning for the less obvious ones. Once you've identified them all, cancel them and send a summary to the Pine Tree distribution list.",
+					"status": "ok",
+					"cc": null,
+					"bcc": null,
+					"kind": "email"
+				},
+				"tc_4d48ce3dd95d49f1_mock_1": {
+					"to": ["pine.tree@northwindtraders.com"],
+					"subject": "Pine Tree Team: Upcoming meetings and context",
+					"body_md": "Hi everyone,\n\nJust a quick update on our upcoming meetings:\n\n1. **Weekly Project Operations Sync** (Fridays 10am) - This is where we discuss Pine Tree environmental compliance status, vendor relationships, and implementation roadblocks. Julia and Naomi lead this.\n\n2. **Q1 Environmental Policy Review** (Thursday 2pm) - Regulatory team meeting focused on Pine Tree's compliance with new environmental regulations. Critical for keeping the project on track.\n\n3. **Sustainability Packaging Workshop** (Recurring Tuesdays) - Working session on Pine Tree's packaging strategy to meet environmental goals.\n\nAll of these are essential to Pine Tree progress even though they don't have 'Pine Tree' in the calendar title. Please make sure you're attending the ones relevant to your role.\n\nBest,\nJulia Patel\nSenior Research Analyst",
+					"status": "ok",
+					"cc": ["julia.patel@northwindtraders.com", "naomi.chee@northwindtraders.com", "eliot.davis@northwindtraders.com"],
+					"bcc": null,
+					"kind": "email"
+				},
+				"tc_4d48ce3dd95d49f1_mock_2": {
+					"title": "Calendar Events Export - Next 90 Days",
+					"content_md": "{\n  \"events\": [\n    {\n      \"id\": \"PTK001\",\n      \"subject\": \"Pine Tree Project Kickoff\",\n      \"startDateTime\": \"2024-01-15T14:00:00-05:00\",\n      \"endDateTime\": \"2024-01-15T15:30:00-05:00\",\n      \"isCancelled\": false,\n      \"attendees\": [\n        {\"name\": \"Julia Patel\", \"email\": \"julia.patel@northwindtraders.com\", \"responseStatus\": \"accepted\"},\n        {\"name\": \"Naomi Chee\", \"email\": \"naomi.chee@northwindtraders.com\", \"responseStatus\": \"accepted\"},\n        {\"name\": \"Eliot Davis\", \"email\": \"eliot.davis@northwindtraders.com\", \"responseStatus\": \"accepted\"},\n        {\"name\": \"Samantha Leung\", \"email\": \"samantha.leung@northwindtraders.com\", \"responseStatus\": \"tentative\"}\n      ],\n      \"organizer\": \"julia.patel@northwindtraders.com\",\n      \"location\": \"Conference Room A\",\n      \"description\": \"Initial kickoff meeting for Pine Tree environmental initiative. Review scope, timeline, and team assignments.\",\n      \"recurrence\": null,\n      \"timeZone\": \"America/New_York\"\n    },\n    {\n      \"id\": \"WPO001\",\n      \"subject\": \"Weekly Project Operations Sync\",\n      \"startDateTime\": \"2024-01-19T10:00:00-05:00\",\n      \"endDateTime\": \"2024-01-19T11:00:00-05:00\",\n      \"isCancelled\": false,\n      \"attendees\": [\n        {\"name\": \"Julia Patel\", \"email\": \"julia.patel@northwindtraders.com\", \"responseStatus\": \"accepted\"},\n        {\"name\": \"Naomi Chee\", \"email\": \"naomi.chee@northwindtraders.com\", \"responseStatus\": \"accepted\"},\n        {\"name\": \"Eliot Davis\", \"email\": \"eliot.davis@northwindtraders.com\", \"responseStatus\": \"accepted\"},\n        {\"name\": \"Benji Talbot\", \"email\": \"benji.talbot@northwindtraders.com\", \"responseStatus\": \"none\"}\n      ],\n      \"organizer\": \"julia.patel@northwindtraders.com\",\n      \"location\": \"Teams\",\n      \"description\": \"Weekly operations review for Pine Tree initiative. Discuss environmental compliance status, vendor coordination, and implementation progress. Review any roadblocks.\",\n      \"recurrence\": {\"type\":\"weekly\", \"interval\":1, \"days\":[\"Friday\"], \"endDate\":\"2024-04-30\"},\n      \"timeZone\": \"America/New_York\"\n    },\n    {\n      \"id\": \"EPR001\",\n      \"subject\": \"Q1 Environmental Policy Review\",\n      \"startDateTime\": \"2024-01-25T14:00:00-05:00\",\n      \"endDateTime\": \"2024-01-25T15:30:00-05:00\",\n      \"isCancelled\": false,\n      \"attendees\": [\n        {\"name\": \"Naomi Chee\", \"email\": \"naomi.chee@northwindtraders.com\", \"responseStatus\": \"accepted\"},\n        {\"name\": \"Eliot Davis\", \"email\": \"eliot.davis@northwindtraders.com\", \"responseStatus\": \"accepted\"},\n        {\"name\": \"Anna-Marie Lopez\", \"email\": \"anna-marie.lopez@northwindtraders.com\", \"responseStatus\": \"accepted\"},\n        {\"name\": \"Julia Patel\", \"email\": \"julia.patel@northwindtraders.com\", \"responseStatus\": \"tentative\"}\n      ],\n      \"organizer\": \"naomi.chee@northwindtraders.com\",\n      \"location\": \"Teams\",\n      \"description\": \"Regulatory compliance review for Pine Tree project. Assess new environmental regulations and their impact on project timeline and deliverables. Legal and environmental team collaboration.\",\n      \"recurrence\": {\"type\":\"weekly\", \"interval\":2, \"days\":[\"Thursday\"], \"endDate\":\"2024-03-31\"},\n      \"timeZone\": \"America/New_York\"\n    },\n    {\n      \"id\": \"SPW001\",\n      \"subject\": \"Sustainability Packaging Workshop\",\n      \"startDateTime\": \"2024-01-23T13:00:00-05:00\",\n      \"endDateTime\": \"2024-01-23T14:30:00-05:00\",\n      \"isCancelled\": false,\n      \"attendees\": [\n        {\"name\": \"Julia Patel\", \"email\": \"julia.patel@northwindtraders.com\", \"responseStatus\": \"accepted\"},\n        {\"name\": \"Miguel Roses\", \"email\": \"miguel.roses@northwindtraders.com\", \"responseStatus\": \"accepted\"},\n        {\"name\": \"Samantha Leung\", \"email\": \"samantha.leung@northwindtraders.com\", \"responseStatus\": \"accepted\"},\n        {\"name\": \"Benji Talbot\", \"email\": \"benji.talbot@northwindtraders.com\", \"responseStatus\": \"none\"}\n      ],\n      \"organizer\": \"julia.patel@northwindtraders.com\",\n      \"location\": \"Conference Room B\",\n      \"description\": \"Working session on sustainable packaging strategy for Pine Tree environmental goals. Evaluate vendor options and cost implications.\",\n      \"recurrence\": {\"type\":\"weekly\", \"interval\":1, \"days\":[\"Tuesday\"], \"endDate\":\"2024-04-30\"},\n      \"timeZone\": \"America/New_York\"\n    },\n    {\n      \"id\": \"PTS001\",\n      \"subject\": \"Pine Tree Weekly Status Update\",\n      \"startDateTime\": \"2024-01-22T15:00:00-05:00\",\n      \"endDateTime\": \"2024-01-22T15:45:00-05:00\",\n      \"isCancelled\": false,\n      \"attendees\": [\n        {\"name\": \"Julia Patel\", \"email\": \"julia.patel@northwindtraders.com\", \"responseStatus\": \"accepted\"},\n        {\"name\": \"Naomi Chee\", \"email\": \"naomi.chee@northwindtraders.com\", \"responseStatus\": \"accepted\"},\n        {\"name\": \"Eliot Davis\", \"email\": \"eliot.davis@northwindtraders.com\", \"responseStatus\": \"accepted\"},\n        {\"name\": \"Gregory Kemper\", \"email\": \"gregory.kemper@northwindtraders.com\", \"responseStatus\": \"accepted\"}\n      ],\n      \"organizer\": \"eliot.davis@northwindtraders.com\",\n      \"location\": \"Teams\",\n      \"description\": \"Weekly team standup. Quick sync on Pine Tree action items, blockers, and upcoming milestones.\",\n      \"recurrence\": {\"type\":\"weekly\", \"interval\":1, \"days\":[\"Monday\"], \"endDate\":\"2024-04-30\"},\n      \"timeZone\": \"America/New_York\"\n    },\n    {\n      \"id\": \"GEN001\",\n      \"subject\": \"General Operations Review\",\n      \"startDateTime\": \"2024-01-24T11:00:00-05:00\",\n      \"endDateTime\": \"2024-01-24T12:00:00-05:00\",\n      \"isCancelled\": false,\n      \"attendees\": [\n        {\"name\": \"Samantha Leung\", \"email\": \"samantha.leung@northwindtraders.com\", \"responseStatus\": \"accepted\"},\n        {\"name\": \"Marcus Johnson\", \"email\": \"marcus.johnson@northwindtraders.com\", \"responseStatus\": \"accepted\"},\n        {\"name\": \"Lisa Wong\", \"email\": \"lisa.wong@northwindtraders.com\", \"responseStatus\": \"accepted\"}\n      ],\n      \"organizer\": \"marcus.johnson@northwindtraders.com\",\n      \"location\": \"Conference Room C\",\n      \"description\": \"Departmental operations review for distribution team. Quarterly metrics, logistics optimization, team performance.\",\n      \"recurrence\": {\"type\":\"monthly\", \"interval\":1, \"dayOfMonth\":24, \"endDate\":\"2024-12-31\"},\n      \"timeZone\": \"America/New_York\"\n    }\n  ]\n}",
+					"status": "ok",
+					"metadata": {
+						"path": "output\\mocks\\tc-4d48ce3dd95d49f1-calendar-doc.json",
+						"sha256": "a1b2c3d4e5f67890abcdef1234567890abcdef1234567890abcdef1234567890"
+					},
+					"sections": null,
+					"kind": "docx"
+				}
+			}
+		},
+		{
+			"id": "tc_5e8a3f7c9d2b4e61",
+			"dataset_id": "dataset_9361f6019e7145e9",
+			"name": "Identify Imminent Pine Tree Meetings to Cancel and Send Urgent Team Notification",
+			"description": "Test the agent's ability to prioritize time-sensitive actions by identifying Pine Tree meetings happening within the next 48 hours that need to be cancelled immediately, and sending an urgent notification to all affected participants explaining the last-minute cancellation. The agent must demonstrate understanding of urgency, extract the right attendee list, and compose an appropriate apologetic message for short-notice cancellations.",
+			"input": "This is urgent - I just found out the Pine Tree project is being suspended effective immediately due to regulatory issues. Can you check my calendar for any Pine Tree meetings in the next 48 hours that need to be cancelled right away? Then please send an email to everyone who was supposed to attend those meetings explaining the situation and apologizing for the extremely short notice. Make sure to mention this is due to unforeseen regulatory compliance requirements.",
+			"minimal_tool_set": ["mcp_CalendarTools_graph_listEvents", "sendMail"],
+			"tool_expectations": [
+				{
+					"name": "mcp_CalendarTools_graph_listEvents",
+					"arguments": [
+						{
+							"name": "filter",
+							"assertion": ["Argument 'filter' contains search criteria for 'Pine Tree' related calendar events"],
+							"rubrics": [
+								{
+									"id": "rubric_4d9e21f8c7a54b82",
+									"name": "task_compliance",
+									"azure_foundry_id": "azureai://built-in/evaluators/task_adherence",
+									"payload": {
+										"response": "<$response$>",
+										"ground_truth": "<$expected_response$>"
+									},
+									"threshold": 0.7
+								},
+								{
+									"id": "rubric_7c3a92e6f5b14d91",
+									"name": "output_coherence",
+									"azure_foundry_id": "azureai://built-in/evaluators/coherence",
+									"payload": {
+										"response": "<$response$>",
+										"ground_truth": "<$expected_response$>"
+									},
+									"threshold": 0.7
+								},
+								{
+									"id": "rubric_2f8b64d9a3c14e75",
+									"name": "content_relevance",
+									"azure_foundry_id": "azureai://built-in/evaluators/relevance",
+									"payload": {
+										"response": "<$response$>",
+										"ground_truth": "<$expected_response$>"
+									},
+									"threshold": 0.7
+								}
+							]
+						},
+						{
+							"name": "startDateTime",
+							"assertion": ["Argument 'startDateTime' is provided and represents current date/time for immediate meeting check"],
+							"rubrics": [
+								{
+									"id": "rubric_4d9e21f8c7a54b82",
+									"name": "task_compliance",
+									"azure_foundry_id": "azureai://built-in/evaluators/task_adherence",
+									"payload": {
+										"response": "<$response$>",
+										"ground_truth": "<$expected_response$>"
+									},
+									"threshold": 0.7
+								},
+								{
+									"id": "rubric_7c3a92e6f5b14d91",
+									"name": "output_coherence",
+									"azure_foundry_id": "azureai://built-in/evaluators/coherence",
+									"payload": {
+										"response": "<$response$>",
+										"ground_truth": "<$expected_response$>"
+									},
+									"threshold": 0.7
+								},
+								{
+									"id": "rubric_2f8b64d9a3c14e75",
+									"name": "content_relevance",
+									"azure_foundry_id": "azureai://built-in/evaluators/relevance",
+									"payload": {
+										"response": "<$response$>",
+										"ground_truth": "<$expected_response$>"
+									},
+									"threshold": 0.7
+								}
+							]
+						},
+						{
+							"name": "endDateTime",
+							"assertion": [
+								"Argument 'endDateTime' is provided and represents approximately 48 hours from startDateTime as specified in user request"
+							],
+							"rubrics": [
+								{
+									"id": "rubric_4d9e21f8c7a54b82",
+									"name": "task_compliance",
+									"azure_foundry_id": "azureai://built-in/evaluators/task_adherence",
+									"payload": {
+										"response": "<$response$>",
+										"ground_truth": "<$expected_response$>"
+									},
+									"threshold": 0.7
+								},
+								{
+									"id": "rubric_7c3a92e6f5b14d91",
+									"name": "output_coherence",
+									"azure_foundry_id": "azureai://built-in/evaluators/coherence",
+									"payload": {
+										"response": "<$response$>",
+										"ground_truth": "<$expected_response$>"
+									},
+									"threshold": 0.7
+								},
+								{
+									"id": "rubric_2f8b64d9a3c14e75",
+									"name": "content_relevance",
+									"azure_foundry_id": "azureai://built-in/evaluators/relevance",
+									"payload": {
+										"response": "<$response$>",
+										"ground_truth": "<$expected_response$>"
+									},
+									"threshold": 0.7
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "sendMail",
+					"arguments": [
+						{
+							"name": "to",
+							"assertion": [
+								"sendMail 'to' argument contains email addresses of attendees from the cancelled 48-hour meetings, specifically angela.chow@northwindtraders.com, paolo.ricci@northwindtraders.com, nina.schreiber@northwindtraders.com, emma.lake@northwindtraders.com, and markus.mueller@northwindtraders.com"
+							],
+							"rubrics": [
+								{
+									"id": "rubric_4d9e21f8c7a54b82",
+									"name": "task_compliance",
+									"azure_foundry_id": "azureai://built-in/evaluators/task_adherence",
+									"payload": {
+										"response": "<$response$>",
+										"ground_truth": "<$expected_response$>"
+									},
+									"threshold": 0.7
+								},
+								{
+									"id": "rubric_7c3a92e6f5b14d91",
+									"name": "output_coherence",
+									"azure_foundry_id": "azureai://built-in/evaluators/coherence",
+									"payload": {
+										"response": "<$response$>",
+										"ground_truth": "<$expected_response$>"
+									},
+									"threshold": 0.7
+								},
+								{
+									"id": "rubric_2f8b64d9a3c14e75",
+									"name": "content_relevance",
+									"azure_foundry_id": "azureai://built-in/evaluators/relevance",
+									"payload": {
+										"response": "<$response$>",
+										"ground_truth": "<$expected_response$>"
+									},
+									"threshold": 0.7
+								}
+							]
+						},
+						{
+							"name": "subject",
+							"assertion": [
+								"sendMail 'subject' indicates urgency and mentions Pine Tree meeting cancellations",
+								"sendMail 'subject' is between 10-200 characters"
+							],
+							"rubrics": [
+								{
+									"id": "rubric_4d9e21f8c7a54b82",
+									"name": "task_compliance",
+									"azure_foundry_id": "azureai://built-in/evaluators/task_adherence",
+									"payload": {
+										"response": "<$response$>",
+										"ground_truth": "<$expected_response$>"
+									},
+									"threshold": 0.7
+								},
+								{
+									"id": "rubric_7c3a92e6f5b14d91",
+									"name": "output_coherence",
+									"azure_foundry_id": "azureai://built-in/evaluators/coherence",
+									"payload": {
+										"response": "<$response$>",
+										"ground_truth": "<$expected_response$>"
+									},
+									"threshold": 0.7
+								},
+								{
+									"id": "rubric_2f8b64d9a3c14e75",
+									"name": "content_relevance",
+									"azure_foundry_id": "azureai://built-in/evaluators/relevance",
+									"payload": {
+										"response": "<$response$>",
+										"ground_truth": "<$expected_response$>"
+									},
+									"threshold": 0.7
+								}
+							]
+						},
+						{
+							"name": "body",
+							"assertion": [
+								"sendMail 'body' includes apology for short notice",
+								"sendMail 'body' mentions regulatory compliance requirements as the reason",
+								"sendMail 'body' lists the specific meetings that need to be cancelled with dates/times, such as 'Pine Tree Status Update', 'Pine Tree Team Standup', and 'Pine Tree Stakeholder Sync'"
+							],
+							"rubrics": [
+								{
+									"id": "rubric_4d9e21f8c7a54b82",
+									"name": "task_compliance",
+									"azure_foundry_id": "azureai://built-in/evaluators/task_adherence",
+									"payload": {
+										"response": "<$response$>",
+										"ground_truth": "<$expected_response$>"
+									},
+									"threshold": 0.7
+								},
+								{
+									"id": "rubric_7c3a92e6f5b14d91",
+									"name": "output_coherence",
+									"azure_foundry_id": "azureai://built-in/evaluators/coherence",
+									"payload": {
+										"response": "<$response$>",
+										"ground_truth": "<$expected_response$>"
+									},
+									"threshold": 0.7
+								},
+								{
+									"id": "rubric_2f8b64d9a3c14e75",
+									"name": "content_relevance",
+									"azure_foundry_id": "azureai://built-in/evaluators/relevance",
+									"payload": {
+										"response": "<$response$>",
+										"ground_truth": "<$expected_response$>"
+									},
+									"threshold": 0.7
+								}
+							]
+						}
+					]
+				}
+			],
+			"expected_response": "I've identified the urgent meetings that need to be cancelled. Here's what I found:\n\n**Meetings to Cancel (Next 48 Hours):**\n1. Pine Tree Status Update - Tomorrow (June 7) at 2:00 PM\n2. Pine Tree Team Standup - Tomorrow (June 7) at 9:30 AM\n3. Pine Tree Stakeholder Sync - Day After Tomorrow (June 8) at 11:00 AM\n\n**Notification Sent To:**\n- Angela Chow (angela.chow@northwindtraders.com)\n- Paolo Ricci (paolo.ricci@northwindtraders.com)\n- Nina Schreiber (nina.schreiber@northwindtraders.com)\n- Emma Lake (emma.lake@northwindtraders.com)\n- Markus Müller (markus.mueller@northwindtraders.com)\n\nThe email explained the immediate suspension due to regulatory compliance requirements and apologized for the extremely short notice. All affected team members have been notified.",
+			"response_quality_expectation": {
+				"assertion": "Response demonstrates the agent understood the urgency, correctly identified meetings within the 48-hour window that need to be cancelled including 'Pine Tree Status Update', 'Pine Tree Team Standup', and 'Pine Tree Stakeholder Sync', extracted all unique attendees (angela.chow@northwindtraders.com, paolo.ricci@northwindtraders.com, nina.schreiber@northwindtraders.com, emma.lake@northwindtraders.com, markus.mueller@northwindtraders.com) from those meetings, and sent an appropriate notification that includes an apology for short notice and explanation of regulatory reasons. The agent shows time-awareness and stakeholder management skills.",
+				"rubrics": [
+					{
+						"id": "rubric_8f7d42c9a6b14e58",
+						"name": "task_compliance",
+						"azure_foundry_id": "azureai://built-in/evaluators/task_adherence",
+						"payload": {
+							"response": "<$response$>",
+							"ground_truth": "<$expected_response$>"
+						},
+						"threshold": 0.7
+					},
+					{
+						"id": "rubric_3e9c51f7d2a84b93",
+						"name": "output_coherence",
+						"azure_foundry_id": "azureai://built-in/evaluators/coherence",
+						"payload": {
+							"response": "<$response$>",
+							"ground_truth": "<$expected_response$>"
+						},
+						"threshold": 0.7
+					},
+					{
+						"id": "rubric_6a2b84e5c9d14f71",
+						"name": "content_relevance",
+						"azure_foundry_id": "azureai://built-in/evaluators/relevance",
+						"payload": {
+							"response": "<$response$>",
+							"ground_truth": "<$expected_response$>"
+						},
+						"threshold": 0.7
+					}
+				]
+			},
+			"references_seed": {
+				"tc_urgent_cancel_mock_0": {
+					"title": "Pine Tree Calendar - 48 Hour Window (June 6-8, 2024)",
+					"content_md": "{\n  \"events\": [\n    {\n      \"id\": \"evt_status_update\",\n      \"subject\": \"Pine Tree Status Update\",\n      \"start_datetime\": \"2024-06-07T14:00:00\",\n      \"end_datetime\": \"2024-06-07T14:45:00\",\n      \"is_recurring\": false,\n      \"attendees\": [\n        {\"name\": \"Angela Chow\", \"email\": \"angela.chow@northwindtraders.com\"},\n        {\"name\": \"Paolo Ricci\", \"email\": \"paolo.ricci@northwindtraders.com\"},\n        {\"name\": \"Nina Schreiber\", \"email\": \"nina.schreiber@northwindtraders.com\"}\n      ],\n      \"organizer\": \"angela.chow@northwindtraders.com\",\n      \"status\": \"scheduled\",\n      \"timeZone\": \"America/New_York\"\n    },\n    {\n      \"id\": \"evt_team_standup\",\n      \"subject\": \"Pine Tree Team Standup\",\n      \"start_datetime\": \"2024-06-07T09:30:00\",\n      \"end_datetime\": \"2024-06-07T10:00:00\",\n      \"is_recurring\": true,\n      \"recurrence_pattern\": \"Daily\",\n      \"recurrence_instance\": \"This is the June 7th instance\",\n      \"attendees\": [\n        {\"name\": \"Emma Lake\", \"email\": \"emma.lake@northwindtraders.com\"},\n        {\"name\": \"Paolo Ricci\", \"email\": \"paolo.ricci@northwindtraders.com\"},\n        {\"name\": \"Markus Müller\", \"email\": \"markus.mueller@northwindtraders.com\"}\n      ],\n      \"organizer\": \"emma.lake@northwindtraders.com\",\n      \"status\": \"scheduled\",\n      \"timeZone\": \"Europe/Berlin\"\n    },\n    {\n      \"id\": \"evt_stakeholder_sync\",\n      \"subject\": \"Pine Tree Stakeholder Sync\",\n      \"start_datetime\": \"2024-06-08T11:00:00\",\n      \"end_datetime\": \"2024-06-08T12:00:00\",\n      \"is_recurring\": false,\n      \"attendees\": [\n        {\"name\": \"Angela Chow\", \"email\": \"angela.chow@northwindtraders.com\"},\n        {\"name\": \"Emma Lake\", \"email\": \"emma.lake@northwindtraders.com\"},\n        {\"name\": \"Nina Schreiber\", \"email\": \"nina.schreiber@northwindtraders.com\"},\n        {\"name\": \"Markus Müller\", \"email\": \"markus.mueller@northwindtraders.com\"}\n      ],\n      \"organizer\": \"emma.lake@northwindtraders.com\",\n      \"status\": \"scheduled\",\n      \"timeZone\": \"America/New_York\"\n    }\n  ]\n}",
+					"status": "ok",
+					"metadata": {
+						"path": "output\\mocks\\tc-urgent-cancel-calendar-doc.json",
+						"sha256": "c3d4e5f6789012345678901234567890abcdef1234567890abcdef123456789a"
+					},
+					"sections": null,
+					"kind": "docx"
+				},
+				"tc_urgent_cancel_mock_1": {
+					"to": [
+						"angela.chow@northwindtraders.com",
+						"paolo.ricci@northwindtraders.com",
+						"nina.schreiber@northwindtraders.com",
+						"emma.lake@northwindtraders.com",
+						"markus.mueller@northwindtraders.com"
+					],
+					"subject": "URGENT: Pine Tree Meetings Cancelled - Regulatory Compliance Issue",
+					"body_md": "Dear Pine Tree Team,\n\nI apologize for the extremely short notice, but I must inform you that the following Pine Tree meetings scheduled for the next 48 hours have been cancelled effective immediately:\n\n- **Pine Tree Team Standup** - Tomorrow (June 7) at 9:30 AM\n- **Pine Tree Status Update** - Tomorrow (June 7) at 2:00 PM  \n- **Pine Tree Stakeholder Sync** - June 8 at 11:00 AM\n\nThis sudden cancellation is due to **unforeseen regulatory compliance requirements** that require us to suspend all Pine Tree project activities immediately while we address these matters.\n\nI understand this is very disruptive given the short timeline, and I sincerely apologize for any inconvenience. We will provide updates on the project status as soon as we have more information.\n\nThank you for your understanding.\n\nBest regards",
+					"status": "ok",
+					"cc": null,
+					"bcc": null,
+					"kind": "email"
+				}
+			}
+		}
+	],
+	"quality_veto": 0,
+	"created_at": "2025-11-19T07:09:11.874733+00:00"
+}

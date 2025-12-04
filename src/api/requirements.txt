@@ -1,0 +1,32 @@
+﻿# Core web framework
+fastapi==0.115.0
+uvicorn==0.35.0
+
+# MCP support
+fastmcp>=2.13.0
+
+# Azure services
+azure-cosmos==4.7.0
+azure-identity==1.25.1
+azure-storage-blob==12.27.0
+
+# OpenAI/AI services
+openai==2.4.0
+azure-ai-agents==1.1.0
+azure-ai-inference==1.0.0b9
+azure-ai-projects==1.0.0
+
+# LangChain
+langchain-core==1.0.7
+langchain-openai==1.0.2
+langgraph>=0.6.10
+langgraph-checkpoint==3.0.0
+langgraph-prebuilt>=0.6.4
+langgraph-sdk>=0.2.9
+
+# Utilities
+python-dotenv>=1.1.0
+pydantic==2.12.2
+pydantic-settings==2.6.1
+httpx==0.28.1
+requests==2.32.5

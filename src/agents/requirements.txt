@@ -1,0 +1,14 @@
+# Core web framework
+fastapi>=0.115.0
+uvicorn>=0.35.0
+
+# Azure services
+azure-identity>=1.25.0
+openai>=2.4.0
+
+# MCP support
+mcp>=1.17.0
+
+# Utilities
+pydantic>=2.12.0
+python-dotenv>=1.0.0

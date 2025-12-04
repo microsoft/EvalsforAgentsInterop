@@ -1,0 +1,20 @@
+# Use Node.js 20 LTS
+FROM node:20
+
+# Set working directory
+WORKDIR /app
+
+# Copy package files
+COPY src/webapp/package.json ./
+
+# Delete package-lock.json and install dependencies fresh
+RUN npm install
+
+# Copy source code
+COPY src/webapp/ ./
+
+# Expose port
+EXPOSE 5000
+
+# Start dev server
+CMD ["npm", "run", "dev"]

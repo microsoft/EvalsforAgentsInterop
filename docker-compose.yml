@@ -1,0 +1,47 @@
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile.api
+    env_file:
+      - ./.env
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./src:/app/src
+    restart: unless-stopped
+
+  agent:
+    build:
+      context: .
+      dockerfile: Dockerfile.agent
+    env_file:
+      - ./.env
+    environment:
+      # Override for Docker networking
+      - MCP_SERVER_URL=http://api:8000/mcp
+    ports:
+      - "8001:8001"
+    volumes:
+      - ./src/agents:/app/src/agents
+    restart: unless-stopped
+    depends_on:
+      - api
+
+  webapp:
+    build:
+      context: .
+      dockerfile: Dockerfile.webapp
+    env_file:
+      - ./.env
+    ports:
+      - "5000:5000"
+    environment:
+      - VITE_API_URL=http://localhost:8000/api
+    volumes:
+      - ./src/webapp:/app
+      - /app/node_modules
+    restart: unless-stopped
+    depends_on:
+      - api
+      - agent

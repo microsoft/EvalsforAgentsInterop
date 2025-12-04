@@ -1,0 +1,553 @@
+{
+	"id": "dataset_3d22091b228746d9",
+	"metadata": {
+		"generator_id": "gen_9393a62e37964a83",
+		"suite_id": "suite_c390c7a0c0eb419a",
+		"created_at": "2025-10-31T16:57:24.803323+00:00",
+		"version": "1.0",
+		"schema_hash": ""
+	},
+	"seed": {
+		"name": "Meeting Scheduler Dataset",
+		"goal": "Test an agents ability to manage a user's calendar by listing and creating events.",
+		"synthetic_domain": "Meeting scheduling and calendar management",
+		"input": {}
+	},
+	"test_cases": [
+		{
+			"id": "tc_4d51149759f07a89",
+			"dataset_id": "dataset_3d22091b228746d9",
+			"name": "Daily Standup Creation",
+			"description": "Agent can create a simple calendar event with basic details",
+			"input": "Please schedule a team standup meeting for tomorrow at 9 AM with my team. Make it 30 minutes long with the subject 'Daily Standup'.",
+			"minimal_tool_set": ["mcp_CalendarTools_graph_createEvent"],
+			"tool_expectations": [
+				{
+					"name": "mcp_CalendarTools_graph_createEvent",
+					"arguments": [
+						{
+							"name": "subject",
+							"assertion": ["Subject contains 'Daily Standup' or 'standup'"],
+							"rubrics": []
+						},
+						{
+							"name": "start",
+							"assertion": ["Start time is tomorrow at 9 AM", "Proper dateTime format with timezone"],
+							"rubrics": []
+						},
+						{
+							"name": "end",
+							"assertion": ["Meeting duration is 30 minutes", "End time is 9:30 AM if start is 9 AM"],
+							"rubrics": []
+						}
+					]
+				}
+			],
+			"expected_response": "I've scheduled a 30-minute Daily Standup meeting for tomorrow at 9 AM.",
+			"response_quality_expectation": {
+				"assertion": "Successfully creates calendar event with correct subject, time, and duration",
+				"rubrics": []
+			},
+			"references_seed": {
+				"tc_standup_schedule_mock_0": {
+					"title": "Calendar",
+					"content_md": "{\n  \"events\": [\n    {\n      \"id\": \"event_rec_weekly_001\",\n      \"subject\": \"Weekly Check-in\",\n      \"start_datetime\": \"2024-06-07T15:00:00\",\n      \"end_datetime\": \"2024-06-07T16:00:00\",\n      \"is_recurring\": true,\n      \"recurrence_pattern\": \"Weekly on Friday at 15:00\",\n      \"description\": \"Weekly project status updates.\",\n      \"attendees\": [\n        {\"name\": \"Emma Lake\", \"email\": \"emma.lake@northwindtraders.com\"},\n        {\"name\": \"Angela Chow\", \"email\": \"angela.chow@northwindtraders.com\"},\n        {\"name\": \"Paolo Ricci\", \"email\": \"paolo.ricci@northwindtraders.com\"}\n      ],\n      \"organizer\": \"emma.lake@northwindtraders.com\",\n      \"status\": \"scheduled\",\n      \"timeZone\": \"America/New_York\"\n    },\n    {\n      \"id\": \"event_onetime_001\",\n      \"subject\": \"Manager Meeting\",\n      \"start_datetime\": \"2024-06-15T10:00:00\",\n      \"end_datetime\": \"2024-06-15T10:30:00\",\n      \"is_recurring\": false,\n      \"recurrence_pattern\": \"\",\n      \"description\": \"1:1 with manager.\",\n      \"attendees\": [\n        {\"name\": \"Michael Oxlong\", \"email\": \"mike.oxlong@northwindtraders.com\"},\n        {\"name\": \"Angela Chow\", \"email\": \"angela.chow@northwindtraders.com\"}\n      ],\n      \"organizer\": \"emma.lake@northwindtraders.com\",\n      \"status\": \"scheduled\",\n      \"timeZone\": \"America/New_York\"\n    },\n    {\n      \"id\": \"event_rec_emea_001\",\n      \"subject\": \"Pine Tree EMEA Regional Sync\",\n      \"start_datetime\": \"2024-06-10T15:00:00\",\n      \"end_datetime\": \"2024-06-10T16:00:00\",\n      \"is_recurring\": true,\n      \"recurrence_pattern\": \"Weekly on Monday at 15:00\",\n      \"description\": \"EMEA region coordination meeting for Pine Tree logistics and compliance.\",\n      \"attendees\": [\n        {\"name\": \"Markus Müller\", \"email\": \"markus.mueller@northwindtraders.com\"},\n        {\"name\": \"Nina Schreiber\", \"email\": \"nina.schreiber@northwindtraders.com\"},\n        {\"name\": \"Angela Chow\", \"email\": \"angela.chow@northwindtraders.com\"}\n      ],\n      \"organizer\": \"markus.mueller@northwindtraders.com\",\n      \"status\": \"scheduled\",\n      \"timeZone\": \"Europe/Berlin\"\n    },\n    {\n      \"id\": \"event_onetime_002\",\n      \"subject\": \"Pine Tree Project Closeout Meeting - Lessons Learned\",\n      \"start_datetime\": \"2024-06-20T11:00:00\",\n      \"end_datetime\": \"2024-06-20T12:30:00\",\n      \"is_recurring\": false,\n      \"recurrence_pattern\": \"\",\n      \"description\": \"Final closeout session to document lessons learned, archive project materials, and conduct retrospective on Pine Tree initiative.\",\n      \"attendees\": [\n        {\"name\": \"Emma Lake\", \"email\": \"emma.lake@northwindtraders.com\"},\n        {\"name\": \"Angela Chow\", \"email\": \"angela.chow@northwindtraders.com\"},\n        {\"name\": \"Paolo Ricci\", \"email\": \"paolo.ricci@northwindtraders.com\"},\n        {\"name\": \"Markus Müller\", \"email\": \"markus.mueller@northwindtraders.com\"}\n      ],\n      \"organizer\": \"emma.lake@northwindtraders.com\",\n      \"status\": \"scheduled\",\n      \"timeZone\": \"America/New_York\"\n    },\n    {\n      \"id\": \"event_rec_standup_001\",\n      \"subject\": \"Pine Tree Q4 Development Standup\",\n      \"start_datetime\": \"2024-06-13T10:00:00\",\n      \"end_datetime\": \"2024-06-13T10:30:00\",\n      \"is_recurring\": true,\n      \"recurrence_pattern\": \"Weekly on Thursday at 10:00\",\n      \"description\": \"Daily standup for Pine Tree development team tracking Q4 deliverables.\",\n      \"attendees\": [\n        {\"name\": \"Paolo Ricci\", \"email\": \"paolo.ricci@northwindtraders.com\"},\n        {\"name\": \"Nina Schreiber\", \"email\": \"nina.schreiber@northwindtraders.com\"},\n        {\"name\": \"Emma Lake\", \"email\": \"emma.lake@northwindtraders.com\"}\n      ],\n      \"organizer\": \"paolo.ricci@northwindtraders.com\",\n      \"status\": \"scheduled\",\n      \"timeZone\": \"Europe/Berlin\"\n    }\n  ]\n}",
+					"status": "ok",
+					"metadata": {
+						"path": "output\\mocks\\tc-calendar-doc.json",
+						"sha256": "a1b2c3d4e5f6789012345678901234567890abcdef1234567890abcdef123456"
+					},
+					"sections": null,
+					"kind": "docx"
+				}
+			}
+		},
+		{
+			"id": "tc_3c40038648e96978",
+			"dataset_id": "dataset_3d22091b228746d9",
+			"name": "Meeting Reschedule",
+			"description": "Agent can check calendar availability, reschedule conflicting meeting, and notify affected attendees",
+			"input": "I have a meeting with johndoe@example.com scheduled for tomorrow at 3 PM. Can you check if that time conflicts with anything else on my calendar? If it does, please reschedule it to the next available 1-hour slot and let John know about the change via email.",
+			"minimal_tool_set": ["mcp_CalendarTools_graph_listEvents", "mcp_CalendarTools_graph_createEvent", "sendMail"],
+			"tool_expectations": [
+				{
+					"name": "mcp_CalendarTools_graph_listEvents",
+					"arguments": [
+						{
+							"name": "startDateTime",
+							"assertion": [
+								"Argument 'startDateTime' is provided with value matching context"
+							],
+							"rubrics": [
+								{
+								"id": "rubric_5d728eb2ee714899",
+								"name": "task_compliance",
+								"azure_foundry_id": "azureai://built-in/evaluators/task_adherence",
+								"payload": {
+									"response": "<$response$>",
+									"ground_truth": "<$expected_response$>"
+								},
+								"threshold": 0.7
+								},
+								{
+								"id": "rubric_7b8f25e532d24bbf",
+								"name": "information_completeness",
+								"azure_foundry_id": "azureai://built-in/evaluators/response_completeness",
+								"payload": {
+									"response": "<$response$>",
+									"ground_truth": "<$expected_response$>"
+								},
+								"threshold": 0.7
+								},
+								{
+								"id": "rubric_14c6875d32cf4c1f",
+								"name": "output_coherence",
+								"azure_foundry_id": "azureai://built-in/evaluators/coherence",
+								"payload": {
+									"response": "<$response$>",
+									"ground_truth": "<$expected_response$>"
+								},
+								"threshold": 0.7
+								}
+							]
+						},
+						{
+							"name": "endDateTime",
+							"assertion": [
+								"Argument 'endDateTime' is provided with value matching context"
+							],
+							"rubrics": [
+								{
+								"id": "rubric_5d728eb2ee714899",
+								"name": "task_compliance",
+								"azure_foundry_id": "azureai://built-in/evaluators/task_adherence",
+								"payload": {
+									"response": "<$response$>",
+									"ground_truth": "<$expected_response$>"
+								},
+								"threshold": 0.7
+								},
+								{
+								"id": "rubric_7b8f25e532d24bbf",
+								"name": "information_completeness",
+								"azure_foundry_id": "azureai://built-in/evaluators/response_completeness",
+								"payload": {
+									"response": "<$response$>",
+									"ground_truth": "<$expected_response$>"
+								},
+								"threshold": 0.7
+								},
+								{
+								"id": "rubric_14c6875d32cf4c1f",
+								"name": "output_coherence",
+								"azure_foundry_id": "azureai://built-in/evaluators/coherence",
+								"payload": {
+									"response": "<$response$>",
+									"ground_truth": "<$expected_response$>"
+								},
+								"threshold": 0.7
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "mcp_CalendarTools_graph_createEvent",
+					"arguments": [
+						{
+							"name": "subject",
+							"assertion": ["Contains meeting or discussion reference appropriate for rescheduled event"],
+							"rubrics": []
+						},
+						{
+							"name": "attendees",
+							"assertion": ["Attendees array includes johndoe@example.com"],
+							"rubrics": []
+						},
+						{
+							"name": "start",
+							"assertion": [
+								"Start time is NOT 3 PM (the conflicting time)",
+								"Start time is during a free slot identified from calendar check",
+								"Proper dateTime format with timezone"
+							],
+							"rubrics": []
+						},
+						{
+							"name": "end",
+							"assertion": ["Meeting duration is 1 hour", "End time is 1 hour after start time"],
+							"rubrics": []
+						}
+					]
+				},
+				{
+					"name": "sendMail",
+					"arguments": [
+						{
+							"name": "toRecipients",
+							"assertion": ["Contains johndoe@example.com"],
+							"rubrics": []
+						},
+						{
+							"name": "subject",
+							"assertion": ["Indicates meeting reschedule or time change"],
+							"rubrics": []
+						},
+						{
+							"name": "body",
+							"assertion": [
+								"Explains that meeting was rescheduled due to conflict",
+								"Includes new meeting time",
+								"Mentions original time was 3 PM tomorrow",
+								"Professional and apologetic tone"
+							],
+							"rubrics": []
+						}
+					]
+				}
+			],
+			"expected_response": "I checked your calendar and found a conflict at 3 PM tomorrow. I've rescheduled your meeting with John Doe to [new time] when you're available, and sent him an email explaining the change.",
+			"response_quality_expectation": {
+				"assertion": "Successfully checks calendar for conflicts, identifies available time slot, creates rescheduled meeting at non-conflicting time, and sends notification explaining the change",
+				"rubrics": [
+					{
+						"id": "rubric_72c7ca9c380747c8",
+						"name": "task_compliance",
+						"azure_foundry_id": "azureai://built-in/evaluators/task_adherence",
+						"payload": {
+							"response": "<$response$>",
+							"ground_truth": "<$expected_response$>"
+						},
+						"threshold": 0.7
+					}
+				]
+			},
+			"references_seed": {
+				"tc_conflict_reschedule_mock_0": {
+					"title": "Calendar",
+					"content_md": "{\n  \"events\": [\n    {\n      \"id\": \"event_rec_weekly_001\",\n      \"subject\": \"Weekly Check-in\",\n      \"start_datetime\": \"2024-06-07T15:00:00\",\n      \"end_datetime\": \"2024-06-07T16:00:00\",\n      \"is_recurring\": true,\n      \"recurrence_pattern\": \"Weekly on Friday at 15:00\",\n      \"description\": \"Weekly project status updates.\",\n      \"attendees\": [\n        {\"name\": \"Emma Lake\", \"email\": \"emma.lake@northwindtraders.com\"},\n        {\"name\": \"Angela Chow\", \"email\": \"angela.chow@northwindtraders.com\"},\n        {\"name\": \"Paolo Ricci\", \"email\": \"paolo.ricci@northwindtraders.com\"}\n      ],\n      \"organizer\": \"emma.lake@northwindtraders.com\",\n      \"status\": \"scheduled\",\n      \"timeZone\": \"America/New_York\"\n    },\n    {\n      \"id\": \"event_onetime_001\",\n      \"subject\": \"Manager Meeting\",\n      \"start_datetime\": \"2024-06-15T10:00:00\",\n      \"end_datetime\": \"2024-06-15T10:30:00\",\n      \"is_recurring\": false,\n      \"recurrence_pattern\": \"\",\n      \"description\": \"1:1 with manager.\",\n      \"attendees\": [\n        {\"name\": \"Michael Oxlong\", \"email\": \"mike.oxlong@northwindtraders.com\"},\n        {\"name\": \"Angela Chow\", \"email\": \"angela.chow@northwindtraders.com\"}\n      ],\n      \"organizer\": \"emma.lake@northwindtraders.com\",\n      \"status\": \"scheduled\",\n      \"timeZone\": \"America/New_York\"\n    },\n    {\n      \"id\": \"event_rec_emea_001\",\n      \"subject\": \"Pine Tree EMEA Regional Sync\",\n      \"start_datetime\": \"2024-06-10T15:00:00\",\n      \"end_datetime\": \"2024-06-10T16:00:00\",\n      \"is_recurring\": true,\n      \"recurrence_pattern\": \"Weekly on Monday at 15:00\",\n      \"description\": \"EMEA region coordination meeting for Pine Tree logistics and compliance.\",\n      \"attendees\": [\n        {\"name\": \"Markus Müller\", \"email\": \"markus.mueller@northwindtraders.com\"},\n        {\"name\": \"Nina Schreiber\", \"email\": \"nina.schreiber@northwindtraders.com\"},\n        {\"name\": \"Angela Chow\", \"email\": \"angela.chow@northwindtraders.com\"}\n      ],\n      \"organizer\": \"markus.mueller@northwindtraders.com\",\n      \"status\": \"scheduled\",\n      \"timeZone\": \"Europe/Berlin\"\n    },\n    {\n      \"id\": \"event_onetime_002\",\n      \"subject\": \"Pine Tree Project Closeout Meeting - Lessons Learned\",\n      \"start_datetime\": \"2024-06-20T11:00:00\",\n      \"end_datetime\": \"2024-06-20T12:30:00\",\n      \"is_recurring\": false,\n      \"recurrence_pattern\": \"\",\n      \"description\": \"Final closeout session to document lessons learned, archive project materials, and conduct retrospective on Pine Tree initiative.\",\n      \"attendees\": [\n        {\"name\": \"Emma Lake\", \"email\": \"emma.lake@northwindtraders.com\"},\n        {\"name\": \"Angela Chow\", \"email\": \"angela.chow@northwindtraders.com\"},\n        {\"name\": \"Paolo Ricci\", \"email\": \"paolo.ricci@northwindtraders.com\"},\n        {\"name\": \"Markus Müller\", \"email\": \"markus.mueller@northwindtraders.com\"}\n      ],\n      \"organizer\": \"emma.lake@northwindtraders.com\",\n      \"status\": \"scheduled\",\n      \"timeZone\": \"America/New_York\"\n    },\n    {\n      \"id\": \"event_rec_standup_001\",\n      \"subject\": \"Pine Tree Q4 Development Standup\",\n      \"start_datetime\": \"2024-06-13T10:00:00\",\n      \"end_datetime\": \"2024-06-13T10:30:00\",\n      \"is_recurring\": true,\n      \"recurrence_pattern\": \"Weekly on Thursday at 10:00\",\n      \"description\": \"Daily standup for Pine Tree development team tracking Q4 deliverables.\",\n      \"attendees\": [\n        {\"name\": \"Paolo Ricci\", \"email\": \"paolo.ricci@northwindtraders.com\"},\n        {\"name\": \"Nina Schreiber\", \"email\": \"nina.schreiber@northwindtraders.com\"},\n        {\"name\": \"Emma Lake\", \"email\": \"emma.lake@northwindtraders.com\"}\n      ],\n      \"organizer\": \"paolo.ricci@northwindtraders.com\",\n      \"status\": \"scheduled\",\n      \"timeZone\": \"Europe/Berlin\"\n    }\n  ]\n}",
+					"status": "ok",
+					"metadata": {
+						"path": "output\\mocks\\tc-calendar-doc.json",
+						"sha256": "a1b2c3d4e5f6789012345678901234567890abcdef1234567890abcdef123456"
+					},
+					"sections": null,
+					"kind": "docx"
+				}
+			}
+		},
+		{
+			"id": "tc_5e62250860g18b90",
+			"dataset_id": "dataset_3d22091b228746d9",
+			"name": "Summarize Upcoming Events",
+			"description": "Agent can retrieve and summarize upcoming calendar events",
+			"input": "What meetings do I have coming up this week? Please give me a summary of my schedule.",
+			"minimal_tool_set": ["mcp_CalendarTools_graph_listEvents"],
+			"tool_expectations": [
+				{
+					"name": "mcp_CalendarTools_graph_listEvents",
+					"arguments": [
+						{
+							"name": "startDateTime",
+							"assertion": [
+								"Argument 'startDateTime' is provided with value matching context"
+							],
+							"rubrics": [
+								{
+								"id": "rubric_5d728eb2ee714899",
+								"name": "task_compliance",
+								"azure_foundry_id": "azureai://built-in/evaluators/task_adherence",
+								"payload": {
+									"response": "<$response$>",
+									"ground_truth": "<$expected_response$>"
+								},
+								"threshold": 0.7
+								},
+								{
+								"id": "rubric_7b8f25e532d24bbf",
+								"name": "information_completeness",
+								"azure_foundry_id": "azureai://built-in/evaluators/response_completeness",
+								"payload": {
+									"response": "<$response$>",
+									"ground_truth": "<$expected_response$>"
+								},
+								"threshold": 0.7
+								},
+								{
+								"id": "rubric_14c6875d32cf4c1f",
+								"name": "output_coherence",
+								"azure_foundry_id": "azureai://built-in/evaluators/coherence",
+								"payload": {
+									"response": "<$response$>",
+									"ground_truth": "<$expected_response$>"
+								},
+								"threshold": 0.7
+								}
+							]
+						},
+						{
+							"name": "endDateTime",
+							"assertion": [
+								"Argument 'endDateTime' is provided with value matching context"
+							],
+							"rubrics": [
+								{
+								"id": "rubric_5d728eb2ee714899",
+								"name": "task_compliance",
+								"azure_foundry_id": "azureai://built-in/evaluators/task_adherence",
+								"payload": {
+									"response": "<$response$>",
+									"ground_truth": "<$expected_response$>"
+								},
+								"threshold": 0.7
+								},
+								{
+								"id": "rubric_7b8f25e532d24bbf",
+								"name": "information_completeness",
+								"azure_foundry_id": "azureai://built-in/evaluators/response_completeness",
+								"payload": {
+									"response": "<$response$>",
+									"ground_truth": "<$expected_response$>"
+								},
+								"threshold": 0.7
+								},
+								{
+								"id": "rubric_14c6875d32cf4c1f",
+								"name": "output_coherence",
+								"azure_foundry_id": "azureai://built-in/evaluators/coherence",
+								"payload": {
+									"response": "<$response$>",
+									"ground_truth": "<$expected_response$>"
+								},
+								"threshold": 0.7
+								}
+							]
+						}
+					]
+				}
+			],
+			"expected_response": "Here's your schedule for this week: You have [summary of meetings with times and subjects from the calendar].",
+			"response_quality_expectation": {
+				"assertion": "Successfully retrieves calendar events and provides clear summary of upcoming meetings with relevant details like subject, date, and time",
+				"rubrics": []
+			},
+			"references_seed": {
+				"tc_summarize_schedule_mock_0": {
+				"title": "Calendar of Events",
+				"content_md": "{\n  \"events\": [\n    {\n      \"id\": \"event_rec_weekly_001\",\n      \"subject\": \"Manager 1:1\",\n      \"start_datetime\": \"2024-06-07T15:00:00\",\n      \"end_datetime\": \"2024-06-07T16:00:00\",\n      \"is_recurring\": true,\n      \"recurrence_pattern\": \"Weekly on Friday at 15:00\",\n      \"description\": \"Weekly check-in with manager to discuss priorities, progress, and blockers.\",\n      \"attendees\": [\n        {\"name\": \"Alex Jordan\", \"email\": \"alex.jordan@example.com\"},\n        {\"name\": \"Sam Lee\", \"email\": \"sam.lee@example.com\"},\n        {\"name\": \"Taylor Morgan\", \"email\": \"taylor.morgan@example.com\"}\n      ],\n      \"organizer\": \"alex.jordan@example.com\",\n      \"status\": \"scheduled\",\n      \"timeZone\": \"America/New_York\"\n    },\n    {\n      \"id\": \"event_onetime_001\",\n      \"subject\": \"Budget Review\",\n      \"start_datetime\": \"2024-06-15T14:00:00\",\n      \"end_datetime\": \"2024-06-15T15:30:00\",\n      \"is_recurring\": false,\n      \"recurrence_pattern\": \"\",\n      \"description\": \"Final budget review session to reconcile expenditures and close remaining purchase orders.\",\n      \"attendees\": [\n        {\"name\": \"Alex Jordan\", \"email\": \"alex.jordan@example.com\"},\n        {\"name\": \"Finance Team\", \"email\": \"finance@example.com\"},\n        {\"name\": \"Sam Lee\", \"email\": \"sam.lee@example.com\"}\n      ],\n      \"organizer\": \"alex.jordan@example.com\",\n      \"status\": \"scheduled\",\n      \"timeZone\": \"America/New_York\"\n    },\n    {\n      \"id\": \"event_rec_emea_001\",\n      \"subject\": \"Regional Sync\",\n      \"start_datetime\": \"2024-06-10T15:00:00\",\n      \"end_datetime\": \"2024-06-10T16:00:00\",\n      \"is_recurring\": true,\n      \"recurrence_pattern\": \"Weekly on Monday at 15:00\",\n      \"description\": \"Regional coordination meeting covering logistics, compliance, and key updates.\",\n      \"attendees\": [\n        {\"name\": \"Jordan Patel\", \"email\": \"jordan.patel@example.com\"},\n        {\"name\": \"Casey Nguyen\", \"email\": \"casey.nguyen@example.com\"},\n        {\"name\": \"Sam Lee\", \"email\": \"sam.lee@example.com\"}\n      ],\n      \"organizer\": \"jordan.patel@example.com\",\n      \"status\": \"scheduled\",\n      \"timeZone\": \"Europe/Berlin\"\n    },\n    {\n      \"id\": \"event_onetime_002\",\n      \"subject\": \"Project Retrospective\",\n      \"start_datetime\": \"2024-06-20T11:00:00\",\n      \"end_datetime\": \"2024-06-20T12:30:00\",\n      \"is_recurring\": false,\n      \"recurrence_pattern\": \"\",\n      \"description\": \"Closeout session to capture lessons learned, archive materials, and plan next steps.\",\n      \"attendees\": [\n        {\"name\": \"Alex Jordan\", \"email\": \"alex.jordan@example.com\"},\n        {\"name\": \"Sam Lee\", \"email\": \"sam.lee@example.com\"},\n        {\"name\": \"Taylor Morgan\", \"email\": \"taylor.morgan@example.com\"},\n        {\"name\": \"Jordan Patel\", \"email\": \"jordan.patel@example.com\"}\n      ],\n      \"organizer\": \"alex.jordan@example.com\",\n      \"status\": \"scheduled\",\n      \"timeZone\": \"America/New_York\"\n    },\n    {\n      \"id\": \"event_rec_standup_001\",\n      \"subject\": \"Development Standup\",\n      \"start_datetime\": \"2024-06-13T10:00:00\",\n      \"end_datetime\": \"2024-06-13T10:30:00\",\n      \"is_recurring\": true,\n      \"recurrence_pattern\": \"Weekly on Thursday at 10:00\",\n      \"description\": \"Short status meeting for the development team to track deliverables.\",\n      \"attendees\": [\n        {\"name\": \"Taylor Morgan\", \"email\": \"taylor.morgan@example.com\"},\n        {\"name\": \"Casey Nguyen\", \"email\": \"casey.nguyen@example.com\"},\n        {\"name\": \"Alex Jordan\", \"email\": \"alex.jordan@example.com\"}\n      ],\n      \"organizer\": \"taylor.morgan@example.com\",\n      \"status\": \"scheduled\",\n      \"timeZone\": \"Europe/Berlin\"\n    }\n  ]\n}",
+				"status": "ok",
+				"metadata": {
+					"path": "output\\mocks\\tc-generic-calendar-doc.json",
+					"sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+				},
+				"sections": null,
+				"kind": "docx"
+				}
+			}
+		},
+		{
+			"id": "tc_6f73361971h29c01",
+			"dataset_id": "dataset_3d22091b228746d9",
+			"name": "Recurring Meeting Schedule",
+			"description": "Agent can create a recurring weekly meeting event",
+			"input": "Set up a weekly 1-on-1 meeting with my manager johndoe@example.com for every Friday at 2 PM. Make it 45 minutes long and call it 'Manager 1-on-1'.",
+			"minimal_tool_set": ["mcp_CalendarTools_graph_createEvent"],
+			"tool_expectations": [
+				{
+					"name": "mcp_CalendarTools_graph_createEvent",
+					"arguments": [
+						{
+							"name": "subject",
+							"assertion": ["Subject contains 'Manager 1-on-1' or '1-on-1'"],
+							"rubrics": []
+						},
+						{
+							"name": "start",
+							"assertion": ["Start time is Friday at 2 PM", "Proper dateTime format with timezone"],
+							"rubrics": []
+						},
+						{
+							"name": "end",
+							"assertion": ["Meeting duration is 45 minutes", "End time is 2:45 PM if start is 2 PM"],
+							"rubrics": []
+						},
+						{
+							"name": "attendees_addresses",
+							"assertion": ["Includes johndoe@example.com"],
+							"rubrics": []
+						}
+					]
+				}
+			],
+			"expected_response": "I've created a weekly Manager 1-on-1 meeting for every Friday at 2 PM, lasting 45 minutes.",
+			"response_quality_expectation": {
+				"assertion": "Successfully creates calendar event with correct subject, Friday timing, and 45-minute duration",
+				"rubrics": []
+			},
+			"references_seed": {}
+		},
+		{
+			"id": "tc_3f8b2e5a9c1d7j4k",
+			"dataset_id": "dataset_3d22091b228746d9",
+			"name": "Client Proposal Presentation",
+			"description": "Schedule important client meeting and send preparation email to team",
+			"input": "Schedule a client proposal presentation with ABC Corp for Friday November 15th, 2025 from 2:00 PM to 4:00 PM Eastern Time. Set it as an online Teams meeting. Invite these people: sarah.wilson@abccorp.com, john.martinez@abccorp.com, team.lead@company.com, and sales.rep@company.com. Send an email to team.lead@company.com and sales.rep@company.com with meeting details and ask them to prepare the Q3 performance slides and pricing proposal by Thursday.",
+			"minimal_tool_set": ["mcp_CalendarTools_graph_createEvent", "sendMail"],
+			"tool_expectations": [
+				{
+					"name": "mcp_CalendarTools_graph_createEvent",
+					"arguments": [
+						{
+							"name": "subject",
+							"assertion": ["Contains 'proposal' or 'presentation' or 'ABC Corp'"],
+							"rubrics": []
+						},
+						{
+							"name": "attendees_addresses",
+							"assertion": ["Includes sarah.wilson@abccorp.com, john.martinez@abccorp.com, team.lead@company.com, and sales.rep@company.com"],
+							"rubrics": []
+						},
+						{
+							"name": "isOnlineMeeting",
+							"assertion": ["Set to true for Teams meeting"],
+							"rubrics": []
+						}
+					]
+				},
+				{
+					"name": "sendMail",
+					"arguments": [
+						{
+							"name": "toRecipients",
+							"assertion": ["Includes team.lead@company.com and sales.rep@company.com"],
+							"rubrics": []
+						},
+						{
+							"name": "body",
+							"assertion": ["Mentions Q3 performance slides preparation", "Mentions pricing proposal preparation", "References Thursday deadline"],
+							"rubrics": []
+						}
+					]
+				}
+			],
+			"expected_response": "I've scheduled the client proposal presentation with ABC Corp for November 15th, 2025 from 2:00-4:00 PM Eastern as a Teams meeting and sent preparation instructions to our internal team.",
+			"response_quality_expectation": {
+				"assertion": "Confirms meeting scheduled with online format and internal team preparation email sent.",
+				"rubrics": []
+			},
+			"references_seed": {}
+		},
+		{
+			"id": "tc_6d9a1f3e8c5b4h7k",
+			"dataset_id": "dataset_3d22091b228746d9",
+			"name": "Quarterly Board Meeting",
+			"description": "Schedule board meeting and send pre-meeting materials request",
+			"input": "Schedule our Q4 board meeting for Wednesday December 18th, 2025 from 9:00 AM to 12:00 PM Pacific Time in the executive boardroom. Invite these board members: chair@company.com, director1@company.com, director2@company.com, and cfo@company.com. Send an email to chair@company.com, director1@company.com, director2@company.com, and cfo@company.com asking for their quarterly reports to be submitted by December 15th and remind them we'll be discussing the 2026 budget approval and merger proposal.",
+			"minimal_tool_set": ["mcp_CalendarTools_graph_createEvent", "sendMail"],
+			"tool_expectations": [
+				{
+					"name": "mcp_CalendarTools_graph_createEvent",
+					"arguments": [
+						{
+							"name": "subject",
+							"assertion": ["Contains 'Q4' or 'quarterly' or 'board meeting'"],
+							"rubrics": []
+						},
+						{
+							"name": "attendees_addresses",
+							"assertion": ["Includes chair@company.com, director1@company.com, director2@company.com, and cfo@company.com"],
+							"rubrics": []
+						},
+						{
+							"name": "location",
+							"assertion": ["Mentions executive boardroom"],
+							"rubrics": []
+						}
+					]
+				},
+				{
+					"name": "sendMail",
+					"arguments": [
+						{
+							"name": "toRecipients",
+							"assertion": ["Includes chair@company.com, director1@company.com, director2@company.com, and cfo@company.com"],
+							"rubrics": []
+						},
+						{
+							"name": "body",
+							"assertion": [
+								"Requests quarterly reports by December 15th",
+								"Mentions 2026 budget approval discussion",
+								"Mentions merger proposal discussion"
+							],
+							"rubrics": []
+						}
+					]
+				}
+			],
+			"expected_response": "I've scheduled the Q4 board meeting for December 18th, 2025 from 9:00 AM to 12:00 PM Pacific Time and sent board members the agenda items and report submission deadline.",
+			"response_quality_expectation": {
+				"assertion": "Confirms board meeting scheduled and pre-meeting preparation requests sent.",
+				"rubrics": []
+			},
+			"references_seed": {}
+		},
+		{
+			"id": "tc_8b5d2g9a4c7f1e3h",
+			"dataset_id": "dataset_3d22091b228746d9",
+			"name": "Portfolio Review Meeting",
+			"description": "Schedule financial planning session with investment team",
+			"input": "Schedule a portfolio review meeting for Tuesday November 19th, 2025 from 3:30 PM to 5:00 PM Eastern Time as a secure Teams meeting. Invite these investment team members: portfolio.manager@wealth.com, financial.advisor@wealth.com, and risk.analyst@wealth.com. Send an email to portfolio.manager@wealth.com, financial.advisor@wealth.com, and risk.analyst@wealth.com requesting they prepare analysis on our Q4 performance, technology sector allocations, and risk assessment for the upcoming year. Mention that we'll be reviewing the $2.5M portfolio rebalancing strategy.",
+			"minimal_tool_set": ["mcp_CalendarTools_graph_createEvent", "sendMail"],
+			"tool_expectations": [
+				{
+					"name": "mcp_CalendarTools_graph_createEvent",
+					"arguments": [
+						{
+							"name": "subject",
+							"assertion": ["Contains 'portfolio review' or 'investment' or 'financial'"],
+							"rubrics": []
+						},
+						{
+							"name": "attendees_addresses",
+							"assertion": ["Includes portfolio.manager@wealth.com, financial.advisor@wealth.com, and risk.analyst@wealth.com"],
+							"rubrics": []
+						},
+						{
+							"name": "isOnlineMeeting",
+							"assertion": ["Set to true for secure Teams meeting"],
+							"rubrics": []
+						}
+					]
+				},
+				{
+					"name": "sendMail",
+					"arguments": [
+						{
+							"name": "toRecipients",
+							"assertion": ["Includes portfolio.manager@wealth.com, financial.advisor@wealth.com, and risk.analyst@wealth.com"],
+							"rubrics": []
+						},
+						{
+							"name": "body",
+							"assertion": [
+								"Requests Q4 performance analysis preparation",
+								"Mentions technology sector allocations review",
+								"References $2.5M portfolio rebalancing strategy"
+							],
+							"rubrics": []
+						}
+					]
+				}
+			],
+			"expected_response": "I've scheduled the portfolio review meeting for November 19th, 2025 from 3:30-5:00 PM Eastern as a secure Teams meeting and requested the investment team prepare analysis materials for our $2.5M portfolio strategy review.",
+			"response_quality_expectation": {
+				"assertion": "Confirms investment meeting scheduled with secure format and detailed preparation requests sent to team.",
+				"rubrics": []
+			},
+			"references_seed": {}
+		}
+	],
+	"quality_veto": 0,
+	"created_at": "2025-10-31T16:57:24.803366+00:00"
+}
