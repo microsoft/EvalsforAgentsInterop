@@ -1,0 +1,232 @@
+{
+	"id": "dataset_dataset_ee6f00f762394612",
+	"metadata": {
+		"generator_id": "generator-service",
+		"suite_id": "dataset_ee6f00f762394612",
+		"created_at": "2025-11-03T21:20:32.910439+00:00",
+		"version": "1.0",
+		"schema_hash": "79928087983098e22bfa89a36079f7a807515c66fcf046b7cfee8705686636df"
+	},
+	"seed": {
+		"name": "Email Collaboration Dataset",
+		"goal": "Test an agents ability to send emails for various subjects and recipients.",
+		"synthetic_domain": "Email communication and collaboration",
+		"input": {}
+	},
+	"test_cases": [
+		{
+			"id": "tc_e4db542b0bce41ae",
+			"dataset_id": "dataset_dataset_ee6f00f762394612",
+			"name": "Soccer League Update",
+			"description": "Email the youth soccer coaches at coaches@springfieldyouth.org about playoff schedule changes. Inform them: semi-finals moved to Saturday May 18th due to field maintenance, championship game confirmed for Memorial Day weekend, referee assignments completed by league coordinator Mike, concession stand volunteers needed for both days, team photos scheduled before championship at 10 AM, and remind coaches to submit final rosters by Thursday.",
+			"input": "Email the youth soccer coaches at coaches@springfieldyouth.org about playoff schedule changes. Inform them: semi-finals moved to Saturday May 18th due to field maintenance, championship game confirmed for Memorial Day weekend, referee assignments completed by league coordinator Mike, concession stand volunteers needed for both days, team photos scheduled before championship at 10 AM, and remind coaches to submit final rosters by Thursday.",
+			"minimal_tool_set": ["sendMail"],
+			"tool_expectations": [
+				{
+					"name": "sendMail",
+					"arguments": [
+						{
+							"name": "toRecipients",
+							"assertion": ["The 'toRecipients' field contains coaches@springfieldyouth.org"],
+							"rubrics": []
+						},
+						{
+							"name": "subject",
+							"assertion": ["The 'subject' field mentions playoff schedule or soccer or championship"],
+							"rubrics": []
+						},
+						{
+							"name": "body",
+							"assertion": [
+								"The 'body' field mentions semi-finals moved to Saturday May 18th due to field maintenance",
+								"The 'body' field includes championship game on Memorial Day weekend",
+								"The 'body' field references referee assignments by coordinator Mike",
+								"The 'body' field mentions concession stand volunteer needs",
+								"The 'body' field includes team photos at 10 AM before championship",
+								"The 'body' field reminds about final roster submission by Thursday"
+							],
+							"rubrics": []
+						}
+					]
+				}
+			],
+			"expected_response": "Email sent successfully to soccer coaches with playoff schedule updates including date changes, referee assignments, volunteer needs, photo scheduling, and roster deadline reminders.",
+			"response_quality_expectation": {
+				"assertion": "Response confirms email was sent with all schedule changes and coordination requirements.",
+				"rubrics": []
+			},
+			"references_seed": {}
+		},
+		{
+			"id": "tc_f4ec95d51ff84519",
+			"dataset_id": "dataset_dataset_ee6f00f762394612",
+			"name": "Research Paper Collaboration",
+			"description": "Email your research partner Dr. Kim at kim.research@university.edu about the climate study progress. Share these updates: data collection completed from 12 weather stations, preliminary analysis shows 2.3°C temperature increase over 20 years, statistical significance at p<0.05 level, draft manuscript deadline is December 15th, and request their input on the methodology section before next week's peer review.",
+			"input": "Email your research partner Dr. Kim at kim.research@university.edu about the climate study progress. Share these updates: data collection completed from 12 weather stations, preliminary analysis shows 2.3°C temperature increase over 20 years, statistical significance at p<0.05 level, draft manuscript deadline is December 15th, and request their input on the methodology section before next week's peer review.",
+			"minimal_tool_set": ["sendMail"],
+			"tool_expectations": [
+				{
+					"name": "sendMail",
+					"arguments": [
+						{
+							"name": "toRecipients",
+							"assertion": ["The 'toRecipients' field contains kim.research@university.edu"],
+							"rubrics": []
+						},
+						{
+							"name": "subject",
+							"assertion": ["The 'subject' field mentions climate study or research progress or collaboration"],
+							"rubrics": []
+						},
+						{
+							"name": "body",
+							"assertion": [
+								"The 'body' field mentions data collection from 12 weather stations",
+								"The 'body' field includes the 2.3°C temperature increase finding",
+								"The 'body' field references statistical significance (p<0.05)",
+								"The 'body' field mentions December 15th manuscript deadline",
+								"The 'body' field requests input on methodology section before peer review"
+							],
+							"rubrics": []
+						}
+					]
+				}
+			],
+			"expected_response": "Email sent successfully to research partner with climate study progress including data collection status, preliminary findings, statistical results, deadline information, and methodology review request.",
+			"response_quality_expectation": {
+				"assertion": "Response confirms email was sent with all research updates and collaboration requests.",
+				"rubrics": []
+			},
+			"references_seed": {}
+		},
+		{
+			"id": "tc_df573bad8a6145c4",
+			"dataset_id": "dataset_dataset_ee6f00f762394612",
+			"name": "Neighborhood Block Party Planning",
+			"description": "Send an email to the neighborhood committee at blockparty2024@gmail.com with updates on the summer block party. Include these details: venue confirmed at Maple Street Park for July 15th, food trucks booked (Tony's Tacos and Sweet Treats), estimated 150 attendees, volunteer shifts needed for setup (9 AM) and cleanup (6 PM), and ask residents to RSVP by July 1st with dietary restrictions.",
+			"input": "Send an email to the neighborhood committee at blockparty2024@gmail.com with updates on the summer block party. Include these details: venue confirmed at Maple Street Park for July 15th, food trucks booked (Tony's Tacos and Sweet Treats), estimated 150 attendees, volunteer shifts needed for setup (9 AM) and cleanup (6 PM), and ask residents to RSVP by July 1st with dietary restrictions.",
+			"minimal_tool_set": ["sendMail"],
+			"tool_expectations": [
+				{
+					"name": "sendMail",
+					"arguments": [
+						{
+							"name": "toRecipients",
+							"assertion": ["The 'toRecipients' field contains blockparty2024@gmail.com"],
+							"rubrics": []
+						},
+						{
+							"name": "subject",
+							"assertion": ["The 'subject' field mentions block party or summer event or July 15th"],
+							"rubrics": []
+						},
+						{
+							"name": "body",
+							"assertion": [
+								"The 'body' field mentions Maple Street Park venue and July 15th date",
+								"The 'body' field includes both food truck names (Tony's Tacos and Sweet Treats)",
+								"The 'body' field mentions 150 estimated attendees",
+								"The 'body' field includes volunteer shift times (9 AM setup, 6 PM cleanup)",
+								"The 'body' field requests RSVP by July 1st with dietary restrictions"
+							],
+							"rubrics": []
+						}
+					]
+				}
+			],
+			"expected_response": "Email sent successfully to neighborhood committee with block party updates including venue confirmation, food truck details, attendance estimates, volunteer needs, and RSVP instructions.",
+			"response_quality_expectation": {
+				"assertion": "Response confirms email was sent with all event planning details and volunteer coordination information.",
+				"rubrics": []
+			},
+			"references_seed": {}
+		},
+		{
+			"id": "tc_3b190ba3e9b042f6",
+			"dataset_id": "dataset_dataset_ee6f00f762394612",
+			"name": "Family Reunion Planning",
+			"description": "Send an email to the family group at johnsonreunion@gmail.com about Grandma's 90th birthday celebration. Include these arrangements: reservation confirmed at Riverside Community Center for August 20th, catering ordered for 45 people, photo slideshow prepared with 200+ family pictures, live music by cousin Mark's band starting at 3 PM, gift collection coordinated by Aunt Susan, and ask everyone to share their favorite Grandma memory for the memory book.",
+			"input": "Send an email to the family group at johnsonreunion@gmail.com about Grandma's 90th birthday celebration. Include these arrangements: reservation confirmed at Riverside Community Center for August 20th, catering ordered for 45 people, photo slideshow prepared with 200+ family pictures, live music by cousin Mark's band starting at 3 PM, gift collection coordinated by Aunt Susan, and ask everyone to share their favorite Grandma memory for the memory book.",
+			"minimal_tool_set": ["sendMail"],
+			"tool_expectations": [
+				{
+					"name": "sendMail",
+					"arguments": [
+						{
+							"name": "toRecipients",
+							"assertion": ["The 'toRecipients' field contains johnsonreunion@gmail.com"],
+							"rubrics": []
+						},
+						{
+							"name": "subject",
+							"assertion": ["The 'subject' field mentions Grandma's birthday or 90th birthday or celebration"],
+							"rubrics": []
+						},
+						{
+							"name": "body",
+							"assertion": [
+								"The 'body' field mentions Riverside Community Center and August 20th",
+								"The 'body' field includes catering for 45 people",
+								"The 'body' field references photo slideshow with 200+ pictures",
+								"The 'body' field mentions cousin Mark's band and 3 PM music start",
+								"The 'body' field includes Aunt Susan coordinating gifts",
+								"The 'body' field requests favorite memories for the memory book"
+							],
+							"rubrics": []
+						}
+					]
+				}
+			],
+			"expected_response": "Email sent successfully to family group with Grandma's 90th birthday celebration details including venue, catering, entertainment, coordination responsibilities, and memory book request.",
+			"response_quality_expectation": {
+				"assertion": "Response confirms email was sent with all celebration arrangements and family participation requests.",
+				"rubrics": []
+			},
+			"references_seed": {}
+		},
+		{
+			"id": "tc_9f2e8a1b6c4d7k5j",
+			"dataset_id": "dataset_dataset_ee6f00f762394612",
+			"name": "Client Meeting Follow-up",
+			"description": "Send a follow-up email to sarah.johnson@clientcorp.com summarizing our proposal meeting. Include these key points: 1) Their budget approval timeline is 3 weeks, 2) They need integration with their existing CRM system, 3) Demo scheduled for next Tuesday at 2 PM EST, 4) Technical requirements include single sign-on and API access. Ask for confirmation of the demo time and any additional attendees.",
+			"input": "Send a follow-up email to sarah.johnson@clientcorp.com summarizing our proposal meeting. Include these key points: 1) Their budget approval timeline is 3 weeks, 2) They need integration with their existing CRM system, 3) Demo scheduled for next Tuesday at 2 PM EST, 4) Technical requirements include single sign-on and API access. Ask for confirmation of the demo time and any additional attendees.",
+			"minimal_tool_set": ["sendMail"],
+			"tool_expectations": [
+				{
+					"name": "sendMail",
+					"arguments": [
+						{
+							"name": "toRecipients",
+							"assertion": ["The 'toRecipients' field contains sarah.johnson@clientcorp.com"],
+							"rubrics": []
+						},
+						{
+							"name": "subject",
+							"assertion": ["The 'subject' field mentions follow-up or proposal meeting or demo"],
+							"rubrics": []
+						},
+						{
+							"name": "body",
+							"assertion": [
+								"The 'body' field mentions the 3-week budget approval timeline",
+								"The 'body' field references CRM system integration requirement",
+								"The 'body' field includes the Tuesday 2 PM EST demo time",
+								"The 'body' field mentions technical requirements (single sign-on and API access)",
+								"The 'body' field asks for demo time confirmation and additional attendees"
+							],
+							"rubrics": []
+						}
+					]
+				}
+			],
+			"expected_response": "Follow-up email sent successfully to client contact summarizing proposal meeting key points including budget timeline, CRM integration needs, demo scheduling, technical requirements, and requesting confirmation.",
+			"response_quality_expectation": {
+				"assertion": "Response confirms email was sent with all meeting summary points and requests for confirmation.",
+				"rubrics": []
+			},
+			"references_seed": {}
+		}
+	],
+	"quality_veto": 0,
+	"created_at": "2025-11-03T21:20:32.987437+00:00"
+}

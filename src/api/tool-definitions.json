@@ -1,0 +1,340 @@
+{
+	"servers": [
+		{
+			"name": "calendar",
+			"tools": [
+				{
+					"name": "mcp_CalendarTools_graph_createEvent",
+					"description": "Use this to create a new event in current user's calendar. IMPORTANT: If recipient names are provided instead of email addresses, you MUST first search for users to find their email addresses..If time is provided, schedule the event — even if there are conflicts/ even if attendee/organizer is busy in that slot.If only a date is given, use the earliest slot where all or most attendees (> 50% of them) are free. If no date is given, schedule meeting at given time for today.If no time/date is given, use the first slot where all attendees are free.Try to create events during working hours of signed-in user (8 AM – 5 PM) if explicit time is not specified.Specify recurrence using recurrence property.Online meetings can be created by setting isOnlineMeeting to true.Default meeting duration is 30 minutes, if not specified by user.",
+					"supportedMockTypes": [],
+					"json_input_schema": {
+						"type": "object",
+						"properties": {
+							"userId": {
+								"type": "string",
+								"description": "The user\u0027s object ID (GUID) or userPrincipalName (email-like UPN). Use the organizer\u0027s mailbox you intend to create the event in; do not pass display names.",
+								"x-ms-location": "path",
+								"x-ms-path": "userId"
+							},
+							"subject": {
+								"type": "string",
+								"description": "Non-empty event subject/title. Avoid trailing whitespace and control characters.",
+								"x-ms-location": "body",
+								"x-ms-path": "subject",
+								"minLength": 1
+							},
+							"body": {
+								"type": "object",
+								"description": "Event body/description content. Use \u0027html\u0027 for rich formatting or \u0027text\u0027 for plain.",
+								"x-ms-location": "body",
+								"x-ms-path": "body",
+								"properties": {
+									"contentType": {
+										"type": "string",
+										"enum": ["Text", "HTML"],
+										"description": "Body content type. If unsure, use \u0027Text\u0027.",
+										"x-ms-location": "body",
+										"x-ms-path": "body.contentType"
+									},
+									"content": {
+										"type": "string",
+										"description": "Body content string. For \u0027html\u0027, provide well-formed HTML; for \u0027text\u0027, provide plain UTF-8 text.",
+										"x-ms-location": "body",
+										"x-ms-path": "body.content"
+									}
+								},
+								"required": ["contentType", "content"]
+							},
+							"start": {
+								"type": "object",
+								"description": "Event start timestamp with time zone. Must be before \u0027end\u0027.",
+								"x-ms-location": "body",
+								"x-ms-path": "start",
+								"properties": {
+									"dateTime": {
+										"type": "string",
+										"description": "Local start time in ISO 8601 without offset: \u0027yyyy-MM-ddTHH:mm:ss\u0027 (e.g., \u00272025-09-18T09:00:00\u0027).",
+										"x-ms-location": "body",
+										"x-ms-path": "start.dateTime",
+										"pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}$"
+									},
+									"timeZone": {
+										"type": "string",
+										"description": "Time zone identifier for start time. Use the organizer\u0027s mailbox zone if known.",
+										"x-ms-location": "body",
+										"x-ms-path": "start.timeZone"
+									}
+								},
+								"required": ["dateTime", "timeZone"]
+							},
+							"end": {
+								"type": "object",
+								"description": "Event end timestamp with time zone. Must be after \u0027start\u0027.",
+								"x-ms-location": "body",
+								"x-ms-path": "end",
+								"properties": {
+									"dateTime": {
+										"type": "string",
+										"description": "Local end time in ISO 8601 without offset: \u0027yyyy-MM-ddTHH:mm:ss\u0027 (e.g., \u00272025-09-18T10:00:00\u0027).",
+										"x-ms-location": "body",
+										"x-ms-path": "end.dateTime",
+										"pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}$"
+									},
+									"timeZone": {
+										"type": "string",
+										"description": "Time zone identifier of \u0027dateTime\u0027. Use the same system as \u0027start.timeZone\u0027 for consistency.",
+										"x-ms-location": "body",
+										"x-ms-path": "end.timeZone"
+									}
+								},
+								"required": ["dateTime", "timeZone"]
+							},
+							"location": {
+								"type": "object",
+								"description": "Primary location for the event. Use a concise name (e.g., room name, address, or \u0027Microsoft Teams Meeting\u0027).",
+								"x-ms-location": "body",
+								"x-ms-path": "location",
+								"properties": {
+									"displayName": {
+										"type": "string",
+										"description": "Human-readable location label (e.g., \u0027Conf Room 12A\u0027, \u00271 Microsoft Way, Redmond\u0027, or \u0027Teams Meeting\u0027).",
+										"x-ms-location": "body",
+										"x-ms-path": "location.displayName"
+									}
+								}
+							},
+							"attendees_addresses": {
+								"type": "array",
+								"description": "Email addresses of attendees. Each must be a valid email address.",
+								"x-ms-location": "body",
+								"x-ms-path": "attendees",
+								"x-ms-restructure": "attendees",
+								"items": {
+									"type": "string",
+									"format": "email",
+									"pattern": "^[^\\s@]\u002B@[^\\s@]\u002B\\.[^\\s@]{2,}$"
+								}
+							},
+							"attendees_types": {
+								"type": "array",
+								"description": "Attendee roles corresponding to each address in \u0027attendees_addresses\u0027. Must appear in the same order as the email array so that each type applies to the attendee at the same index.",
+								"x-ms-location": "body",
+								"x-ms-path": "attendees",
+								"x-ms-restructure": "attendees",
+								"items": {
+									"type": "string",
+									"enum": ["required", "optional", "resource"]
+								}
+							},
+							"attendees_names": {
+								"type": "array",
+								"description": "Display names of attendees corresponding to each address in \u0027attendees_addresses\u0027. Must appear in the same order as the email array so that each name applies to the attendee at the same index.",
+								"x-ms-location": "body",
+								"x-ms-path": "attendees",
+								"x-ms-restructure": "attendees",
+								"items": { "type": "string" }
+							},
+							"recurrence": {
+								"type": "object",
+								"description": "Recurrence specification. Provide both \u0027pattern\u0027 and \u0027range\u0027. Omit for one-time events.",
+								"x-ms-location": "body",
+								"x-ms-path": "recurrence",
+								"properties": {
+									"pattern": {
+										"type": "object",
+										"properties": {
+											"type": {
+												"type": "string",
+												"enum": ["daily", "weekly", "absoluteMonthly", "relativeMonthly", "absoluteYearly", "relativeYearly"],
+												"description": "The recurrence pattern type"
+											},
+											"interval": {
+												"type": "integer",
+												"description": "The time interval between occurrences (e.g., every 2 weeks)"
+											},
+											"daysOfWeek": {
+												"type": "array",
+												"items": {
+													"type": "string",
+													"enum": ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"]
+												},
+												"description": "Days of the week for recurrence, if applicable"
+											},
+											"dayOfMonth": {
+												"type": "integer",
+												"description": "Day of the month for monthly pattern"
+											},
+											"month": {
+												"type": "integer",
+												"description": "Month for yearly pattern"
+											}
+										},
+										"required": ["type", "interval"]
+									},
+									"range": {
+										"type": "object",
+										"properties": {
+											"type": {
+												"type": "string",
+												"enum": ["endDate", "noEnd", "numbered"],
+												"description": "The recurrence range type"
+											},
+											"startDate": {
+												"type": "string",
+												"description": "The start date of the recurrence (yyyy-MM-dd)"
+											},
+											"endDate": {
+												"type": "string",
+												"description": "The end date of the recurrence (yyyy-MM-dd)"
+											},
+											"numberOfOccurrences": {
+												"type": "integer",
+												"description": "The number of times the event occurs"
+											}
+										},
+										"required": ["type", "startDate"]
+									}
+								},
+								"required": ["pattern", "range"]
+							},
+							"allowNewTimeProposals": {
+								"type": "boolean",
+								"description": "Whether invitees can propose a new time. Defaults to true if omitted.",
+								"x-ms-location": "body",
+								"x-ms-path": "allowNewTimeProposals"
+							},
+							"transactionId": {
+								"type": "string",
+								"description": "Optional unique client-provided identifier to ensure idempotence",
+								"x-ms-location": "body",
+								"x-ms-path": "transactionId"
+							},
+							"isOnlineMeeting": {
+								"type": "boolean",
+								"description": "Set to true to create an online meeting. Defaults to false.",
+								"x-ms-location": "body",
+								"x-ms-path": "isOnlineMeeting"
+							},
+							"onlineMeetingProvider": {
+								"type": "string",
+								"enum": ["teamsForBusiness", "skypeForBusiness", "skypeForConsumer"],
+								"description": "Online meeting provider. REQUIRED when \u0027isOnlineMeeting\u0027 = true; omit otherwise.",
+								"x-ms-location": "body",
+								"x-ms-path": "onlineMeetingProvider"
+							}
+						},
+						"required": ["subject", "start", "end", "attendees_addresses"]
+					}
+				},
+				{
+					"name": "mcp_CalendarTools_graph_listEvents",
+					"description": "Retrieve a list of events in a user's calendar.For recurring meetings, only return one / first record with full recurrence details (pattern, start, end) to the agent.For searching by meeting title, filter using contains(subject,'X'); avoid 'eq' or startswith(subject,'X') filter for this case.Use this tool to find existing meetings whenever the user refers to a meeting by day, date, time , or title (e.g., “add someone to the architecture review at 2 PM”), before calling any tool that modifies, updates, or cancels a meeting.",
+					"supportedMockTypes": ["docx"],
+					"json_input_schema": {
+						"type": "object",
+						"properties": {
+							"userId": {
+								"type": "string",
+								"description": "The ID or userPrincipalName of the user whose calendar events will be retrieved.",
+								"x-ms-location": "path",
+								"x-ms-path": "userId"
+							},
+							"startDateTime": {
+								"type": "string",
+								"description": "The start of the time range for the events (ISO 8601 format).",
+								"x-ms-location": "query",
+								"x-ms-path": "startDateTime"
+							},
+							"endDateTime": {
+								"type": "string",
+								"description": "The end of the time range for the events (ISO 8601 format).",
+								"x-ms-location": "query",
+								"x-ms-path": "endDateTime"
+							},
+							"top": {
+								"type": "integer",
+								"description": "The maximum number of events to return.",
+								"x-ms-location": "query",
+								"x-ms-path": "$top"
+							},
+							"filter": {
+								"type": "string",
+								"description": "OData filter query to filter events.",
+								"x-ms-location": "query",
+								"x-ms-path": "$filter"
+							},
+							"orderby": {
+								"type": "string",
+								"description": "OData order by query to sort events.",
+								"x-ms-location": "query",
+								"x-ms-path": "$orderby"
+							}
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "email",
+			"tools": [
+				{
+					"name": "sendMail",
+					"description": "Create and send an email with optional attachments. Supports both file URIs (OneDrive/SharePoint) and direct file uploads (base64-encoded). IMPORTANT: If recipient names are provided instead of email addresses, you MUST first search for users to find their email addresses.",
+					"supportedMockTypes": [],
+					"json_input_schema": {
+						"type": "object",
+						"properties": {
+							"to": {
+								"type": "array",
+								"description": "List of To recipients (MUST be email addresses - if you only have names, search for users first to get their email addresses)",
+								"items": { "type": "string" }
+							},
+							"cc": {
+								"type": "array",
+								"description": "List of Cc recipients (MUST be email addresses - if you only have names, search for users first to get their email addresses)",
+								"items": { "type": "string" }
+							},
+							"bcc": {
+								"type": "array",
+								"description": "List of Bcc recipients (MUST be email addresses - if you only have names, search for users first to get their email addresses)",
+								"items": { "type": "string" }
+							},
+							"subject": { "type": "string", "description": "Subject of the email" },
+							"body": { "type": "string", "description": "Body of the email" },
+							"attachmentUris": {
+								"type": "array",
+								"description": "List of direct file URIs to attach (must be Microsoft 365 file links: OneDrive, SharePoint, Teams, or Graph /drives/{id}/items/{id}).",
+								"items": { "type": "string" }
+							}
+						},
+						"required": []
+					}
+				},
+				{
+					"name": "SearchMessages",
+					"description": "Search Outlook messages using Microsoft Graph Search API with KQL-style queries.",
+					"supportedMockTypes": ["email"],
+					"json_input_schema": {
+						"type": "object",
+						"properties": {
+							"queryString": {
+								"type": "string",
+								"description": "KQL-style search string (e.g., \u0027contoso OR from:user@example.com\u0027)"
+							},
+							"from": {
+								"type": "integer",
+								"description": "Zero-based offset of the first result"
+							},
+							"size": { "type": "integer", "description": "Page size (1-50)" },
+							"enableTopResults": {
+								"type": "boolean",
+								"description": "If true, returns top results with relevance boosting"
+							}
+						},
+						"required": []
+					}
+				}
+			]
+		}
+	]
+}
