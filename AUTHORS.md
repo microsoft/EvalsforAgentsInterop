@@ -6,7 +6,6 @@ These are all the launch authors. Everyone is affiliated with Microsoft.
 
 - Aadharsh Kannan ([@aadharshkannan](https://github.com/aadharshkannan))
 - AJ Fehr ([@ajmfehr](https://github.com/ajmfehr))
-- Dane Vora ([@danevora](https://github.com/danevora))
 - Darshini Jois
 - Grant Harris ([@gwharris7](https://github.com/gwharris7))
 - H Acuna ([@h-acuna](https://github.com/h-acuna))
