@@ -17,7 +17,7 @@ azure-ai-inference==1.0.0b9
 azure-ai-projects==1.0.0
 
 # LangChain
-langchain-core==1.0.7
+langchain-core==1.2.5
 langchain-openai==1.0.2
 langgraph>=0.6.10
 langgraph-checkpoint==3.0.0
