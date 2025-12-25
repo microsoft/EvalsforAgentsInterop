@@ -316,6 +316,47 @@ async def get_test_result(evaluation_id: str, testcase_id: str):
     return test_result
 
 
+# ==============================================================================
+# CANCEL EVALUATION ENDPOINT (Feature: cancel-evaluation)
+# ==============================================================================
+# This endpoint allows users to manually cancel a running or stuck evaluation.
+# Use cases:
+# - Evaluation is taking too long and user wants to abort
+# - Something went wrong and evaluation is stuck
+# - User started wrong evaluation by mistake
+#
+# The cancelled evaluation is preserved with its partial results for review.
+# ==============================================================================
+@router.post("/evaluations/{evaluation_id}/cancel", response_model=EvaluationRun)
+async def cancel_evaluation(evaluation_id: str):
+    """Cancel a running or stuck evaluation.
+    
+    Marks the evaluation as cancelled. Use this to clean up stuck evaluations
+    that are no longer making progress. The evaluation is preserved with any
+    partial results that were collected before cancellation.
+    
+    Args:
+        evaluation_id: ID of the evaluation to cancel
+        
+    Returns:
+        The updated EvaluationRun with status='cancelled'
+        
+    Raises:
+        404: Evaluation not found
+        400: Evaluation already completed (cannot cancel)
+        500: Internal error during cancellation
+    """
+    try:
+        eval_run = await evaluator.cancel_evaluation_run(evaluation_id)
+        if not eval_run:
+            raise HTTPException(404, f"Evaluation '{evaluation_id}' not found")
+        return eval_run
+    except ValueError as e:
+        raise HTTPException(400, str(e))
+    except Exception as e:
+        raise HTTPException(500, f"Failed to cancel evaluation: {str(e)}")
+
+
 @router.delete("/evaluations/{evaluation_id}", status_code=204)
 async def delete_evaluation(evaluation_id: str):
     try:

@@ -247,8 +247,21 @@ class ResponseQualityResult(BaseModel):
     llm_judge_output: str
 
 
+# ==============================================================================
+# TEST CASE RESULT MODEL (Features: timing-metrics, rate-limit-retry)
+# ==============================================================================
+# This model captures the complete result of executing a single test case.
+# It includes both the evaluation results AND operational metadata like:
+# - Timing information for performance analysis
+# - Retry counts for rate limit visibility
+# - Actual tool calls for debugging agent behavior
+# ==============================================================================
 class TestCaseResult(BaseModel):
-    """Structured result for a single test case."""
+    """Structured result for a single test case.
+    
+    This model is persisted to Cosmos DB as part of the EvaluationRun document.
+    It contains everything needed to understand what happened during the test.
+    """
     testcase_id: str
     passed: bool  # Overall pass/fail based on all assertions and expected tools
     response_from_agent: str
@@ -257,19 +270,95 @@ class TestCaseResult(BaseModel):
     response_quality_assertion: Optional[ResponseQualityResult] = None
     
     # Capture what the agent actually did for UI display
-    actual_tool_calls: List[Dict[str, Any]] = Field(default_factory=list)  # Full tool call data from agent
+    # This includes the full tool call data with arguments and responses
+    actual_tool_calls: List[Dict[str, Any]] = Field(default_factory=list)
     execution_error: Optional[str] = None  # Error message if execution failed
+    
+    # ==== RATE LIMIT TRACKING (Feature: rate-limit-retry) ====
+    # This field tracks how many retries were needed due to Azure OpenAI rate limits.
+    # A non-zero value here indicates the test encountered capacity issues.
+    retry_count: int = Field(default=0, description="Number of retries due to rate limits")
+    
+    # ==== TIMING INFORMATION (Feature: timing-metrics) ====
+    # These fields enable performance analysis of individual tests.
+    # - agent_call_duration: Time spent calling the agent (including retries)
+    # - judge_call_duration: Time spent on LLM judge calls (including retries)
+    # - total_duration: End-to-end time including all phases
+    completed_at: Optional[datetime] = Field(default=None, description="When this test case completed")
+    agent_call_duration_seconds: Optional[float] = Field(default=None, description="Time taken for agent call including retries")
+    judge_call_duration_seconds: Optional[float] = Field(default=None, description="Time taken for LLM judge calls including retries")
+    total_duration_seconds: Optional[float] = Field(default=None, description="Total time for this test case")
+    
+    @field_serializer('completed_at')
+    def serialize_completed_at(self, dt: Optional[datetime], _info) -> Optional[str]:
+        if dt is None:
+            return None
+        return dt.isoformat()
 
 
+# ==============================================================================
+# EVALUATION RUN STATUS ENUM (Feature: cancel-evaluation, orphan-cleanup)
+# ==============================================================================
+# Added 'cancelled' status to support manual cancellation and automatic
+# cleanup of orphaned evaluations after server restarts.
+# ==============================================================================
 class EvaluationRunStatus(str, Enum):
-    pending = "pending"
-    running = "running"
-    completed = "completed"
-    failed = "failed"
+    pending = "pending"      # Created but not yet started
+    running = "running"      # Currently executing tests
+    completed = "completed"  # All tests finished successfully
+    failed = "failed"        # Evaluation failed with error
+    cancelled = "cancelled"  # Manually cancelled OR orphaned after restart (Feature: cancel-evaluation)
 
 
+# ==============================================================================
+# STATUS HISTORY ENTRY (Features: status-updates, rate-limit-retry)
+# ==============================================================================
+# This model tracks the chronological history of status changes during
+# evaluation execution. It enables:
+# - Real-time progress visibility in the UI
+# - Post-mortem analysis of what happened during an evaluation
+# - Rate limit tracking with specific retry details
+# ==============================================================================
+class StatusHistoryEntry(BaseModel):
+    """A timestamped status message for evaluation progress tracking.
+    
+    Each entry represents a notable event during evaluation execution.
+    The UI uses this to show an activity log and highlight rate limit events.
+    """
+    timestamp: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+    message: str
+    
+    # ==== RATE LIMIT DETAILS (Feature: rate-limit-retry) ====
+    # These fields provide granular visibility into rate limit events.
+    # When is_rate_limit=True, the other fields show retry details.
+    is_rate_limit: bool = Field(default=False, description="Whether this entry is a rate limit event")
+    retry_attempt: Optional[int] = Field(default=None, description="Which retry attempt (1-based)")
+    max_attempts: Optional[int] = Field(default=None, description="Maximum retry attempts configured")
+    wait_seconds: Optional[float] = Field(default=None, description="Seconds waiting before retry")
+    
+    @field_serializer('timestamp')
+    def serialize_timestamp(self, dt: datetime, _info):
+        return dt.isoformat()
+
+
+# ==============================================================================
+# EVALUATION RUN MODEL (Features: verbose-logging, status-updates, rate-limit-retry)
+# ==============================================================================
+# This is the main document stored in Cosmos DB for each evaluation.
+# It contains:
+# - Configuration (agent endpoint, timeout, verbose logging flag)
+# - Progress tracking (completed/failed/passed counts)
+# - Timestamps (created, started, completed)
+# - Test case results (nested TestCaseResult objects)
+# - Status history for real-time visibility (Feature: status-updates)
+# - Rate limit statistics (Feature: rate-limit-retry)
+# ==============================================================================
 class EvaluationRun(BaseModel):
-    """Evaluation run with structured test case results."""
+    """Evaluation run with structured test case results.
+    
+    This is the main evaluation document. It tracks the entire lifecycle
+    of an evaluation from creation through completion.
+    """
     
     id: str = Field(default_factory=lambda: f"eval_{datetime.now(timezone.utc).timestamp()}")
     name: str
@@ -277,24 +366,41 @@ class EvaluationRun(BaseModel):
     agent_id: str
     status: EvaluationRunStatus = EvaluationRunStatus.pending
     
-    # Configuration
+    # ==== CONFIGURATION ====
     agent_endpoint: str
     agent_auth_required: bool = True
     timeout_seconds: int = 300
+    # Feature: verbose-logging - When True, logs each assertion being evaluated
+    verbose_logging: bool = Field(default=False, description="Enable detailed assertion-level status updates")
     
-    # Progress tracking
+    # ==== PROGRESS TRACKING ====
     total_tests: int = 0
     completed_tests: int = 0
     failed_tests: int = 0
     passed_count: int = 0
     
-    # Timestamps
+    # ==== TIMESTAMPS ====
     created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
     started_at: Optional[datetime] = None
     completed_at: Optional[datetime] = None
     
-    # Results
+    # ==== RESULTS ====
     test_cases: List[TestCaseResult] = []
+    
+    # ==== WARNINGS (Feature: rate-limit-retry) ====
+    # Collects warning messages, primarily about rate limit retries.
+    # These are displayed prominently in the UI.
+    warnings: List[str] = Field(default_factory=list, description="Warnings encountered during evaluation")
+    
+    # ==== REAL-TIME STATUS (Feature: status-updates) ====
+    # status_message: Current activity, polled by the UI for live updates
+    # status_history: Complete chronological log for post-mortem analysis
+    status_message: Optional[str] = Field(default=None, description="Current activity message for UI display")
+    status_history: List[StatusHistoryEntry] = Field(default_factory=list, description="Chronological list of status messages")
+    
+    # Rate limit statistics
+    total_rate_limit_hits: int = Field(default=0, description="Total number of rate limit errors encountered")
+    total_retry_wait_seconds: float = Field(default=0.0, description="Total time spent waiting on retries")
     
     @field_serializer('created_at', 'started_at', 'completed_at')
     def serialize_datetime(self, dt: Optional[datetime], _info):
@@ -308,6 +414,7 @@ class EvaluationRunCreate(BaseModel):
     agent_endpoint: str
     agent_auth_required: bool = True
     timeout_seconds: int = 300
+    verbose_logging: bool = False
 
 
 # ---------- MCP stuff ----------
