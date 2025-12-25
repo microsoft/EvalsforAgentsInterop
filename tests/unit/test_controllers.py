@@ -190,18 +190,6 @@ class TestTestCaseEndpoints:
         assert response.status_code in [status.HTTP_404_NOT_FOUND, status.HTTP_500_INTERNAL_SERVER_ERROR]
 
 
-class TestEvaluationEndpoints:
-    """Tests for evaluation run endpoints."""
-    
-    @pytest.mark.skip(reason="Evaluator requires complex async mocking, covered in integration tests")
-    def test_evaluation_endpoints_exist(self, test_client):
-        """Evaluation endpoints should be registered."""
-        # This test is skipped because the evaluator service requires
-        # complex async mocking. Full evaluation flow is tested in
-        # integration tests with a mock agent server.
-        pass
-
-
 class TestAPIDocumentation:
     """Tests for API documentation endpoints."""
     
