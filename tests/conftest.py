@@ -6,6 +6,7 @@ Provides shared fixtures for both unit and integration tests.
 
 import pytest
 import asyncio
+import warnings
 from typing import AsyncGenerator, Generator
 from unittest.mock import AsyncMock, MagicMock, patch
 from fastapi.testclient import TestClient
