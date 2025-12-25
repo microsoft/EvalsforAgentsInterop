@@ -83,6 +83,7 @@ export function AgentDetailPage() {
 
   // Run evaluation state
   const [runDialogOpen, setRunDialogOpen] = useState(false);
+  const [verboseLogging, setVerboseLogging] = useState(false);
   const [selectedDataset, setSelectedDataset] = useState<string>("");
   const [isRunningEvaluation, setIsRunningEvaluation] = useState(false);
   const { createClickHandler } = useSelectableClick();
@@ -254,6 +255,7 @@ export function AgentDetailPage() {
         agent_endpoint: agent.agent_invocation_url,
         agent_auth_required: true,
         timeout_seconds: 300,
+        verbose_logging: verboseLogging,
       });
 
       toast.success(`Evaluation started: ${evaluationRun.name}`, {
@@ -262,6 +264,7 @@ export function AgentDetailPage() {
 
       setRunDialogOpen(false);
       setSelectedDataset("");
+      setVerboseLogging(false);
 
       // Navigate to the evaluation detail page
       navigate(`/evaluations/${evaluationRun.id}`);
@@ -678,6 +681,18 @@ export function AgentDetailPage() {
                   ))}
                 </select>
               )}
+            </div>
+            <div className="flex items-center space-x-2 pt-2">
+              <input
+                type="checkbox"
+                id="verboseLogging"
+                checked={verboseLogging}
+                onChange={(e) => setVerboseLogging(e.target.checked)}
+                className="h-4 w-4 rounded border-gray-300 text-primary focus:ring-primary"
+              />
+              <Label htmlFor="verboseLogging" className="text-sm font-normal cursor-pointer">
+                Verbose logging (show each assertion in activity log)
+              </Label>
             </div>
           </div>
           <DialogFooter>

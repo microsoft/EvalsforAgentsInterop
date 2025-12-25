@@ -83,6 +83,7 @@ export function AgentsPage() {
     []
   );
   const [isRunningEvaluation, setIsRunningEvaluation] = useState(false);
+  const [verboseLogging, setVerboseLogging] = useState(false);
 
   const availableModels = Array.from(
     new Set(agents.map((agent) => agent.model).filter((model) => model))
@@ -421,6 +422,7 @@ export function AgentsPage() {
         agent_endpoint: agent.agent_invocation_url,
         agent_auth_required: true,
         timeout_seconds: 300,
+        verbose_logging: verboseLogging,
       });
 
       toast.success(`Evaluation started: ${evaluationRun.name}`, {
@@ -430,6 +432,7 @@ export function AgentsPage() {
       setRunDialogOpen(false);
       setSelectedDataset("");
       setSelectedAgent(null);
+      setVerboseLogging(false);
 
       // Navigate to the evaluation detail page
       navigate(`/evaluations/${evaluationRun.id}`);
@@ -590,6 +593,19 @@ export function AgentsPage() {
                   ))}
                 </select>
               )}
+            </div>
+            <div className="flex items-center space-x-2">
+              <input
+                type="checkbox"
+                id="verboseLogging"
+                title="Enable verbose logging"
+                checked={verboseLogging}
+                onChange={(e) => setVerboseLogging(e.target.checked)}
+                className="h-4 w-4 rounded border-gray-300"
+              />
+              <Label htmlFor="verboseLogging" className="text-sm font-normal">
+                Enable verbose logging (show assertion-level progress)
+              </Label>
             </div>
           </div>
           <DialogFooter>
