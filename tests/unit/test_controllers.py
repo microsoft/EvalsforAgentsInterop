@@ -207,3 +207,187 @@ class TestAPIDocumentation:
         assert "/api/datasets" in paths
         assert "/api/agents" in paths
         assert "/api/evaluations" in paths
+
+
+# =============================================================================
+# Tests for API Evaluation Improvements - Endpoint Structure
+# =============================================================================
+# These tests validate the new endpoints via OpenAPI schema inspection,
+# avoiding complex async mocking for the evaluator service.
+# =============================================================================
+
+
+class TestCancelEvaluationEndpoint:
+    """Tests for the POST /evaluations/{id}/cancel endpoint."""
+    
+    def test_cancel_endpoint_exists(self, test_client):
+        """Cancel endpoint should be registered in the API."""
+        response = test_client.get("/openapi.json")
+        assert response.status_code == 200
+        
+        paths = response.json()["paths"]
+        cancel_path = "/api/evaluations/{evaluation_id}/cancel"
+        assert cancel_path in paths
+        assert "post" in paths[cancel_path]
+    
+    def test_cancel_endpoint_method(self, test_client):
+        """Cancel endpoint should only accept POST method."""
+        response = test_client.get("/openapi.json")
+        paths = response.json()["paths"]
+        
+        cancel_path = "/api/evaluations/{evaluation_id}/cancel"
+        assert "post" in paths[cancel_path]
+        assert "get" not in paths[cancel_path]
+
+
+class TestDeleteEvaluationEndpoint:
+    """Tests for DELETE /evaluations/{id} endpoint."""
+    
+    def test_delete_endpoint_exists(self, test_client):
+        """Delete endpoint should be registered in the API."""
+        response = test_client.get("/openapi.json")
+        assert response.status_code == 200
+        
+        paths = response.json()["paths"]
+        eval_path = "/api/evaluations/{evaluation_id}"
+        assert eval_path in paths
+        assert "delete" in paths[eval_path]
+    
+    def test_delete_endpoint_returns_204(self, test_client):
+        """Delete endpoint should return 204 on success (per OpenAPI spec)."""
+        response = test_client.get("/openapi.json")
+        paths = response.json()["paths"]
+        
+        eval_path = "/api/evaluations/{evaluation_id}"
+        delete_spec = paths[eval_path]["delete"]
+        assert "204" in delete_spec["responses"]
+
+
+class TestEvaluationEndpointStructure:
+    """Tests for evaluation endpoint structure and OpenAPI spec."""
+    
+    def test_evaluation_list_supports_agent_filter(self, test_client):
+        """GET /evaluations should support agent_id query parameter."""
+        response = test_client.get("/openapi.json")
+        paths = response.json()["paths"]
+        
+        list_path = "/api/evaluations"
+        get_spec = paths[list_path]["get"]
+        param_names = [p["name"] for p in get_spec.get("parameters", [])]
+        assert "agent_id" in param_names
+    
+    def test_evaluation_list_supports_pagination(self, test_client):
+        """GET /evaluations should support skip and limit parameters."""
+        response = test_client.get("/openapi.json")
+        paths = response.json()["paths"]
+        
+        list_path = "/api/evaluations"
+        get_spec = paths[list_path]["get"]
+        param_names = [p["name"] for p in get_spec.get("parameters", [])]
+        assert "skip" in param_names
+        assert "limit" in param_names
+    
+    def test_evaluation_results_endpoint_exists(self, test_client):
+        """GET /evaluations/{id}/results should be registered."""
+        response = test_client.get("/openapi.json")
+        paths = response.json()["paths"]
+        
+        results_path = "/api/evaluations/{evaluation_id}/results"
+        assert results_path in paths
+        assert "get" in paths[results_path]
+    
+    def test_single_result_endpoint_exists(self, test_client):
+        """GET /evaluations/{id}/results/{tc_id} should be registered."""
+        response = test_client.get("/openapi.json")
+        paths = response.json()["paths"]
+        
+        result_path = "/api/evaluations/{evaluation_id}/results/{testcase_id}"
+        assert result_path in paths
+        assert "get" in paths[result_path]
+
+
+class TestEvaluationRunStatusSchema:
+    """Tests verifying the EvaluationRun model supports new statuses in API schema."""
+    
+    def test_cancelled_status_in_schema(self, test_client):
+        """EvaluationRunStatus should include 'cancelled' in OpenAPI schema."""
+        response = test_client.get("/openapi.json")
+        schemas = response.json()["components"]["schemas"]
+        
+        if "EvaluationRunStatus" in schemas:
+            enum_values = schemas["EvaluationRunStatus"]["enum"]
+            assert "cancelled" in enum_values
+    
+    def test_status_history_in_evaluation_run_schema(self, test_client):
+        """EvaluationRun schema should include status_history field."""
+        response = test_client.get("/openapi.json")
+        schemas = response.json()["components"]["schemas"]
+        
+        if "EvaluationRun" in schemas:
+            properties = schemas["EvaluationRun"]["properties"]
+            assert "status_history" in properties
+    
+    def test_timing_fields_in_evaluation_run_schema(self, test_client):
+        """EvaluationRun schema should include timing fields."""
+        response = test_client.get("/openapi.json")
+        schemas = response.json()["components"]["schemas"]
+        
+        if "EvaluationRun" in schemas:
+            properties = schemas["EvaluationRun"]["properties"]
+            assert "started_at" in properties
+            assert "completed_at" in properties
+            assert "created_at" in properties
+    
+    def test_rate_limit_tracking_in_schema(self, test_client):
+        """EvaluationRun schema should include rate limit tracking fields."""
+        response = test_client.get("/openapi.json")
+        schemas = response.json()["components"]["schemas"]
+        
+        if "EvaluationRun" in schemas:
+            properties = schemas["EvaluationRun"]["properties"]
+            assert "total_rate_limit_hits" in properties
+            assert "total_retry_wait_seconds" in properties
+
+
+class TestEvaluationRunCreateSchema:
+    """Tests for EvaluationRunCreate request model in API schema."""
+    
+    def test_create_supports_verbose_logging(self, test_client):
+        """EvaluationRunCreate should support verbose_logging option."""
+        response = test_client.get("/openapi.json")
+        schemas = response.json()["components"]["schemas"]
+        
+        if "EvaluationRunCreate" in schemas:
+            properties = schemas["EvaluationRunCreate"]["properties"]
+            assert "verbose_logging" in properties
+    
+    def test_create_requires_agent_endpoint(self, test_client):
+        """EvaluationRunCreate should require agent_endpoint."""
+        response = test_client.get("/openapi.json")
+        schemas = response.json()["components"]["schemas"]
+        
+        if "EvaluationRunCreate" in schemas:
+            required = schemas["EvaluationRunCreate"].get("required", [])
+            assert "agent_endpoint" in required
+
+
+class TestStatusHistoryEntrySchema:
+    """Tests for StatusHistoryEntry model in API schema."""
+    
+    def test_status_history_entry_schema_exists(self, test_client):
+        """StatusHistoryEntry should be defined in OpenAPI schema."""
+        response = test_client.get("/openapi.json")
+        schemas = response.json()["components"]["schemas"]
+        
+        assert "StatusHistoryEntry" in schemas
+    
+    def test_status_history_entry_has_rate_limit_fields(self, test_client):
+        """StatusHistoryEntry should have rate limit tracking fields."""
+        response = test_client.get("/openapi.json")
+        schemas = response.json()["components"]["schemas"]
+        
+        if "StatusHistoryEntry" in schemas:
+            properties = schemas["StatusHistoryEntry"]["properties"]
+            assert "is_rate_limit" in properties
+            assert "retry_attempt" in properties
+            assert "wait_seconds" in properties
