@@ -45,6 +45,26 @@ cosmos_preload.py    # Load evaluation datasets to Cosmos DB
 - `GET /api/evaluations/{id}` - Get evaluation run
 - `GET /api/evaluations/{id}/results` - Get evaluation results
 - `GET /api/evaluations/{id}/results/{result_id}` - Get specific test result
+- `POST /api/evaluations/{id}/cancel` - Cancel a running evaluation
+- `DELETE /api/evaluations/{id}` - Delete an evaluation
+
+### Streaming
+
+- `GET /api/evaluations/{id}/stream` - SSE stream for real-time evaluation progress updates
+
+## Features
+
+### Rate Limiting
+The evaluation service implements rate limiting with automatic retry logic when calling the agent endpoint. If a 429 (Too Many Requests) response is received:
+- Automatic retry with exponential backoff
+- Retry count tracked per test case result
+- Configurable through environment variables
+
+### Streaming Progress Updates
+Real-time evaluation progress is available via Server-Sent Events (SSE):
+- Connect to `/api/evaluations/{id}/stream` for live updates
+- Events include test case completion, scores, and status changes
+- Automatic reconnection support in the webapp
 
 ## Data Models
 
