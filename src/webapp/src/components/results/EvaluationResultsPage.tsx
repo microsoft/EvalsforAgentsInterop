@@ -1,4 +1,5 @@
 import { useParams, useNavigate } from "react-router-dom";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -13,6 +14,8 @@ import {
   XCircle,
   CircleNotch,
   Clock,
+  X,
+  Warning,
 } from "@phosphor-icons/react";
 import { Badge } from "@/components/ui/badge";
 import {
@@ -33,6 +36,7 @@ import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Progress } from "@/components/ui/progress";
 import { useAgents } from "@/hooks/useAgents";
 import { useDatasets } from "@/hooks/useDatasets";
+import { apiClient } from "@/lib/api";
 
 const useBreadcrumbStyles = makeStyles({
   // Remove custom styles since we're using Fluent UI's built-in truncation
@@ -42,10 +46,25 @@ export function EvaluationResultsPage() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const breadcrumbStyles = useBreadcrumbStyles();
-  const { evaluation, testCases, loading, error } = useEvaluation(id, true); // Enable polling
+  const { evaluation, testCases, loading, error, refetch } = useEvaluation(id, true); // Enable polling
   const { agents } = useAgents();
   const { datasets } = useDatasets();
   const { createClickHandler } = useSelectableClick();
+  const [isCancelling, setIsCancelling] = useState(false);
+
+  // Handler to cancel the evaluation
+  const handleCancel = async () => {
+    if (!id) return;
+    setIsCancelling(true);
+    try {
+      await apiClient.cancelEvaluation(id);
+      refetch(); // Refresh the evaluation data
+    } catch (err) {
+      console.error("Failed to cancel evaluation:", err);
+    } finally {
+      setIsCancelling(false);
+    }
+  };
 
   // Get agent and dataset details
   const agent = evaluation
@@ -188,6 +207,28 @@ export function EvaluationResultsPage() {
         </div>
       </div>
 
+      {/* Show rate limit warnings if any */}
+      {evaluation.warnings && evaluation.warnings.length > 0 && (
+        <Alert>
+          <AlertDescription className="flex items-start gap-2" style={{ color: "#9E6A03" }}>
+            <Warning size={18} className="mt-0.5 flex-shrink-0" />
+            <div>
+              <strong>Rate Limit Warnings:</strong>
+              <ul className="mt-1 ml-4 list-disc">
+                {evaluation.warnings.slice(0, 5).map((warning, index) => (
+                  <li key={index} className="text-sm">{warning}</li>
+                ))}
+                {evaluation.warnings.length > 5 && (
+                  <li className="text-sm text-muted-foreground">
+                    ...and {evaluation.warnings.length - 5} more warning(s)
+                  </li>
+                )}
+              </ul>
+            </div>
+          </AlertDescription>
+        </Alert>
+      )}
+
       {/* Show progress bar for running/pending evaluations */}
       {(evaluation.status === "running" || evaluation.status === "pending") && (
         <Card>
@@ -211,15 +252,91 @@ export function EvaluationResultsPage() {
                 </div>
               </div>
               <p className="text-xs text-muted-foreground text-center animate-pulse">
-                {evaluation.status === "pending"
+                {evaluation.status_message || (evaluation.status === "pending"
                   ? "Starting evaluation"
-                  : "Running tests"}
+                  : "Running tests")}
                 <span className="inline-block w-3 text-left">
                   <span className="animate-dots">.</span>
                   <span className="animate-dots animation-delay-200">.</span>
                   <span className="animate-dots animation-delay-400">.</span>
                 </span>
               </p>
+              
+              {/* Rate Limit Statistics */}
+              {(evaluation.total_rate_limit_hits ?? 0) > 0 && (
+                <div className="mt-3 p-2 bg-amber-50 dark:bg-amber-950/30 rounded-md">
+                  <div className="flex items-center gap-4 text-xs">
+                    <div className="flex items-center gap-1">
+                      <Warning size={12} className="text-amber-600" />
+                      <span className="text-amber-700 dark:text-amber-400">
+                        <strong>{evaluation.total_rate_limit_hits}</strong> rate limit hit(s)
+                      </span>
+                    </div>
+                    <div className="text-amber-600 dark:text-amber-500">
+                      <strong>{evaluation.total_retry_wait_seconds?.toFixed(1) ?? 0}s</strong> total wait time
+                    </div>
+                  </div>
+                </div>
+              )}
+              
+              {/* Status History Timeline */}
+              {evaluation.status_history && evaluation.status_history.length > 0 && (
+                <div className="mt-4 pt-4 border-t">
+                  <details className="group">
+                    <summary className="cursor-pointer text-xs text-muted-foreground hover:text-foreground flex items-center gap-1">
+                      <Clock size={12} />
+                      <span>Activity Log ({evaluation.status_history.length} entries
+                        {(evaluation.total_rate_limit_hits ?? 0) > 0 && 
+                          `, ${evaluation.total_rate_limit_hits} retries`
+                        }
+                      )</span>
+                    </summary>
+                    <div className="mt-2 max-h-40 overflow-y-auto">
+                      <div className="space-y-1">
+                        {evaluation.status_history.slice().reverse().map((entry, index) => (
+                          <div 
+                            key={index} 
+                            className={`text-xs py-1 px-2 rounded flex items-start gap-2 ${
+                              entry.is_rate_limit 
+                                ? 'bg-amber-50 dark:bg-amber-950/30 text-amber-700 dark:text-amber-400' 
+                                : index === 0 
+                                  ? 'bg-primary/10 text-primary' 
+                                  : 'text-muted-foreground'
+                            }`}
+                          >
+                            <span className="shrink-0 font-mono text-[10px] opacity-70">
+                              {new Date(entry.timestamp).toLocaleTimeString()}
+                            </span>
+                            <span className="break-words flex-1">{entry.message}</span>
+                            {entry.is_rate_limit && entry.wait_seconds && (
+                              <span className="shrink-0 text-[10px] font-mono bg-amber-200 dark:bg-amber-800 px-1 rounded">
+                                +{entry.wait_seconds.toFixed(1)}s
+                              </span>
+                            )}
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </details>
+                </div>
+              )}
+              
+              <div className="flex justify-center pt-2">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={handleCancel}
+                  disabled={isCancelling}
+                  className="gap-2 text-destructive hover:text-destructive"
+                >
+                  {isCancelling ? (
+                    <CircleNotch size={14} className="animate-spin" />
+                  ) : (
+                    <X size={14} />
+                  )}
+                  {isCancelling ? "Cancelling..." : "Cancel Evaluation"}
+                </Button>
+              </div>
             </div>
           </CardContent>
         </Card>
@@ -264,6 +381,54 @@ export function EvaluationResultsPage() {
         </Card>
       </div>
 
+      {/* Status History for completed evaluations */}
+      {evaluation.status !== "running" && evaluation.status !== "pending" && 
+       evaluation.status_history && evaluation.status_history.length > 0 && (
+        <Card>
+          <CardHeader className="pb-3">
+            <CardTitle className="text-lg flex items-center gap-2">
+              <Clock size={18} />
+              Evaluation Activity Log
+            </CardTitle>
+            <CardDescription className="flex items-center gap-4">
+              <span>{evaluation.status_history.length} steps completed</span>
+              {(evaluation.total_rate_limit_hits ?? 0) > 0 && (
+                <span className="flex items-center gap-2 text-amber-600">
+                  <Warning size={14} />
+                  {evaluation.total_rate_limit_hits} rate limit hit(s) • {evaluation.total_retry_wait_seconds?.toFixed(1) ?? 0}s total wait
+                </span>
+              )}
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="max-h-48 overflow-y-auto">
+              <div className="space-y-1">
+                {evaluation.status_history.map((entry, index) => (
+                  <div 
+                    key={index} 
+                    className={`text-sm py-1.5 px-3 rounded flex items-start gap-3 hover:bg-muted/50 ${
+                      entry.is_rate_limit 
+                        ? 'bg-amber-50 dark:bg-amber-950/30 text-amber-700 dark:text-amber-400' 
+                        : ''
+                    }`}
+                  >
+                    <span className="shrink-0 font-mono text-xs text-muted-foreground">
+                      {new Date(entry.timestamp).toLocaleTimeString()}
+                    </span>
+                    <span className={entry.is_rate_limit ? '' : 'text-muted-foreground'}>{entry.message}</span>
+                    {entry.is_rate_limit && entry.wait_seconds && (
+                      <span className="shrink-0 text-xs font-mono bg-amber-200 dark:bg-amber-800 px-1.5 py-0.5 rounded ml-auto">
+                        +{entry.wait_seconds.toFixed(1)}s
+                      </span>
+                    )}
+                  </div>
+                ))}
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      )}
+
       {/* Show test results if available */}
       {evaluation.test_cases && evaluation.test_cases.length > 0 && (
         <div className="space-y-4">
@@ -287,14 +452,52 @@ export function EvaluationResultsPage() {
                         <h3 className="font-medium">
                           {getTestCaseName(testCase.testcase_id)}
                         </h3>
-                        <p className="text-sm text-muted-foreground">
-                          {evaluation.created_at
-                            ? new Date(evaluation.created_at).toLocaleString()
-                            : "No date available"}
+                        <p className="text-sm text-muted-foreground flex items-center gap-2">
+                          <span>
+                            {testCase.completed_at
+                              ? new Date(testCase.completed_at).toLocaleString()
+                              : evaluation.created_at
+                                ? new Date(evaluation.created_at).toLocaleString()
+                                : "No date available"}
+                          </span>
+                          {/* Timing information */}
+                          {testCase.total_duration_seconds != null && (
+                            <span className="text-xs text-muted-foreground/70 font-mono">
+                              ⏱ {testCase.total_duration_seconds.toFixed(1)}s
+                              {testCase.agent_call_duration_seconds != null && testCase.judge_call_duration_seconds != null && (
+                                <span className="ml-1 opacity-70">
+                                  (agent: {testCase.agent_call_duration_seconds.toFixed(1)}s, judge: {testCase.judge_call_duration_seconds.toFixed(1)}s)
+                                </span>
+                              )}
+                            </span>
+                          )}
                         </p>
                       </div>
                     </div>
                     <div className="flex items-center gap-2">
+                      {/* Show retry indicator if there were rate limit retries */}
+                      {testCase.retry_count && testCase.retry_count > 0 && (
+                        <Tooltip
+                          withArrow
+                          content={`${testCase.retry_count} retry(ies) due to rate limits`}
+                          relationship="label"
+                        >
+                          <Badge
+                            variant="outline"
+                            className="text-xs flex items-center gap-1"
+                            style={{
+                              backgroundColor: "#FFFBEB",
+                              color: "#9E6A03",
+                              borderColor: "#FCD34D",
+                              borderRadius: "4px",
+                              padding: "2px 6px",
+                            }}
+                          >
+                            <Warning size={12} />
+                            {testCase.retry_count}×
+                          </Badge>
+                        </Tooltip>
+                      )}
                       <Badge
                         variant={testCase.passed ? "default" : "destructive"}
                         className="text-xs"
@@ -328,7 +531,8 @@ export function EvaluationResultsPage() {
 
       {/* Show message if no results yet */}
       {(!evaluation.test_cases || evaluation.test_cases.length === 0) &&
-        evaluation.status !== "failed" && (
+        evaluation.status !== "failed" &&
+        evaluation.status !== "cancelled" && (
           <Card>
             <CardContent className="flex flex-col items-center justify-center py-12">
               {evaluation.status === "running" ||
@@ -371,6 +575,15 @@ export function EvaluationResultsPage() {
           <AlertDescription style={{ color: "#C4314B" }}>
             This evaluation run failed. Please check the logs for more
             information.
+          </AlertDescription>
+        </Alert>
+      )}
+
+      {/* Show message if evaluation was cancelled */}
+      {evaluation.status === "cancelled" && (
+        <Alert>
+          <AlertDescription style={{ color: "#9E6A03" }}>
+            This evaluation was cancelled. Completed tests: {evaluation.completed_tests} / {evaluation.total_tests}.
           </AlertDescription>
         </Alert>
       )}

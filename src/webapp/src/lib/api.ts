@@ -1,4 +1,37 @@
-// API client for the Agent Arena backend
+/**
+ * API Client for the Agent Evaluations Backend
+ * 
+ * ==============================================================================
+ * FEATURES IMPLEMENTED IN THIS MODULE:
+ * ==============================================================================
+ * 
+ * 1. RATE LIMIT TRACKING (Feature: rate-limit-retry)
+ *    - TestCaseResult.retry_count: Shows how many retries were needed
+ *    - EvaluationRun.warnings: Collects rate limit warning messages
+ *    - EvaluationRun.total_rate_limit_hits: Aggregate count
+ *    - EvaluationRun.total_retry_wait_seconds: Total time spent waiting
+ * 
+ * 2. TIMING METRICS (Feature: timing-metrics)
+ *    - TestCaseResult.completed_at: When each test finished
+ *    - TestCaseResult.agent_call_duration_seconds: Agent call time
+ *    - TestCaseResult.judge_call_duration_seconds: LLM judge time
+ *    - TestCaseResult.total_duration_seconds: End-to-end time
+ * 
+ * 3. VERBOSE LOGGING (Feature: verbose-logging)
+ *    - CreateEvaluationRequest.verbose_logging: Enable detailed logging
+ *    - EvaluationRun.verbose_logging: Flag stored on evaluation
+ * 
+ * 4. STATUS UPDATES (Feature: status-updates)
+ *    - EvaluationRun.status_message: Current activity for live updates
+ *    - EvaluationRun.status_history: Chronological activity log
+ *    - StatusHistoryEntry: Timestamped status with rate limit details
+ * 
+ * 5. CANCEL EVALUATION (Feature: cancel-evaluation)
+ *    - cancelEvaluation(): API method to cancel running evaluations
+ * 
+ * ==============================================================================
+ */
+
 import { API_BASE_URL } from "./config";
 
 // Backend types from the API matching models2.py schema
@@ -100,7 +133,8 @@ export interface CreateTestCaseRequest {
 	evaluationCriteria: string;
 }
 
-export type EvaluationRunStatus = "pending" | "running" | "completed" | "failed";
+// Feature: cancel-evaluation - Added "cancelled" status
+export type EvaluationRunStatus = "pending" | "running" | "completed" | "failed" | "cancelled";
 
 // Structured evaluation result types
 export interface AssertionResult {
@@ -128,6 +162,13 @@ export interface ResponseQualityResult {
 	llm_judge_output: string;
 }
 
+/**
+ * Result of a single test case execution.
+ * 
+ * Features included:
+ * - retry_count (Feature: rate-limit-retry): Number of retries due to rate limits
+ * - completed_at, agent_call_duration_seconds, etc. (Feature: timing-metrics): Performance data
+ */
 export interface TestCaseResult {
 	testcase_id: string;
 	passed: boolean;
@@ -141,6 +182,12 @@ export interface TestCaseResult {
 		response?: any;  // MCP tool response
 	}>;
 	execution_error?: string | null;
+	retry_count?: number;  // Number of retries due to rate limits
+	// Timing information
+	completed_at?: string | null;  // When this test case completed
+	agent_call_duration_seconds?: number | null;  // Time for agent call including retries
+	judge_call_duration_seconds?: number | null;  // Time for LLM judge calls
+	total_duration_seconds?: number | null;  // Total time for this test case
 }
 
 export interface EvaluationRun {
@@ -152,6 +199,7 @@ export interface EvaluationRun {
 	agent_endpoint: string;
 	agent_auth_required: boolean;
 	timeout_seconds: number;
+	verbose_logging?: boolean;  // Enable detailed assertion-level status updates
 	total_tests: number;
 	completed_tests: number;
 	failed_tests: number;
@@ -160,6 +208,20 @@ export interface EvaluationRun {
 	started_at?: string | null;
 	completed_at?: string | null;
 	test_cases: TestCaseResult[];
+	warnings?: string[];  // Warnings like rate limit retries
+	status_message?: string | null;  // Current activity message
+	status_history?: StatusHistoryEntry[];  // Chronological list of status messages
+	total_rate_limit_hits?: number;  // Total number of rate limit errors encountered
+	total_retry_wait_seconds?: number;  // Total time spent waiting on retries
+}
+
+export interface StatusHistoryEntry {
+	timestamp: string;
+	message: string;
+	is_rate_limit?: boolean;  // Whether this entry is a rate limit event
+	retry_attempt?: number | null;  // Which retry attempt (1-based)
+	max_attempts?: number | null;  // Maximum retry attempts configured
+	wait_seconds?: number | null;  // Seconds waiting before retry
 }
 
 export interface CreateEvaluationRequest {
@@ -169,6 +231,7 @@ export interface CreateEvaluationRequest {
 	agent_endpoint: string;
 	agent_auth_required?: boolean;
 	timeout_seconds?: number;
+	verbose_logging?: boolean;  // Enable detailed assertion-level status updates
 }
 
 class ApiClient {
@@ -364,6 +427,7 @@ class ApiClient {
 		agent_endpoint: string;
 		agent_auth_required?: boolean;
 		timeout_seconds?: number;
+		verbose_logging?: boolean;
 	}): Promise<EvaluationRun> {
 		const response = await fetch(`${this.baseUrl}/evaluations`, {
 			method: "POST",
@@ -396,6 +460,16 @@ class ApiClient {
 		const response = await fetch(`${this.baseUrl}/evaluations/${evaluationId}`);
 		if (!response.ok) {
 			throw new Error(`Failed to fetch evaluation: ${response.statusText}`);
+		}
+		return response.json();
+	}
+
+	async cancelEvaluation(evaluationId: string): Promise<EvaluationRun> {
+		const response = await fetch(`${this.baseUrl}/evaluations/${evaluationId}/cancel`, {
+			method: "POST",
+		});
+		if (!response.ok) {
+			throw new Error(`Failed to cancel evaluation: ${response.statusText}`);
 		}
 		return response.json();
 	}
