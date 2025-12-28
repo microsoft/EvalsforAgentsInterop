@@ -1,3 +1,31 @@
+/**
+ * Evaluation Results Page
+ * 
+ * Displays the results of an evaluation run including test case outcomes,
+ * progress tracking, and activity log.
+ * 
+ * ==============================================================================
+ * FEATURES ADDED IN THIS FILE:
+ * ==============================================================================
+ * 
+ * 1. CANCEL EVALUATION (Feature: cancel-evaluation)
+ *    - Cancel button appears during "pending" or "running" status
+ *    - Calls apiClient.cancelEvaluation() to stop the evaluation
+ *    - Updates status to "cancelled" with partial results preserved
+ * 
+ * 2. RATE LIMIT WARNINGS (Feature: rate-limit-retry)
+ *    - Displays warning banner when evaluation.warnings contains rate limit info
+ *    - Shows total rate limit hits and time spent waiting
+ *    - Helps users understand why evaluations may take longer
+ * 
+ * 3. STATUS ACTIVITY LOG (Feature: status-updates)
+ *    - Collapsible activity log showing evaluation progress timeline
+ *    - Highlights rate limit events with warning styling
+ *    - Real-time updates via polling when evaluation is running
+ * 
+ * ==============================================================================
+ */
+
 import { useParams, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
