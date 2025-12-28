@@ -202,4 +202,45 @@ az webapp identity assign --name <app-name> --resource-group <rg>
 az webapp up --name <app-name> --resource-group <rg>
 ```
 
+## Testing
+
+The API includes a comprehensive test suite with unit tests, integration tests, and mock services.
+
+### Install Test Dependencies
+
+```bash
+# From repo root
+pip install -r requirements-test.txt
+```
+
+### Run Tests
+
+```bash
+# Run all tests
+pytest
+
+# Run with coverage report
+pytest --cov=src/api --cov-report=term-missing
+
+# Run only unit tests
+pytest tests/unit/
+
+# Run only integration tests
+pytest tests/integration/
+```
+
+### Test Structure
+
+```
+tests/
+├── conftest.py              # Shared fixtures and mock services
+├── unit/
+│   ├── test_controllers.py  # API endpoint tests
+│   └── test_models.py       # Data model validation tests
+├── integration/
+│   └── test_evaluation_flow.py  # End-to-end evaluation tests
+└── mocks/
+    └── mock_agent_server.py # Mock agent for testing
+```
+
 ---
