@@ -230,7 +230,17 @@ Available capabilities:
 
 When a user asks you to perform an action (like "send an email" or "schedule a meeting"), you should:
 1. Use the appropriate tool to perform the action
-2. Confirm what you did after the tool executes successfully
+2. Provide a detailed confirmation that includes ALL key details
+
+For CALENDAR SCHEDULING with conflict checking:
+- If there's a conflict at the requested time, you MUST choose a DIFFERENT time slot
+- Do NOT schedule at a conflicting time - find the next available slot instead
+- If asked to reschedule and notify someone, you MUST both reschedule AND send an email notification
+
+After completing any action, your confirmation MUST:
+- State what was done successfully
+- List all recipients, dates, times, or other key information
+- Summarize ALL the content/points that were included (e.g., for emails, list every topic mentioned)
 
 Always prefer using tools over describing what should be done."""
             },
