@@ -315,7 +315,7 @@ class TestFullEvaluationPipeline:
             minimal_tool_set=["sendMail"],
             expected_response="Email sent"
         )
-        await mock_cosmos_service.create_test_case(test_case)
+        await mock_cosmos_service.create_testcase(test_case)
         
         # 3. Create an agent
         agent = Agent(
@@ -332,7 +332,7 @@ class TestFullEvaluationPipeline:
         retrieved_agent = await mock_cosmos_service.get_agent(agent.id)
         assert retrieved_agent is not None
         
-        test_cases = await mock_cosmos_service.get_test_cases_for_dataset(dataset.id)
+        test_cases = await mock_cosmos_service.list_testcases_by_dataset(dataset.id)
         assert len(test_cases) == 1
         assert test_cases[0].name == "Simple Email Test"
     

@@ -55,19 +55,39 @@ def mock_cosmos_service():
         return False
     
     # Test case operations
-    async def create_test_case(test_case):
+    async def create_testcase(test_case):
+        mock._testcases[test_case.id] = test_case
+        # Also update dataset's test_case_ids
+        if test_case.dataset_id in mock._datasets:
+            dataset = mock._datasets[test_case.dataset_id]
+            if test_case.id not in dataset.test_case_ids:
+                dataset.test_case_ids.append(test_case.id)
+        return test_case
+    
+    async def get_testcase(test_case_id, dataset_id=None):
+        tc = mock._testcases.get(test_case_id)
+        if tc and dataset_id and tc.dataset_id != dataset_id:
+            return None
+        return tc
+    
+    async def list_testcases_by_dataset(dataset_id):
+        return [tc for tc in mock._testcases.values() if tc.dataset_id == dataset_id]
+    
+    async def update_testcase(test_case):
         mock._testcases[test_case.id] = test_case
         return test_case
     
-    async def get_test_case(test_case_id):
-        return mock._testcases.get(test_case_id)
-    
-    async def get_test_cases_for_dataset(dataset_id):
-        return [tc for tc in mock._testcases.values() if tc.dataset_id == dataset_id]
-    
-    async def delete_test_case(test_case_id):
-        if test_case_id in mock._testcases:
+    async def delete_testcase(test_case_id, dataset_id=None):
+        tc = mock._testcases.get(test_case_id)
+        if tc:
+            if dataset_id and tc.dataset_id != dataset_id:
+                return False
             del mock._testcases[test_case_id]
+            # Remove from dataset's test_case_ids
+            if tc.dataset_id in mock._datasets:
+                dataset = mock._datasets[tc.dataset_id]
+                if test_case_id in dataset.test_case_ids:
+                    dataset.test_case_ids.remove(test_case_id)
             return True
         return False
     
@@ -88,6 +108,12 @@ def mock_cosmos_service():
             del mock._agents[agent_id]
             return True
         return False
+    
+    async def update_agent(agent_id, agent):
+        if agent_id not in mock._agents:
+            return None
+        mock._agents[agent_id] = agent
+        return agent
     
     # Evaluation operations
     async def create_evaluation_run(eval_run):
@@ -117,15 +143,17 @@ def mock_cosmos_service():
     mock.list_datasets = list_datasets
     mock.delete_dataset = delete_dataset
     
-    mock.create_test_case = create_test_case
-    mock.get_test_case = get_test_case
-    mock.get_test_cases_for_dataset = get_test_cases_for_dataset
-    mock.delete_test_case = delete_test_case
+    mock.create_testcase = create_testcase
+    mock.get_testcase = get_testcase
+    mock.list_testcases_by_dataset = list_testcases_by_dataset
+    mock.update_testcase = update_testcase
+    mock.delete_testcase = delete_testcase
     
     mock.create_agent = create_agent
     mock.get_agent = get_agent
     mock.list_agents = list_agents
     mock.delete_agent = delete_agent
+    mock.update_agent = update_agent
     
     mock.create_evaluation_run = create_evaluation_run
     mock.get_evaluation_run = get_evaluation_run
