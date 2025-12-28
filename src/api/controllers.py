@@ -351,6 +351,8 @@ async def cancel_evaluation(evaluation_id: str):
         if not eval_run:
             raise HTTPException(404, f"Evaluation '{evaluation_id}' not found")
         return eval_run
+    except HTTPException:
+        raise  # Re-raise HTTP exceptions as-is
     except ValueError as e:
         raise HTTPException(400, str(e))
     except Exception as e:
@@ -363,5 +365,7 @@ async def delete_evaluation(evaluation_id: str):
         success = await evaluator.delete_evaluation_run(evaluation_id)
         if not success:
             raise HTTPException(404, f"Evaluation '{evaluation_id}' not found")
+    except HTTPException:
+        raise  # Re-raise HTTP exceptions as-is
     except Exception as e:
         raise HTTPException(500, f"Failed to delete evaluation: {str(e)}")
