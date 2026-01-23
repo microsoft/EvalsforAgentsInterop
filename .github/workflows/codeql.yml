@@ -32,6 +32,7 @@ jobs:
     runs-on: ${{ (matrix.language == 'swift' && 'macos-latest') || 'ubuntu-latest' }}
     # Skip if this is pull_request_target event from the same repo (pull_request already handles it)
     # Or skip if this is pull_request event from a fork (pull_request_target will handle it)
+    # This ensures: Internal PRs use pull_request only, Fork PRs use pull_request_target only
     if: |
       (github.event_name != 'pull_request_target' || github.event.pull_request.head.repo.full_name != github.repository) &&
       (github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository)
@@ -66,6 +67,7 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v4
       with:
+        # For PR events: use PR head SHA; for push/schedule: use the commit SHA
         ref: ${{ github.event.pull_request.head.sha || github.sha }}
 
     # Add any setup steps before running the `github/codeql-action/init` action.
