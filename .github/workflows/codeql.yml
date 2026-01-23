@@ -16,6 +16,8 @@ on:
     branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
+  pull_request_target:
+    branches: [ "main" ]
   schedule:
     - cron: '17 3 * * 0'
 
@@ -28,6 +30,11 @@ jobs:
     #   - https://gh.io/using-larger-runners (GitHub.com only)
     # Consider using larger runners or machines with greater resources for possible analysis time improvements.
     runs-on: ${{ (matrix.language == 'swift' && 'macos-latest') || 'ubuntu-latest' }}
+    # Skip if this is pull_request_target event from the same repo (pull_request already handles it)
+    # Or skip if this is pull_request event from a fork (pull_request_target will handle it)
+    if: |
+      (github.event_name != 'pull_request_target' || github.event.pull_request.head.repo.full_name != github.repository) &&
+      (github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository)
     permissions:
       # required for all workflows
       security-events: write
@@ -58,6 +65,8 @@ jobs:
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
+      with:
+        ref: ${{ github.event.pull_request.head.sha || github.sha }}
 
     # Add any setup steps before running the `github/codeql-action/init` action.
     # This includes steps like installing compilers or runtimes (`actions/setup-node`
