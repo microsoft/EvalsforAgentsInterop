@@ -47,7 +47,7 @@ export function useEvaluation(evaluationId: string | undefined, enablePolling = 
 
 	// Polling for live updates when evaluation is running
 	useEffect(() => {
-		if (!enablePolling || !evaluation || evaluation.status === "completed" || evaluation.status === "failed") {
+		if (!enablePolling || !evaluation || evaluation.status === "completed" || evaluation.status === "failed" || evaluation.status === "cancelled") {
 			return;
 		}
 
