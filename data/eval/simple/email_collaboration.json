@@ -70,7 +70,7 @@
 					"arguments": [
 						{
 							"name": "toRecipients",
-							"assertion": ["The 'toRecipients' field contains kim.research@university.edu"],
+							"assertion": ["The 'toRecipients' field contains chen.research@university.edu"],
 							"rubrics": []
 						},
 						{
@@ -188,8 +188,8 @@
 			"id": "tc_9f2e8a1b6c4d7k5j",
 			"dataset_id": "dataset_dataset_ee6f00f762394612",
 			"name": "Client Meeting Follow-up",
-			"description": "Send a follow-up email to sarah.johnson@clientcorp.com summarizing our proposal meeting. Include these key points: 1) Their budget approval timeline is 3 weeks, 2) They need integration with their existing CRM system, 3) Demo scheduled for next Tuesday at 2 PM EST, 4) Technical requirements include single sign-on and API access. Ask for confirmation of the demo time and any additional attendees.",
-			"input": "Send a follow-up email to sarah.johnson@clientcorp.com summarizing our proposal meeting. Include these key points: 1) Their budget approval timeline is 3 weeks, 2) They need integration with their existing CRM system, 3) Demo scheduled for next Tuesday at 2 PM EST, 4) Technical requirements include single sign-on and API access. Ask for confirmation of the demo time and any additional attendees.",
+			"description": "Send a follow-up email to riley.kim@clientcorp.com summarizing our proposal meeting. Include these key points: 1) Their budget approval timeline is 3 weeks, 2) They need integration with their existing CRM system, 3) Demo scheduled for next Tuesday at 2 PM EST, 4) Technical requirements include single sign-on and API access. Ask for confirmation of the demo time and any additional attendees.",
+			"input": "Send a follow-up email to riley.kim@clientcorp.com summarizing our proposal meeting. Include these key points: 1) Their budget approval timeline is 3 weeks, 2) They need integration with their existing CRM system, 3) Demo scheduled for next Tuesday at 2 PM EST, 4) Technical requirements include single sign-on and API access. Ask for confirmation of the demo time and any additional attendees.",
 			"minimal_tool_set": ["sendMail"],
 			"tool_expectations": [
 				{
@@ -197,7 +197,7 @@
 					"arguments": [
 						{
 							"name": "toRecipients",
-							"assertion": ["The 'toRecipients' field contains sarah.johnson@clientcorp.com"],
+							"assertion": ["The 'toRecipients' field contains riley.chen@clientcorp.com"],
 							"rubrics": []
 						},
 						{
