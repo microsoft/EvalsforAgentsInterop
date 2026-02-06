@@ -7,6 +7,7 @@ import {
   NavItem,
   Button,
   Tooltip,
+  Badge,
   makeStyles,
   tokens,
 } from "@fluentui/react-components";
@@ -55,6 +56,13 @@ const useStyles = makeStyles({
     flex: "1 1 auto",
     minWidth: "0",
     maxWidth: "100%",
+  },
+  titleContainer: {
+    display: "flex",
+    alignItems: "center",
+    gap: "8px",
+    flex: 1,
+    minWidth: 0,
   },
   navItem: {
     paddingLeft: "4px", //Spacing/xs
@@ -131,11 +139,11 @@ export function Navigation() {
         >
         <NavDrawerHeader>
           <div className={styles.navHeader}>
-            <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+            <div className={styles.titleContainer}>
               <img
                 src="/images/microsoftlogo.svg"
                 alt="Microsoft logo"
-                style={{ width: "24px", height: "24px" }}
+                style={{ width: "24px", height: "24px", flexShrink: 0 }}
               />
               <div className={styles.title}>Evals for Agent Interop</div>
               <Badge appearance="tint" color="brand" shape="circular" size="small">
