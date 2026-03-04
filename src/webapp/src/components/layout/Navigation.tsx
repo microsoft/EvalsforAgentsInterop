@@ -129,14 +129,14 @@ export function Navigation() {
           />
         </Tooltip>
       )}
-      {isOpen && (
-        <NavDrawer
-          selectedValue={selectedValue}
-          open={isOpen}
-          type="inline"
-          className={styles.nav}
-          style={{ height: "100vh", display: "flex", flexDirection: "column" }}
-        >
+      <NavDrawer
+        selectedValue={selectedValue}
+        open={isOpen}
+        type="inline"
+        className={styles.nav}
+        style={{ height: "100vh", display: "flex", flexDirection: "column" }}
+        {...(!isOpen && { inert: "" })}
+      >
         <NavDrawerHeader>
           <div className={styles.navHeader}>
             <div className={styles.titleContainer}>
@@ -187,7 +187,6 @@ export function Navigation() {
           </NavItem>
         </NavDrawerBody>
       </NavDrawer>
-      )}
     </>
   );
 }
