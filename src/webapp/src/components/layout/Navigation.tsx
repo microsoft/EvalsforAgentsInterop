@@ -97,6 +97,7 @@ export function Navigation() {
         type="inline"
         className={styles.nav}
         style={{ height: "100vh", display: "flex", flexDirection: "column" }}
+        {...(!isOpen ? { inert: "" } : {})}
       >
         <NavDrawerHeader>
           <div className={styles.navHeader}>
