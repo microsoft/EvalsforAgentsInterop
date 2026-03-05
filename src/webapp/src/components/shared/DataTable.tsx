@@ -17,6 +17,7 @@ const useStyles = makeStyles({
     backgroundColor: tokens.colorNeutralBackground1,
     width: "100%",
     tableLayout: "fixed", // Ensures consistent column widths
+    overflow: "visible", // Ensure focus indicators aren't clipped by table
   },
   tableRow: {
     marginLeft: "8px",
@@ -26,7 +27,7 @@ const useStyles = makeStyles({
     paddingTop: "16px",
     paddingBottom: "16px",
     paddingLeft: "8px",
-    paddingRight: "8px",
+    paddingRight: "16px", // Increased padding to accommodate focus rings (3px) on buttons
     whiteSpace: "nowrap", // Prevent header text wrapping
     overflow: "visible", // Allow focus outlines to be visible
     textOverflow: "ellipsis",
@@ -36,7 +37,7 @@ const useStyles = makeStyles({
     paddingTop: "16px",
     paddingBottom: "16px",
     paddingLeft: "8px",
-    paddingRight: "8px",
+    paddingRight: "16px", // Increased padding to accommodate focus rings (3px) on buttons
     whiteSpace: "nowrap", // Prevent cell content wrapping
     overflow: "visible", // Allow focus outlines to be visible
     textOverflow: "ellipsis",
@@ -51,6 +52,11 @@ const useStyles = makeStyles({
   tableContainer: {
     width: "100%",
     overflowX: "auto", // Enable horizontal scrolling when needed
+    paddingTop: "4px",
+    paddingBottom: "4px", 
+    paddingLeft: "4px",
+    paddingRight: "20px", // Extra right padding to prevent focus ring (3px) clipping on rightmost buttons
+    overflowY: "visible", // Allow vertical overflow for focus rings to be fully visible
   },
 });
 
