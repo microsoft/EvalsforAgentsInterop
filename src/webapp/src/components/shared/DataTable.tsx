@@ -28,7 +28,7 @@ const useStyles = makeStyles({
     paddingLeft: "8px",
     paddingRight: "8px",
     whiteSpace: "nowrap", // Prevent header text wrapping
-    overflow: "hidden",
+    overflow: "visible", // Allow focus outlines to be visible
     textOverflow: "ellipsis",
     maxWidth: 0, // This forces the ellipsis to work with flexbox
   },
@@ -38,12 +38,12 @@ const useStyles = makeStyles({
     paddingLeft: "8px",
     paddingRight: "8px",
     whiteSpace: "nowrap", // Prevent cell content wrapping
-    overflow: "hidden",
+    overflow: "visible", // Allow focus outlines to be visible
     textOverflow: "ellipsis",
     maxWidth: 0, // This forces the ellipsis to work with flexbox
   },
   tableCellContent: {
-    overflow: "hidden",
+    overflow: "visible", // Allow focus outlines and interactive elements to be fully visible
     textOverflow: "ellipsis",
     whiteSpace: "nowrap",
     width: "100%",
