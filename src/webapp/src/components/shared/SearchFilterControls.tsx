@@ -174,6 +174,7 @@ export function SearchFilterControls({
             className={styles.filterDropdown}
             style={{ minWidth: filter.minWidth || "180px", maxWidth: "250px" }}
             placeholder={filter.placeholder}
+            aria-label={filter.placeholder}
             multiselect={filter.multiselect}
             value={getDisplayValue(filter)}
             selectedOptions={filter.selectedOptions}
