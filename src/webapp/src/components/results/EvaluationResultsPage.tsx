@@ -553,6 +553,60 @@ export function EvaluationResultsPage() {
                       </p>
                     </div>
                   )}
+
+                  {/* Show Azure Foundry metrics if available for this test case and rubrics UX is enabled */}
+                  {testCase.azure_ai_metrics && rubricsConfig.enabled && (
+                    <div className="mt-4 pt-4 border-t-2 border-blue-100 bg-blue-50/30 rounded-lg p-3">
+                      <div className="text-sm font-semibold text-blue-800 mb-3 flex items-center gap-2">
+                        <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+                        Azure AI Foundry Metrics
+                      </div>
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
+                        {testCase.azure_ai_metrics.intent_resolution_score !== null && testCase.azure_ai_metrics.intent_resolution_score !== undefined && (
+                          <div className="flex justify-between items-center bg-white rounded px-2 py-1 shadow-sm">
+                            <span className="text-gray-600 font-medium">Intent Resolution:</span>
+                            <span className="font-bold text-blue-700 text-lg">{testCase.azure_ai_metrics.intent_resolution_score}/5</span>
+                          </div>
+                        )}
+                        {testCase.azure_ai_metrics.task_adherence_score !== null && testCase.azure_ai_metrics.task_adherence_score !== undefined && (
+                          <div className="flex justify-between items-center bg-white rounded px-2 py-1 shadow-sm">
+                            <span className="text-gray-600 font-medium">Task Adherence:</span>
+                            <span className="font-bold text-blue-700 text-lg">{testCase.azure_ai_metrics.task_adherence_score}/5</span>
+                          </div>
+                        )}
+                        {testCase.azure_ai_metrics.tool_call_accuracy_score !== null && testCase.azure_ai_metrics.tool_call_accuracy_score !== undefined && (
+                          <div className="flex justify-between items-center bg-white rounded px-2 py-1 shadow-sm">
+                            <span className="text-gray-600 font-medium">Tool Accuracy:</span>
+                            <span className="font-bold text-blue-700 text-lg">{testCase.azure_ai_metrics.tool_call_accuracy_score}/5</span>
+                          </div>
+                        )}
+                        {testCase.azure_ai_metrics.coherence_score !== null && testCase.azure_ai_metrics.coherence_score !== undefined && (
+                          <div className="flex justify-between items-center bg-white rounded px-2 py-1 shadow-sm">
+                            <span className="text-gray-600 font-medium">Coherence:</span>
+                            <span className="font-bold text-blue-700 text-lg">{testCase.azure_ai_metrics.coherence_score}/5</span>
+                          </div>
+                        )}
+                        {testCase.azure_ai_metrics.fluency_score !== null && testCase.azure_ai_metrics.fluency_score !== undefined && (
+                          <div className="flex justify-between items-center bg-white rounded px-2 py-1 shadow-sm">
+                            <span className="text-gray-600 font-medium">Fluency:</span>
+                            <span className="font-bold text-blue-700 text-lg">{testCase.azure_ai_metrics.fluency_score}/5</span>
+                          </div>
+                        )}
+                        {testCase.azure_ai_metrics.relevance_score !== null && testCase.azure_ai_metrics.relevance_score !== undefined && (
+                          <div className="flex justify-between items-center bg-white rounded px-2 py-1 shadow-sm">
+                            <span className="text-gray-600 font-medium">Relevance:</span>
+                            <span className="font-bold text-blue-700 text-lg">{testCase.azure_ai_metrics.relevance_score}/5</span>
+                          </div>
+                        )}
+                        {testCase.azure_ai_metrics.groundedness_score !== null && testCase.azure_ai_metrics.groundedness_score !== undefined && (
+                          <div className="flex justify-between items-center bg-white rounded px-2 py-1 shadow-sm">
+                            <span className="text-gray-600 font-medium">Groundedness:</span>
+                            <span className="font-bold text-blue-700 text-lg">{testCase.azure_ai_metrics.groundedness_score}/5</span>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  )}
                 </CardContent>
               </Card>
             );

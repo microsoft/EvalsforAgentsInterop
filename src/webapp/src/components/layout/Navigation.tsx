@@ -20,7 +20,7 @@ const useStyles = makeStyles({
   },
   nav: {
     width: "20vw",
-    minWidth: "240px",
+    minWidth: "200px",
     maxWidth: "400px",
     height: "100vh",
     borderRight: `1px solid ${tokens.colorNeutralStroke2}`,
@@ -79,11 +79,23 @@ export function Navigation() {
   const location = useLocation();
   const navigate = useNavigate();
   const [selectedValue, setSelectedValue] = useState(location.pathname);
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(() => window.innerWidth >= 768);
 
   useEffect(() => {
     setSelectedValue(location.pathname);
   }, [location.pathname]);
+
+  // Handle window resize to auto-collapse navigation on narrow viewports
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth < 768) {
+        setIsOpen(false);
+      }
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   const handleSelectionChange = (path: string) => {
     setSelectedValue(path);
@@ -103,14 +115,14 @@ export function Navigation() {
           />
         </Tooltip>
       )}
-      <NavDrawer
-        selectedValue={selectedValue}
-        open={isOpen}
-        type="inline"
-        className={styles.nav}
-        style={{ height: "100vh", display: "flex", flexDirection: "column" }}
-        {...(!isOpen ? { inert: "" } : {})}
-      >
+      {isOpen && (
+        <NavDrawer
+          selectedValue={selectedValue}
+          open={isOpen}
+          type="inline"
+          className={styles.nav}
+          style={{ height: "100vh", display: "flex", flexDirection: "column" }}
+        >
         <NavDrawerHeader>
           <div className={styles.navHeader}>
             <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
@@ -158,6 +170,7 @@ export function Navigation() {
           </NavItem>
         </NavDrawerBody>
       </NavDrawer>
+      )}
     </>
   );
 }

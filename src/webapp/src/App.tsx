@@ -64,19 +64,15 @@ function App() {
               className="bg-background"
               style={{
                 height: "100vh",
-                width: "100vw",
+                width: "100%",
                 display: "flex",
                 overflow: "hidden",
               }}
             >
               <Navigation />
               <main
-                className="flex-1"
+                className="flex-1 p-4 sm:p-6 md:p-8 lg:p-12 overflow-auto"
                 style={{
-                  padding: "48px",
-                  paddingTop: "32px",
-                  paddingBottom: "32px",
-                  overflow: "auto",
                   height: "100vh",
                   minWidth: 0,
                 }}
