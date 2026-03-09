@@ -27,12 +27,14 @@ const useStyles = makeStyles({
     display: "flex",
     flexDirection: "column",
     flexShrink: 0,
+    overflowX: "hidden",
   },
   navBody: {
     flex: "1",
-    overflow: "auto",
+    overflowY: "auto",
+    overflowX: "hidden",
     paddingLeft: "24px",
-    paddingRight: "12px",
+    paddingRight: "24px",
   },
   navHeader: {
     display: "flex",
@@ -44,16 +46,20 @@ const useStyles = makeStyles({
     paddingBottom: "16px",
     gap: "8px",
     flexWrap: "wrap",
+    overflowX: "hidden",
   },
   titleContainer: {
     display: "flex",
     alignItems: "center",
     gap: "8px",
     flex: "1 1 auto",
-    minWidth: "200px",
+    minWidth: "0",
+    maxWidth: "100%",
   },
   navItem: {
     paddingLeft: "4px", //Spacing/xs
+    paddingRight: "8px",
+    marginRight: "4px",
   },
   title: {
     fontSize: tokens.fontSizeBase300,
