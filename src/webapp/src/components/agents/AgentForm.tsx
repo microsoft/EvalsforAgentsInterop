@@ -82,6 +82,8 @@ export function AgentForm({
           value={agentInvocationUrl}
           onChange={(e) => setAgentInvocationUrl(e.target.value)}
           disabled={isLoading}
+          aria-invalid={agentInvocationUrl.trim() && !isUrlValid ? "true" : "false"}
+          aria-describedby={agentInvocationUrl.trim() && !isUrlValid ? "agent-url-error" : undefined}
           className={
             agentInvocationUrl.trim() && !isUrlValid
               ? ""
@@ -93,7 +95,12 @@ export function AgentForm({
           } : {}}
         />
         {agentInvocationUrl.trim() && !isUrlValid && (
-          <p style={{ fontSize: "14px", color: "#C4314B" }}>
+          <p 
+            id="agent-url-error"
+            role="alert"
+            aria-live="polite"
+            style={{ fontSize: "14px", color: "#C4314B" }}
+          >
             Please enter a valid URL
           </p>
         )}
