@@ -173,7 +173,7 @@ export function AgentsPage() {
             <div
               style={{
                 fontSize: "12px",
-                color: "#6b7280",
+                color: "#525252",
                 display: "-webkit-box",
                 WebkitLineClamp: 2,
                 WebkitBoxOrient: "vertical",
@@ -215,7 +215,7 @@ export function AgentsPage() {
               flexShrink: 0,
               borderRadius: "4px",
               background: "#EBEBEB",
-              color: "#6B7280",
+              color: "#525252",
               border: "none",
             }}
           >

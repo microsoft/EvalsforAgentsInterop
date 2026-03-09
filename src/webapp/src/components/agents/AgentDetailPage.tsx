@@ -377,7 +377,7 @@ export function AgentDetailPage() {
                     flexShrink: 0,
                     borderRadius: "4px",
                     background: "#EBEBEB",
-                    color: "#6B7280",
+                    color: "#525252",
                     border: "none",
                   }}
                 >

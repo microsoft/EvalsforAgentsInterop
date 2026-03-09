@@ -310,7 +310,7 @@ export function TestCaseDetailPage() {
                                       flexShrink: 0,
                                       borderRadius: "4px",
                                       background: "#EBEBEB",
-                                      color: "#6B7280",
+                                      color: "#525252",
                                       border: "none",
                                       fontSize: "12px",
                                     }}
