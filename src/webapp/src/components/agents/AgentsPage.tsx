@@ -163,9 +163,9 @@ export function AgentsPage() {
               style={{
                 fontWeight: 600,
                 fontSize: "14px",
-                overflow: "hidden",
-                textOverflow: "ellipsis",
-                whiteSpace: "nowrap",
+                overflow: "visible",
+                wordBreak: "break-word",
+                overflowWrap: "break-word",
               }}
             >
               {agent.name}
@@ -255,6 +255,7 @@ export function AgentsPage() {
                 variant="ghost"
                 size="sm"
                 onClick={(e) => e.stopPropagation()}
+                aria-label="Agent options"
               >
                 <DotsThree size={16} />
               </Button>

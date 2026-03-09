@@ -60,6 +60,7 @@ import { Document20Regular } from "@fluentui/react-icons";
 import { AIContentDisclaimer } from "@/components/shared/AIContentDisclaimer";
 import { useEvaluation } from "@/hooks/useEvaluation";
 import { useSelectableClick } from "@/hooks/useSelectableClick";
+import { getKeyboardProps } from "@/hooks/useKeyboardClick";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Progress } from "@/components/ui/progress";
 import { useAgents } from "@/hooks/useAgents";
@@ -463,13 +464,15 @@ export function EvaluationResultsPage() {
           <h2 className="text-xl font-semibold">Test Results</h2>
 
           <div className="grid grid-cols-1 gap-3">
-            {evaluation.test_cases.map((testCase, index) => (
+            {evaluation.test_cases.map((testCase, index) => {
+              const keyboardProps = getKeyboardProps((event) =>
+                handleTestCaseClick(testCase.testcase_id, event)
+              );
+              return (
               <Card
                 key={testCase.testcase_id}
-                className="cursor-pointer transition-all border-indigo-100/70 shadow-indigo-50/30 shadow-sm hover:shadow-indigo-100/50 hover:shadow-md"
-                onClick={(event) =>
-                  handleTestCaseClick(testCase.testcase_id, event)
-                }
+                className="cursor-pointer transition-all border-indigo-100/70 shadow-indigo-50/30 shadow-sm hover:shadow-indigo-100/50 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+                {...keyboardProps}
                 style={{ userSelect: "text" }}
               >
                 <CardContent className="p-4">
@@ -552,7 +555,8 @@ export function EvaluationResultsPage() {
                   )}
                 </CardContent>
               </Card>
-            ))}
+            );
+            })}
           </div>
         </div>
       )}

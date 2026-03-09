@@ -17,7 +17,8 @@ const useStyles = makeStyles({
     backgroundColor: tokens.colorNeutralBackground1,
     width: "100%",
     minWidth: "100%", // Table should be at least full width, but can grow beyond with resized text
-    tableLayout: "auto", // Allow columns to grow with content instead of fixed widths
+    tableLayout: "auto", // Allow columns to grow with content for accessibility
+    overflow: "visible", // Ensure focus indicators aren't clipped by table
   },
   tableRow: {
     marginLeft: "8px",
@@ -28,27 +29,35 @@ const useStyles = makeStyles({
     paddingBottom: "16px",
     paddingLeft: "8px",
     paddingRight: "16px", // Increased padding to accommodate focus rings (3px) on buttons
-    whiteSpace: "nowrap", // Prevent header text wrapping
     overflow: "visible", // Allow focus outlines to be visible
-    textOverflow: "ellipsis",
+    wordBreak: "break-word", // Allow long words to break for accessibility
+    overflowWrap: "break-word", // Ensure text wraps instead of overflowing
   },
   tableCell: {
     paddingTop: "16px",
     paddingBottom: "16px",
     paddingLeft: "8px",
     paddingRight: "16px", // Increased padding to accommodate focus rings (3px) on buttons
-    whiteSpace: "nowrap", // Prevent cell content wrapping
     overflow: "visible", // Allow focus outlines to be visible
-    textOverflow: "ellipsis",
+    wordBreak: "break-word", // Allow long words to break for accessibility
+    overflowWrap: "break-word", // Ensure text wraps instead of overflowing
   },
   tableCellContent: {
-    whiteSpace: "nowrap",
+    overflow: "visible", // Allow focus outlines and interactive elements to be fully visible
+    wordBreak: "break-word", // Allow long words to break for accessibility
+    overflowWrap: "break-word", // Ensure text wraps instead of overflowing
     display: "block", // Ensure content respects parent cell size
   },
   tableContainer: {
     width: "100%",
     overflowX: "auto", // Enable horizontal scrolling when table exceeds container width
-    WebkitOverflowScrolling: "touch", //Smooth scrolling on mobile devices
+    WebkitOverflowScrolling: "touch", // Smooth scrolling on mobile devices
+    paddingTop: "4px",
+    paddingBottom: "4px", 
+    paddingLeft: "4px",
+    paddingRight: "20px", // Extra right padding to prevent focus ring (3px) clipping on rightmost buttons
+    overflowY: "visible", // Allow vertical overflow for focus rings to be fully visible
+    position: "relative", // Establish containing block for proper scrolling
   },
 });
 

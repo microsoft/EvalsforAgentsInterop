@@ -19,17 +19,20 @@ const useStyles = makeStyles({
     height: "100vh",
   },
   nav: {
-    minWidth: "284px",
+    width: "20vw",
+    minWidth: "240px",
+    maxWidth: "400px",
     height: "100vh",
     borderRight: `1px solid ${tokens.colorNeutralStroke2}`,
     display: "flex",
     flexDirection: "column",
+    flexShrink: 0,
   },
   navBody: {
     flex: "1",
     overflow: "auto",
-    paddingLeft: "36px",
-    paddingRight: "0px",
+    paddingLeft: "24px",
+    paddingRight: "12px",
   },
   navHeader: {
     display: "flex",
@@ -39,7 +42,15 @@ const useStyles = makeStyles({
     paddingLeft: "3px",
     paddingTop: "16px",
     paddingBottom: "16px",
-    gap: "8px"
+    gap: "8px",
+    flexWrap: "wrap",
+  },
+  titleContainer: {
+    display: "flex",
+    alignItems: "center",
+    gap: "8px",
+    flex: "1 1 auto",
+    minWidth: "200px",
   },
   navItem: {
     paddingLeft: "4px", //Spacing/xs
@@ -49,7 +60,7 @@ const useStyles = makeStyles({
     fontWeight: tokens.fontWeightSemibold,
     color: tokens.colorNeutralForeground1,
     margin: 0,
-    whiteSpace: "nowrap",
+    wordBreak: "break-word",
   },
   externalToggleButton: {
     position: "fixed",
@@ -88,6 +99,7 @@ export function Navigation() {
             appearance="subtle"
             onClick={() => setIsOpen(!isOpen)}
             className={styles.externalToggleButton}
+            aria-label="Open Navigation"
           />
         </Tooltip>
       )}
@@ -114,6 +126,7 @@ export function Navigation() {
                 icon={<PanelLeftText20Regular />}
                 appearance="subtle"
                 onClick={() => setIsOpen(!isOpen)}
+                aria-label="Close Navigation"
               />
             </Tooltip>
           </div>

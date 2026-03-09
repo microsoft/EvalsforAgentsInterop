@@ -53,6 +53,7 @@ import { NoDataCard } from "@/components/shared/NoDataCard";
 import { AIContentDisclaimer } from "@/components/shared/AIContentDisclaimer";
 import { useRubricsConfig } from "@/hooks/useRubricsConfig";
 import { useSelectableClick } from "@/hooks/useSelectableClick";
+import { getKeyboardProps } from "@/hooks/useKeyboardClick";
 
 interface BaseCardItem {
   id: string;
@@ -1249,11 +1250,12 @@ export function TestCaseResultPage() {
               {filteredCardData.map((item) => {
                 const isCollapsed = collapsedCards.has(item.id);
                 const status = getCardStatus(item);
+                const keyboardProps = getKeyboardProps((event) => handleCardToggle(item.id, event));
                 return (
                   <Card
                     key={item.id}
-                    className="transition-all cursor-pointer border-indigo-100/70 shadow-indigo-50/30 shadow-sm hover:shadow-indigo-100/50 hover:shadow-md"
-                    onClick={(event) => handleCardToggle(item.id, event)}
+                    className="transition-all cursor-pointer border-indigo-100/70 shadow-indigo-50/30 shadow-sm hover:shadow-indigo-100/50 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+                    {...keyboardProps}
                     style={{ userSelect: "text" }}
                   >
                     {isCollapsed ? (

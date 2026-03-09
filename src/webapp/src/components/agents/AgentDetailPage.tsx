@@ -63,6 +63,7 @@ import { Agent } from "@/lib/types";
 import { useAgentEvaluations } from "@/hooks/useAgentEvaluations";
 import { useDatasets } from "@/hooks/useDatasets";
 import { useSelectableClick } from "@/hooks/useSelectableClick";
+import { getKeyboardProps } from "@/hooks/useKeyboardClick";
 
 export function AgentDetailPage() {
   const { id } = useParams<{ id: string }>();
@@ -474,13 +475,14 @@ export function AgentDetailPage() {
             ) : (
               <div className="space-y-6">
                 {filteredEvaluations.map((evaluation) => {
+                  const keyboardProps = getKeyboardProps((event) =>
+                    handleEvaluationClick(evaluation.id, event)
+                  );
                   return (
                     <Card
                       key={evaluation.id}
-                      className="cursor-pointer transition-all hover:shadow-md"
-                      onClick={(event) =>
-                        handleEvaluationClick(evaluation.id, event)
-                      }
+                      className="cursor-pointer transition-all hover:shadow-md focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+                      {...keyboardProps}
                       style={{ userSelect: "text" }}
                     >
                       <CardHeader>
@@ -587,6 +589,7 @@ export function AgentDetailPage() {
                                   variant="ghost"
                                   size="sm"
                                   onClick={(e) => e.stopPropagation()}
+                                  aria-label="Evaluation options"
                                 >
                                   <DotsThree size={16} />
                                 </Button>
