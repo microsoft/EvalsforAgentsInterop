@@ -341,3 +341,26 @@
 .animation-delay-400 {
   animation-delay: 0.4s;
 }
+
+/* Skip to main content link for keyboard accessibility */
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  z-index: 9999;
+  padding: 1rem;
+  background-color: #0078d4;
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+  border-radius: 0 0 4px 0;
+  transition: none;
+}
+
+.skip-link:focus,
+.skip-link:focus-visible {
+  left: 0 !important;
+  top: 0 !important;
+  outline: 3px solid white !important;
+  outline-offset: -3px !important;
+}

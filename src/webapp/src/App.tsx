@@ -60,6 +60,9 @@ function App() {
       <FluentProvider theme={webLightTheme}>
         <BrowserRouter>
           <AuthenticatedRoute>
+            <a href="#main-content" className="skip-link">
+              Skip to main content
+            </a>
             <div
               className="bg-background"
               style={{
@@ -71,6 +74,7 @@ function App() {
             >
               <Navigation />
               <main
+                id="main-content"
                 className="flex-1 p-4 sm:p-6 md:p-8 lg:p-12 overflow-auto"
                 style={{
                   height: "100vh",
