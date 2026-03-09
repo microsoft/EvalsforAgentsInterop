@@ -137,7 +137,10 @@ export function Navigation() {
                 alt="Microsoft logo"
                 style={{ width: "24px", height: "24px" }}
               />
-              <h1 className={styles.title}>Evals for Agent Interop</h1>
+              <div className={styles.title}>Evals for Agent Interop</div>
+              <Badge appearance="tint" color="brand" shape="circular" size="small">
+                Preview
+              </Badge>
             </div>
             <Tooltip content="Close Navigation" relationship="label">
               <Button
