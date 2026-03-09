@@ -62,7 +62,7 @@ export function AgentForm({
     isUrlValid;
 
   return (
-    <div className="space-y-4 py-4">
+    <div className="space-y-4 py-4 min-w-0">
       <div className="space-y-2">
         <Label htmlFor="agent-name">Agent Name</Label>
         <Input
@@ -71,6 +71,7 @@ export function AgentForm({
           value={agentName}
           onChange={(e) => setAgentName(e.target.value)}
           disabled={isLoading}
+          className="w-full"
         />
       </div>
       <div className="space-y-2">
@@ -84,11 +85,7 @@ export function AgentForm({
           disabled={isLoading}
           aria-invalid={agentInvocationUrl.trim() && !isUrlValid ? "true" : "false"}
           aria-describedby={agentInvocationUrl.trim() && !isUrlValid ? "agent-url-error" : undefined}
-          className={
-            agentInvocationUrl.trim() && !isUrlValid
-              ? ""
-              : ""
-          }
+          className="w-full"
           style={agentInvocationUrl.trim() && !isUrlValid ? {
             borderColor: "#C4314B",
             boxShadow: "0 0 0 2px rgba(196, 49, 75, 0.2)"
@@ -113,6 +110,7 @@ export function AgentForm({
           value={agentModel}
           onChange={(e) => setAgentModel(e.target.value)}
           disabled={isLoading}
+          className="w-full"
         />
       </div>
       <div className="space-y-2">
@@ -124,13 +122,14 @@ export function AgentForm({
           onChange={(e) => setAgentDescription(e.target.value)}
           rows={3}
           disabled={isLoading}
+          className="w-full resize-none"
         />
       </div>
-      <div className="flex justify-end gap-2">
-        <Button variant="outline" onClick={onCancel} disabled={isLoading}>
+      <div className="flex flex-col sm:flex-row justify-end gap-2 pt-2">
+        <Button variant="outline" onClick={onCancel} disabled={isLoading} className="w-full sm:w-auto">
           Cancel
         </Button>
-        <Button onClick={handleSubmit} disabled={!isValid || isLoading}>
+        <Button onClick={handleSubmit} disabled={!isValid || isLoading} className="w-full sm:w-auto">
           {isLoading ? (
             <>
               <CircleNotch size={16} className="animate-spin mr-2" />
