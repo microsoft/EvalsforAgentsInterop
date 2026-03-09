@@ -1,4 +1,4 @@
-import { ReactElement, JSXElementConstructor } from "react";
+import { ReactElement, JSXElementConstructor, useState, useEffect } from "react";
 import {
   makeStyles,
   tokens,
@@ -16,12 +16,17 @@ import {
 const useStyles = makeStyles({
   searchContainer: {
     marginTop: "48px",
-    marginBottom: "32px",
+    marginBottom: "16px",
     display: "flex",
     justifyContent: "space-between",
     alignItems: "center",
     gap: tokens.spacingHorizontalM,
     flexWrap: "wrap", // Allow wrapping on smaller screens for accessibility
+  },
+  statusMessage: {
+    marginBottom: "16px",
+    fontSize: "14px",
+    color: tokens.colorNeutralForeground3,
   },
   leftControls: {
     display: "flex",
@@ -104,6 +109,8 @@ export interface SearchFilterControlsProps {
   onSortChange: () => void;
   sortLabel?: string;
   additionalControls?: ReactElement<any, string | JSXElementConstructor<any>>;
+  resultsCount?: number;
+  itemType?: string;
 }
 
 export function SearchFilterControls({
@@ -115,8 +122,27 @@ export function SearchFilterControls({
   onSortChange,
   sortLabel = "Sort",
   additionalControls,
+  resultsCount,
+  itemType = "results",
 }: SearchFilterControlsProps) {
   const styles = useStyles();
+  const [announcement, setAnnouncement] = useState("");
+
+  // Announce search results changes for screen readers
+  useEffect(() => {
+    if (resultsCount !== undefined) {
+      const message = resultsCount === 1
+        ? `1 ${itemType.replace(/s$/, "")} found`
+        : `${resultsCount} ${itemType} found`;
+      
+      // Update announcement with a delay to ensure screen readers detect the change
+      const timeoutId = setTimeout(() => {
+        setAnnouncement(message);
+      }, 500);
+
+      return () => clearTimeout(timeoutId);
+    }
+  }, [resultsCount, itemType]);
 
   // Helper function to create truncated display text for multiselect
   const getDisplayValue = (filter: FilterOption) => {
@@ -170,15 +196,16 @@ export function SearchFilterControls({
   };
 
   return (
-    <div className={styles.searchContainer}>
-      <div className={styles.leftControls}>
-        <SearchBox
-          appearance="outline"
-          className={styles.searchBox}
-          placeholder={searchPlaceholder}
-          value={searchValue}
-          onChange={(_, data) => onSearchChange(data.value)}
-        />
+    <>
+      <div className={styles.searchContainer}>
+        <div className={styles.leftControls}>
+          <SearchBox
+            appearance="outline"
+            className={styles.searchBox}
+            placeholder={searchPlaceholder}
+            value={searchValue}
+            onChange={(_, data) => onSearchChange(data.value)}
+          />
         {filters.map((filter) => {
           const displayValue = getDisplayValue(filter);
           const ariaLabel = displayValue 
@@ -221,5 +248,16 @@ export function SearchFilterControls({
         {sortLabel}
       </FluentButton>
     </div>
+    {resultsCount !== undefined && (
+      <div 
+        className={styles.statusMessage}
+        role="status" 
+        aria-live="assertive" 
+        aria-atomic="true"
+      >
+        {announcement}
+      </div>
+    )}
+    </>
   );
 }

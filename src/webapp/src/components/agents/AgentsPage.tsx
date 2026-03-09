@@ -534,6 +534,8 @@ export function AgentsPage() {
             sortOrder={sortOrder}
             onSortChange={handleSort}
             sortLabel="Sort"
+            resultsCount={filteredAgents.length}
+            itemType="agents"
           />
           <DataTable
             columns={columns}

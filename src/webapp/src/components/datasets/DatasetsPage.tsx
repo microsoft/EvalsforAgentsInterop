@@ -241,12 +241,13 @@ export function DatasetsPage() {
 						sortOrder={sortOrder}
 						onSortChange={handleSort}
 						sortLabel="Sort"
+						resultsCount={filteredDatasets.length}
+						itemType="datasets"
 					/>
 					<DataTable
 						columns={columns}
 						data={filteredDatasets}
 						onRowClick={(dataset) => navigate(`/datasets/${dataset.id}`)}
-						emptyState={
 							<NoDataCard
 								icon={<FileText size={48} className="text-muted-foreground mb-4" />}
 								title={`No datasets found matching "${searchTerm}"`}

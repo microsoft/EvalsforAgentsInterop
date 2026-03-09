@@ -309,6 +309,8 @@ export function LeaderboardPage() {
             sortOrder={sortOrder}
             onSortChange={handleSort}
             sortLabel="Sort"
+            resultsCount={filteredEntries.length}
+            itemType="results"
           />
           <DataTable
             columns={columns}

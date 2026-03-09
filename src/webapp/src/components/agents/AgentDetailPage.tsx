@@ -449,6 +449,8 @@ export function AgentDetailPage() {
                   sortOrder={sortOrder}
                   onSortChange={handleSort}
                   sortLabel="Latest Runs"
+                  resultsCount={filteredEvaluations.length}
+                  itemType="evaluations"
                 />
               </div>
               <Button

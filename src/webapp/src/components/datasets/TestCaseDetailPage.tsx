@@ -683,6 +683,8 @@ export function TestCaseDetailPage() {
                   sortOrder={sortOrder}
                   onSortChange={handleSort}
                   sortLabel="Sort"
+                  resultsCount={filteredCardData.length}
+                  itemType="items"
                 />
                 <div className="space-y-3">
                   {filteredCardData.map((item) => {
