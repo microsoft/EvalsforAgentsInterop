@@ -53,6 +53,7 @@ import { NoDataCard } from "@/components/shared/NoDataCard";
 import { AIContentDisclaimer } from "@/components/shared/AIContentDisclaimer";
 import { useRubricsConfig } from "@/hooks/useRubricsConfig";
 import { useSelectableClick } from "@/hooks/useSelectableClick";
+import { getKeyboardProps } from "@/hooks/useKeyboardClick";
 
 interface BaseCardItem {
   id: string;
@@ -646,7 +647,7 @@ export function TestCaseResultPage() {
                       {isResponseExpanded && (
                         <>
                           {isSuccess ? (
-                            <pre className="text-xs font-mono overflow-x-auto whitespace-pre-wrap leading-relaxed bg-green-50 p-3 rounded border">
+                            <pre className="text-xs font-mono whitespace-pre-wrap break-words leading-relaxed bg-green-50 p-3 rounded border overflow-auto">
                               {formatResponseJson(actualToolCall.response)}
                             </pre>
                           ) : (
@@ -1208,7 +1209,7 @@ export function TestCaseResultPage() {
           <h2 className="text-xl font-semibold">Results</h2>
 
           {/* Simple pill filters */}
-          <div className="flex items-center gap-2">
+          <div className="flex flex-wrap items-center gap-2">
             {[
               "All",
               "Actual Tool Calls",
@@ -1249,19 +1250,20 @@ export function TestCaseResultPage() {
               {filteredCardData.map((item) => {
                 const isCollapsed = collapsedCards.has(item.id);
                 const status = getCardStatus(item);
+                const keyboardProps = getKeyboardProps((event) => handleCardToggle(item.id, event));
                 return (
                   <Card
                     key={item.id}
-                    className="transition-all cursor-pointer border-indigo-100/70 shadow-indigo-50/30 shadow-sm hover:shadow-indigo-100/50 hover:shadow-md"
-                    onClick={(event) => handleCardToggle(item.id, event)}
+                    className="transition-all cursor-pointer border-indigo-100/70 shadow-indigo-50/30 shadow-sm hover:shadow-indigo-100/50 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+                    {...keyboardProps}
                     style={{ userSelect: "text" }}
                   >
                     {isCollapsed ? (
                       // Collapsed view - compact single line like screenshot
-                      <div className="flex items-center justify-between gap-4 p-4">
-                        <div className="flex items-center gap-3">
+                      <div className="flex flex-wrap items-center justify-between gap-4 p-4">
+                        <div className="flex items-center gap-3 flex-1 min-w-0">
                           {getCardIcon(item.type)}
-                          <span className="text-sm font-medium">
+                          <span className="text-sm font-medium break-words">
                             {item.type === "tools" && "Actual Tool Calls"}
                             {item.type === "assertions" &&
                               (item as AssertionCardItem).toolExpectations[0]
@@ -1270,7 +1272,7 @@ export function TestCaseResultPage() {
                             {item.type === "rubric" && "Rubric"}
                             {item.type === "error" && "Error"}
                           </span>
-                          <span className="text-xs text-muted-foreground">
+                          <span className="text-xs text-muted-foreground whitespace-nowrap">
                             {item.type === "tools" &&
                               (item as ToolCardItem).actualTools &&
                               `${
@@ -1282,7 +1284,7 @@ export function TestCaseResultPage() {
                             {item.type === "error" && "Error"}
                           </span>
                         </div>
-                        <div className="flex items-center gap-2">
+                        <div className="flex items-center gap-2 flex-shrink-0">
                           {/* Add PASSED/FAILED badge for items with status */}
                           {status && (
                             <Badge

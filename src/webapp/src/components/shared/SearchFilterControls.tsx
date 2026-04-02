@@ -1,4 +1,4 @@
-import { ReactElement, JSXElementConstructor } from "react";
+import { ReactElement, JSXElementConstructor, useState, useEffect } from "react";
 import {
   makeStyles,
   tokens,
@@ -16,35 +16,47 @@ import {
 const useStyles = makeStyles({
   searchContainer: {
     marginTop: "48px",
-    marginBottom: "32px",
+    marginBottom: "16px",
     display: "flex",
     justifyContent: "space-between",
     alignItems: "center",
     gap: tokens.spacingHorizontalM,
+    flexWrap: "wrap", // Allow wrapping on smaller screens for accessibility
+  },
+  statusMessage: {
+    marginBottom: "16px",
+    fontSize: "14px",
+    color: tokens.colorNeutralForeground3,
   },
   leftControls: {
     display: "flex",
     alignItems: "center",
     gap: tokens.spacingHorizontalM,
+    flexWrap: "wrap", // Allow wrapping on smaller screens for accessibility
+    flex: "1 1 auto", // Allow to grow and shrink but maintain minimum size
+    minWidth: 0, // Allow shrinking below content size
   },
   searchBox: {
     width: "400px",
-    minWidth: "320px",
+    minWidth: "200px", // Reduced min-width for better responsiveness
+    maxWidth: "100%", // Prevent overflow on small screens
     minHeight: "40px",
     backgroundColor: tokens.colorNeutralBackground1,
     border: `${tokens.strokeWidthThin} solid ${tokens.colorNeutralStroke2}`,
     borderRadius: tokens.borderRadiusXLarge,
+    flex: "1 1 auto", // Allow search box to be flexible
     "& input": {
       borderRadius: tokens.borderRadiusXLarge,
     },
   },
   filterDropdown: {
     minWidth: "180px",
-    maxWidth: "250px", // Add max width to prevent expansion
+    maxWidth: "250px",
     minHeight: "40px",
     backgroundColor: tokens.colorNeutralBackground1,
     border: `${tokens.strokeWidthThin} solid ${tokens.colorNeutralStroke2}`,
     borderRadius: tokens.borderRadiusXLarge,
+    flexShrink: 0, // Prevent dropdown from shrinking
     "& > div": {
       borderRadius: tokens.borderRadiusXLarge,
       border: "none",
@@ -54,9 +66,6 @@ const useStyles = makeStyles({
       borderRadius: tokens.borderRadiusXLarge,
       border: "none",
       textDecoration: "none",
-      overflow: "hidden",
-      textOverflow: "ellipsis",
-      whiteSpace: "nowrap",
     },
     "& button": {
       border: "none",
@@ -65,12 +74,14 @@ const useStyles = makeStyles({
     },
   },
   sortButton: {
-    minWidth: "auto",
+    minWidth: "100px", // Ensure button is wide enough to show full text
     minHeight: "40px",
     padding: `${tokens.spacingVerticalSNudge} ${tokens.spacingHorizontalL}`,
     borderRadius: tokens.borderRadiusXLarge,
     border: `${tokens.strokeWidthThin} solid ${tokens.colorNeutralStroke1}`,
     backgroundColor: tokens.colorNeutralBackground1,
+    flexShrink: 0, // Prevent button from shrinking
+    whiteSpace: "nowrap", // Keep button text on one line
     "&:hover": {
       backgroundColor: tokens.colorNeutralBackground1Hover,
     },
@@ -98,6 +109,8 @@ export interface SearchFilterControlsProps {
   onSortChange: () => void;
   sortLabel?: string;
   additionalControls?: ReactElement<any, string | JSXElementConstructor<any>>;
+  resultsCount?: number;
+  itemType?: string;
 }
 
 export function SearchFilterControls({
@@ -109,12 +122,36 @@ export function SearchFilterControls({
   onSortChange,
   sortLabel = "Sort",
   additionalControls,
+  resultsCount,
+  itemType = "results",
 }: SearchFilterControlsProps) {
   const styles = useStyles();
+  const [announcement, setAnnouncement] = useState("");
+
+  // Announce search results changes for screen readers
+  useEffect(() => {
+    if (resultsCount !== undefined) {
+      const message = resultsCount === 1
+        ? `1 ${itemType.replace(/s$/, "")} found`
+        : `${resultsCount} ${itemType} found`;
+      
+      // Update announcement with a delay to ensure screen readers detect the change
+      const timeoutId = setTimeout(() => {
+        setAnnouncement(message);
+      }, 500);
+
+      return () => clearTimeout(timeoutId);
+    }
+  }, [resultsCount, itemType]);
 
   // Helper function to create truncated display text for multiselect
   const getDisplayValue = (filter: FilterOption) => {
-    if (!filter.multiselect || filter.selectedOptions.length === 0) {
+    // Return undefined when no selections to let placeholder show
+    if (filter.selectedOptions.length === 0) {
+      return undefined;
+    }
+
+    if (!filter.multiselect) {
       return filter.selectedOptions.join(", ");
     }
 
@@ -159,23 +196,31 @@ export function SearchFilterControls({
   };
 
   return (
-    <div className={styles.searchContainer}>
-      <div className={styles.leftControls}>
-        <SearchBox
-          appearance="outline"
-          className={styles.searchBox}
-          placeholder={searchPlaceholder}
-          value={searchValue}
-          onChange={(_, data) => onSearchChange(data.value)}
-        />
-        {filters.map((filter) => (
+    <>
+      <div className={styles.searchContainer}>
+        <div className={styles.leftControls}>
+          <SearchBox
+            appearance="outline"
+            className={styles.searchBox}
+            placeholder={searchPlaceholder}
+            value={searchValue}
+            onChange={(_, data) => onSearchChange(data.value)}
+          />
+        {filters.map((filter) => {
+          const displayValue = getDisplayValue(filter);
+          const ariaLabel = displayValue 
+            ? `${filter.placeholder}: ${displayValue}` 
+            : filter.placeholder;
+          
+          return (
           <Dropdown
             key={filter.key}
             className={styles.filterDropdown}
             style={{ minWidth: filter.minWidth || "180px", maxWidth: "250px" }}
             placeholder={filter.placeholder}
+            aria-label={ariaLabel}
             multiselect={filter.multiselect}
-            value={getDisplayValue(filter)}
+            value={displayValue}
             selectedOptions={filter.selectedOptions}
             onOptionSelect={(_, data) => {
               if (data.selectedOptions) {
@@ -189,7 +234,8 @@ export function SearchFilterControls({
               </Option>
             ))}
           </Dropdown>
-        ))}
+          );
+        })}
         {additionalControls}
       </div>
       <FluentButton
@@ -202,5 +248,16 @@ export function SearchFilterControls({
         {sortLabel}
       </FluentButton>
     </div>
+    {resultsCount !== undefined && (
+      <div 
+        className={styles.statusMessage}
+        role="status" 
+        aria-live="assertive" 
+        aria-atomic="true"
+      >
+        {announcement}
+      </div>
+    )}
+    </>
   );
 }

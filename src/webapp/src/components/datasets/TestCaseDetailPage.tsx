@@ -47,6 +47,7 @@ import { JsonEditor } from "@/components/shared/JsonEditor";
 import { apiClient } from "@/lib/api";
 import { toast } from "sonner";
 import { useRubricsConfig } from "@/hooks/useRubricsConfig";
+import { getKeyboardProps } from "@/hooks/useKeyboardClick";
 import type {
   ToolExpectation,
   Rubric,
@@ -309,7 +310,7 @@ export function TestCaseDetailPage() {
                                       flexShrink: 0,
                                       borderRadius: "4px",
                                       background: "#EBEBEB",
-                                      color: "#6B7280",
+                                      color: "#525252",
                                       border: "none",
                                       fontSize: "12px",
                                     }}
@@ -682,16 +683,19 @@ export function TestCaseDetailPage() {
                   sortOrder={sortOrder}
                   onSortChange={handleSort}
                   sortLabel="Sort"
+                  resultsCount={filteredCardData.length}
+                  itemType="items"
                 />
                 <div className="space-y-3">
                   {filteredCardData.map((item) => {
                     const isCollapsed = collapsedCards.has(item.id);
+                    const keyboardProps = getKeyboardProps(() => toggleCardCollapse(item.id));
 
                     return (
                       <Card
                         key={item.id}
-                        className="transition-all hover:shadow-md hover:border-primary/50 cursor-pointer"
-                        onClick={() => toggleCardCollapse(item.id)}
+                        className="transition-all hover:shadow-md hover:border-primary/50 cursor-pointer focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+                        {...keyboardProps}
                       >
                         <CardHeader className="pb-1">
                           <div className="flex items-start justify-between gap-4">

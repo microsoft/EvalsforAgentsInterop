@@ -16,6 +16,233 @@
   }
 }
 
+/* Enhanced focus indicators for accessibility - ensures visibility in all themes */
+/* Applies to all interactive elements for keyboard navigation */
+@layer base {
+  /* Global focus-visible styles for better keyboard accessibility */
+  *:focus-visible {
+    outline: 3px solid var(--ring) !important;
+    outline-offset: 2px !important;
+  }
+  
+  /* Ensure FluentUI buttons and interactive elements have visible focus */
+  button:focus-visible,
+  [role="button"]:focus-visible,
+  [role="menuitem"]:focus-visible,
+  a:focus-visible,
+  input:focus-visible,
+  textarea:focus-visible,
+  select:focus-visible {
+    outline: 3px solid var(--ring) !important;
+    outline-offset: 2px !important;
+  }
+  
+  /* FluentUI specific components */
+  [data-tabster]:focus-visible,
+  .fui-Button:focus-visible,
+  .fui-Menu:focus-visible,
+  [class*="fui-"]:focus-visible {
+    outline: 3px solid var(--ring) !important;
+    outline-offset: 2px !important;
+  }
+  
+  /* SearchBox and Input fields need full coverage focus */
+  .fui-SearchBox:focus-within,
+  .fui-Input:focus-within,
+  [class*="fui-SearchBox"]:focus-within,
+  [class*="fui-Input"]:focus-within {
+    outline: 3px solid var(--ring) !important;
+    outline-offset: 2px !important;
+  }
+  
+  /* Remove focus from internal input elements of SearchBox */
+  .fui-SearchBox input:focus-visible,
+  .fui-SearchBox input:focus,
+  [class*="fui-SearchBox"] input:focus-visible,
+  [class*="fui-SearchBox"] input:focus {
+    outline: none !important;
+    border: none !important;
+  }
+  
+  /* Nav items need inset outline to prevent clipping */
+  .fui-NavItem:focus-visible,
+  .fui-NavItem:focus-visible > *,
+  .fui-NavItem > *:focus-visible {
+    outline: 3px solid var(--ring) !important;
+    outline-offset: -3px !important;
+    border: none !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    background-image: none !important;
+  }
+  
+  /* Disable FluentUI's native focus indicator on NavItems - target all internal elements */
+  .fui-NavItem,
+  .fui-NavItem *,
+  .fui-NavItem::before,
+  .fui-NavItem::after,
+  .fui-NavItem *::before,
+  .fui-NavItem *::after,
+  [class*="fui-NavItem"],
+  [class*="fui-NavItem"] *,
+  [class*="fui-NavItem"]::before,
+  [class*="fui-NavItem"]::after {
+    border-radius: 0 !important;
+  }
+  
+  /* Remove the brown focus border completely */
+  .fui-NavItem:focus::before,
+  .fui-NavItem:focus::after,
+  .fui-NavItem:focus-visible::before,
+  .fui-NavItem:focus-visible::after,
+  .fui-NavItem:focus-within::before,
+  .fui-NavItem:focus-within::after,
+  .fui-NavItem *:focus::before,
+  .fui-NavItem *:focus::after,
+  .fui-NavItem *:focus-visible::before,
+  .fui-NavItem *:focus-visible::after,
+  [class*="fui-NavItem"]:focus::before,
+  [class*="fui-NavItem"]:focus::after,
+  [class*="fui-NavItem"]:focus-visible::before,
+  [class*="fui-NavItem"]:focus-visible::after {
+    display: none !important;
+    content: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+  }
+  
+  .fui-NavItem::before,
+  .fui-NavItem::after,
+  .fui-NavItem *::before,
+  .fui-NavItem *::after,
+  [class*="fui-NavItem"]::before,
+  [class*="fui-NavItem"]::after {
+    display: none !important;
+    content: none !important;
+    border: none !important;
+    outline: none !important;
+    background: transparent !important;
+    box-shadow: none !important;
+  }
+  
+  /* Hide any indicator children */
+  .fui-NavItem [class*="indicator"],
+  [class*="fui-NavItem"] [class*="indicator"] {
+    display: none !important;
+  }
+  
+  /* High contrast mode support - ensures focus is always visible */
+  @media (prefers-contrast: high), (prefers-contrast: more) {
+    *:focus-visible,
+    button:focus-visible,
+    [role="button"]:focus-visible,
+    [role="menuitem"]:focus-visible,
+    a:focus-visible {
+      outline: 4px solid currentColor !important;
+      outline-offset: 2px !important;
+    }
+    
+    /* SearchBox gets full coverage in high contrast */
+    .fui-SearchBox:focus-within,
+    .fui-Input:focus-within,
+    [class*="fui-SearchBox"]:focus-within,
+    [class*="fui-Input"]:focus-within {
+      outline: 4px solid currentColor !important;
+      outline-offset: 2px !important;
+    }
+    
+    .fui-SearchBox input:focus-visible,
+    .fui-SearchBox input:focus,
+    [class*="fui-SearchBox"] input:focus-visible,
+    [class*="fui-SearchBox"] input:focus {
+      outline: none !important;
+    }
+  }
+  
+  /* Forced colors mode (Windows High Contrast) - use system colors and prevent override */
+  @media (forced-colors: active) {
+    *:focus-visible,
+    button:focus-visible,
+    [role="button"]:focus-visible,
+    [role="menuitem"]:focus-visible,
+    a:focus-visible,
+    input:focus-visible,
+    textarea:focus-visible,
+    select:focus-visible,
+    [data-tabster]:focus-visible,
+    [class*="fui-"]:focus-visible {
+      forced-color-adjust: none !important;
+      outline: 3px solid Highlight !important;
+      outline-offset: 2px !important;
+    }
+    
+    /* SearchBox and Input fields need full coverage focus in high contrast */
+    .fui-SearchBox:focus-within,
+    .fui-Input:focus-within,
+    [class*="fui-SearchBox"]:focus-within,
+    [class*="fui-Input"]:focus-within {
+      forced-color-adjust: none !important;
+      outline: 3px solid Highlight !important;
+      outline-offset: 2px !important;
+    }
+    
+    /* Remove focus from internal input elements of SearchBox in high contrast */
+    .fui-SearchBox input:focus-visible,
+    .fui-SearchBox input:focus,
+    [class*="fui-SearchBox"] input:focus-visible,
+    [class*="fui-SearchBox"] input:focus {
+      outline: none !important;
+      border: none !important;
+    }
+    
+    /* Nav items need inset outline in high contrast mode too */
+    .fui-NavItem:focus-visible {
+      forced-color-adjust: none !important;
+      outline: 3px solid Highlight !important;
+      outline-offset: -3px !important;
+      border: none !important;
+      box-shadow: none !important;
+    }
+    
+    /* Disable FluentUI's native focus indicator in high contrast too */
+    .fui-NavItem,
+    .fui-NavItem *,
+    [class*="fui-NavItem"],
+    [class*="fui-NavItem"] * {
+      border-radius: 0 !important;
+    }
+    
+    .fui-NavItem::before,
+    .fui-NavItem::after,
+    .fui-NavItem *::before,
+    .fui-NavItem *::after,
+    [class*="fui-NavItem"]::before,
+    [class*="fui-NavItem"]::after {
+      display: none !important;
+      content: none !important;
+      border: none !important;
+      outline: none !important;
+      background: transparent !important;
+      box-shadow: none !important;
+    }
+    
+    .fui-NavItem [class*="indicator"],
+    [class*="fui-NavItem"] [class*="indicator"] {
+      display: none !important;
+    }
+    
+    /* Additional emphasis for buttons specifically */
+    button:focus-visible,
+    [role="button"]:focus-visible,
+    .fui-Button:focus-visible {
+      forced-color-adjust: none !important;
+      outline: 4px solid Highlight !important;
+      outline-offset: 3px !important;
+      box-shadow: 0 0 0 2px HighlightText, 0 0 0 6px Highlight !important;
+    }
+  }
+}
+
 :root {
   --background: oklch(0.99 0 0);
   --foreground: oklch(0.18 0.01 250);
@@ -33,7 +260,7 @@
   --secondary-foreground: oklch(0.18 0.01 250);
   
   --muted: oklch(0.97 0.003 250);
-  --muted-foreground: oklch(0.52 0.01 250);
+  --muted-foreground: oklch(0.46 0.01 250);
   
   --accent: oklch(0.75 0.15 75);
   --accent-foreground: oklch(0.18 0.01 250);
@@ -113,4 +340,27 @@
 
 .animation-delay-400 {
   animation-delay: 0.4s;
+}
+
+/* Skip to main content link for keyboard accessibility */
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  z-index: 9999;
+  padding: 1rem;
+  background-color: #0078d4;
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+  border-radius: 0 0 4px 0;
+  transition: none;
+}
+
+.skip-link:focus,
+.skip-link:focus-visible {
+  left: 0 !important;
+  top: 0 !important;
+  outline: 3px solid white !important;
+  outline-offset: -3px !important;
 }

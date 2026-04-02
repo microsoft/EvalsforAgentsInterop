@@ -163,9 +163,9 @@ export function AgentsPage() {
               style={{
                 fontWeight: 600,
                 fontSize: "14px",
-                overflow: "hidden",
-                textOverflow: "ellipsis",
-                whiteSpace: "nowrap",
+                overflow: "visible",
+                wordBreak: "break-word",
+                overflowWrap: "break-word",
               }}
             >
               {agent.name}
@@ -173,7 +173,7 @@ export function AgentsPage() {
             <div
               style={{
                 fontSize: "12px",
-                color: "#6b7280",
+                color: "#525252",
                 display: "-webkit-box",
                 WebkitLineClamp: 2,
                 WebkitBoxOrient: "vertical",
@@ -215,7 +215,7 @@ export function AgentsPage() {
               flexShrink: 0,
               borderRadius: "4px",
               background: "#EBEBEB",
-              color: "#6B7280",
+              color: "#525252",
               border: "none",
             }}
           >
@@ -255,6 +255,7 @@ export function AgentsPage() {
                 variant="ghost"
                 size="sm"
                 onClick={(e) => e.stopPropagation()}
+                aria-label="Agent options"
               >
                 <DotsThree size={16} />
               </Button>
@@ -533,6 +534,8 @@ export function AgentsPage() {
             sortOrder={sortOrder}
             onSortChange={handleSort}
             sortLabel="Sort"
+            resultsCount={filteredAgents.length}
+            itemType="agents"
           />
           <DataTable
             columns={columns}

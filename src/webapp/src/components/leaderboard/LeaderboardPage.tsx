@@ -202,7 +202,7 @@ export function LeaderboardPage() {
             <div style={{ fontWeight: 600, fontSize: "14px" }}>
               {entry.agent?.name || "Unknown Agent"}
             </div>
-            <div style={{ fontSize: "12px", color: "#6b7280" }}>
+            <div style={{ fontSize: "12px", color: "#525252" }}>
               {entry.agent?.description || "No description"}
             </div>
           </div>
@@ -234,7 +234,7 @@ export function LeaderboardPage() {
             flexShrink: 0,
             borderRadius: "4px",
             background: "#EBEBEB",
-            color: "#6B7280",
+            color: "#525252",
             border: "none",
           }}
         >
@@ -309,6 +309,8 @@ export function LeaderboardPage() {
             sortOrder={sortOrder}
             onSortChange={handleSort}
             sortLabel="Sort"
+            resultsCount={filteredEntries.length}
+            itemType="results"
           />
           <DataTable
             columns={columns}

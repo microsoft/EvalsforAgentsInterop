@@ -7,6 +7,7 @@ import {
   NavItem,
   Button,
   Tooltip,
+  Badge,
   makeStyles,
   tokens,
 } from "@fluentui/react-components";
@@ -19,17 +20,22 @@ const useStyles = makeStyles({
     height: "100vh",
   },
   nav: {
-    minWidth: "284px",
+    width: "20vw",
+    minWidth: "200px",
+    maxWidth: "400px",
     height: "100vh",
     borderRight: `1px solid ${tokens.colorNeutralStroke2}`,
     display: "flex",
     flexDirection: "column",
+    flexShrink: 0,
+    overflowX: "hidden",
   },
   navBody: {
     flex: "1",
-    overflow: "auto",
-    paddingLeft: "36px",
-    paddingRight: "0px",
+    overflowY: "auto",
+    overflowX: "hidden",
+    paddingLeft: "24px",
+    paddingRight: "24px",
   },
   navHeader: {
     display: "flex",
@@ -39,17 +45,36 @@ const useStyles = makeStyles({
     paddingLeft: "3px",
     paddingTop: "16px",
     paddingBottom: "16px",
-    gap: "8px"
+    gap: "8px",
+    flexWrap: "wrap",
+    overflowX: "hidden",
+  },
+  titleContainer: {
+    display: "flex",
+    alignItems: "center",
+    gap: "8px",
+    flex: "1 1 auto",
+    minWidth: "0",
+    maxWidth: "100%",
+  },
+  titleContainer: {
+    display: "flex",
+    alignItems: "center",
+    gap: "8px",
+    flex: 1,
+    minWidth: 0,
   },
   navItem: {
     paddingLeft: "4px", //Spacing/xs
+    paddingRight: "8px",
+    marginRight: "4px",
   },
   title: {
     fontSize: tokens.fontSizeBase300,
     fontWeight: tokens.fontWeightSemibold,
     color: tokens.colorNeutralForeground1,
     margin: 0,
-    whiteSpace: "nowrap",
+    wordBreak: "break-word",
   },
   externalToggleButton: {
     position: "fixed",
@@ -68,11 +93,23 @@ export function Navigation() {
   const location = useLocation();
   const navigate = useNavigate();
   const [selectedValue, setSelectedValue] = useState(location.pathname);
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(() => window.innerWidth >= 768);
 
   useEffect(() => {
     setSelectedValue(location.pathname);
   }, [location.pathname]);
+
+  // Handle window resize to auto-collapse navigation on narrow viewports
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth < 768) {
+        setIsOpen(false);
+      }
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   const handleSelectionChange = (path: string) => {
     setSelectedValue(path);
@@ -88,6 +125,7 @@ export function Navigation() {
             appearance="subtle"
             onClick={() => setIsOpen(!isOpen)}
             className={styles.externalToggleButton}
+            aria-label="Open Navigation"
           />
         </Tooltip>
       )}
@@ -97,22 +135,27 @@ export function Navigation() {
         type="inline"
         className={styles.nav}
         style={{ height: "100vh", display: "flex", flexDirection: "column" }}
+        {...(!isOpen && { inert: "" })}
       >
         <NavDrawerHeader>
           <div className={styles.navHeader}>
-            <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+            <div className={styles.titleContainer}>
               <img
                 src="/images/microsoftlogo.svg"
                 alt="Microsoft logo"
-                style={{ width: "24px", height: "24px" }}
+                style={{ width: "24px", height: "24px", flexShrink: 0 }}
               />
-              <h1 className={styles.title}>Evals for Agent Interop</h1>
+              <div className={styles.title}>Evals for Agent Interop</div>
+              <Badge appearance="tint" color="brand" shape="circular" size="small">
+                Preview
+              </Badge>
             </div>
             <Tooltip content="Close Navigation" relationship="label">
               <Button
                 icon={<PanelLeftText20Regular />}
                 appearance="subtle"
                 onClick={() => setIsOpen(!isOpen)}
+                aria-label="Close Navigation"
               />
             </Tooltip>
           </div>

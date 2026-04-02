@@ -68,7 +68,7 @@ export function DatasetsPage() {
 					<div
 						style={{
 							fontSize: "12px",
-							color: "#6b7280",
+						color: "#525252",
 							display: "-webkit-box",
 							WebkitLineClamp: 2,
 							WebkitBoxOrient: "vertical",
@@ -108,7 +108,7 @@ export function DatasetsPage() {
 							flexShrink: 0,
 							borderRadius: "4px",
 							background: "#EBEBEB",
-							color: "#6B7280",
+						color: "#525252",
 							border: "none",
 						}}
 					>
@@ -160,6 +160,7 @@ export function DatasetsPage() {
 	const handleOpenDataset = (dataset: any) => {
 		navigate(`/datasets/${dataset.id}`);
 	};
+
 
 	const handleDeleteDataset = (dataset: any) => {
 		setDatasetToDelete(dataset);
@@ -240,12 +241,13 @@ export function DatasetsPage() {
 						sortOrder={sortOrder}
 						onSortChange={handleSort}
 						sortLabel="Sort"
+						resultsCount={filteredDatasets.length}
+						itemType="datasets"
 					/>
 					<DataTable
 						columns={columns}
 						data={filteredDatasets}
 						onRowClick={(dataset) => navigate(`/datasets/${dataset.id}`)}
-						emptyState={
 							<NoDataCard
 								icon={<FileText size={48} className="text-muted-foreground mb-4" />}
 								title={`No datasets found matching "${searchTerm}"`}

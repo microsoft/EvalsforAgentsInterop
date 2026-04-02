@@ -22,6 +22,7 @@ import {
 } from "@fluentui/react-components";
 import { AIContentDisclaimer } from "@/components/shared/AIContentDisclaimer";
 import { useDataset } from "@/hooks/useDatasets";
+import { getKeyboardProps } from "@/hooks/useKeyboardClick";
 
 const useBreadcrumbStyles = makeStyles({
   // Remove custom styles since we're using Fluent UI's built-in truncation
@@ -182,13 +183,15 @@ export function DatasetDetailPage() {
           </Card>
         ) : (
           <div className="space-y-3">
-            {(dataset.test_cases || []).map((testCase, index) => (
+            {(dataset.test_cases || []).map((testCase, index) => {
+              const keyboardProps = getKeyboardProps(() =>
+                navigate(`/datasets/${id}/testcases/${testCase.id}`)
+              );
+              return (
               <Card
                 key={testCase.id}
-                className="cursor-pointer transition-all hover:shadow-md hover:border-primary/50"
-                onClick={() =>
-                  navigate(`/datasets/${id}/testcases/${testCase.id}`)
-                }
+                className="cursor-pointer transition-all hover:shadow-md hover:border-primary/50 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+                {...keyboardProps}
               >
                 <CardHeader className="pb-3">
                   <div className="flex items-start justify-between gap-4">
@@ -234,7 +237,7 @@ export function DatasetDetailPage() {
                                 flexShrink: 0,
                                 borderRadius: "4px",
                                 background: "#EBEBEB",
-                                color: "#6B7280",
+                                color: "#525252",
                                 border: "none",
                                 fontSize: "12px",
                               }}
@@ -258,7 +261,8 @@ export function DatasetDetailPage() {
                   </div>
                 </CardContent>
               </Card>
-            ))}
+              );
+            })}
           </div>
         )}
       </div>
