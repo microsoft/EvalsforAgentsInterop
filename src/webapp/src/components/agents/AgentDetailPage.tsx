@@ -329,7 +329,7 @@ export function AgentDetailPage() {
   }
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-8 w-full overflow-x-hidden">
       <div className="flex items-start justify-between gap-4">
         <div className="space-y-1 flex-1">
           <Breadcrumb aria-label="Agent navigation" className="mb-4">
@@ -429,8 +429,8 @@ export function AgentDetailPage() {
         ) : (
           <div className="space-y-6">
             {/* Search and Filter Controls with Run Evals Button */}
-            <div className="flex justify-between items-start gap-4">
-              <div className="flex-1">
+            <div className="flex flex-col gap-4 sm:flex-row sm:justify-between sm:items-start">
+              <div className="flex-1 min-w-0 w-full">
                 <SearchFilterControls
                   searchValue={searchTerm}
                   onSearchChange={setSearchTerm}
@@ -443,7 +443,7 @@ export function AgentDetailPage() {
                       selectedOptions: selectedDatasetFilters,
                       onSelectionChange: setSelectedDatasetFilters,
                       multiselect: true,
-                      minWidth: "200px",
+                      minWidth: "140px",
                     },
                   ]}
                   sortOrder={sortOrder}
@@ -455,8 +455,7 @@ export function AgentDetailPage() {
               </div>
               <Button
                 onClick={() => setRunDialogOpen(true)}
-                className="gap-2 min-h-[40px] px-4 py-1.5"
-                style={{ marginTop: "48px" }}
+                className="gap-2 min-h-[40px] px-4 py-1.5 w-full sm:w-auto sm:mt-12"
               >
                 <Play size={16} />
                 Run Evals
@@ -489,7 +488,7 @@ export function AgentDetailPage() {
                     >
                       <CardHeader>
                         <div
-                          className="flex items-center justify-between gap-4"
+                          className="flex flex-wrap items-start justify-between gap-4"
                           style={{ minWidth: 0 }}
                         >
                           <div className="flex-1 min-w-0">
@@ -557,7 +556,7 @@ export function AgentDetailPage() {
                               {evaluation.total_tests !== 1 ? "s" : ""}
                             </CardDescription>
                           </div>
-                          <div className="flex items-center gap-3">
+                          <div className="flex items-center gap-3 shrink-0 self-start sm:self-center">
                             {evaluation.status === "completed" && (
                               <Badge
                                 variant="secondary"
