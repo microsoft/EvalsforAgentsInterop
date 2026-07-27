@@ -19,10 +19,11 @@
 /* Enhanced focus indicators for accessibility - ensures visibility in all themes */
 /* Applies to all interactive elements for keyboard navigation */
 @layer base {
-  /* Global focus-visible styles for better keyboard accessibility */
+  /* Global focus-visible styles with high-contrast colors */
   *:focus-visible {
-    outline: 3px solid var(--ring) !important;
+    outline: 3px solid #0066cc !important;
     outline-offset: 2px !important;
+    box-shadow: 0 0 0 4px rgba(0, 102, 204, 0.15) !important;
   }
   
   /* Ensure FluentUI buttons and interactive elements have visible focus */
@@ -33,8 +34,9 @@
   input:focus-visible,
   textarea:focus-visible,
   select:focus-visible {
-    outline: 3px solid var(--ring) !important;
+    outline: 3px solid #0066cc !important;
     outline-offset: 2px !important;
+    box-shadow: 0 0 0 4px rgba(0, 102, 204, 0.15) !important;
   }
   
   /* FluentUI specific components */
@@ -42,8 +44,9 @@
   .fui-Button:focus-visible,
   .fui-Menu:focus-visible,
   [class*="fui-"]:focus-visible {
-    outline: 3px solid var(--ring) !important;
+    outline: 3px solid #0066cc !important;
     outline-offset: 2px !important;
+    box-shadow: 0 0 0 4px rgba(0, 102, 204, 0.15) !important;
   }
   
   /* SearchBox and Input fields need full coverage focus */
@@ -51,8 +54,9 @@
   .fui-Input:focus-within,
   [class*="fui-SearchBox"]:focus-within,
   [class*="fui-Input"]:focus-within {
-    outline: 3px solid var(--ring) !important;
+    outline: 3px solid #0066cc !important;
     outline-offset: 2px !important;
+    box-shadow: 0 0 0 4px rgba(0, 102, 204, 0.15) !important;
   }
   
   /* Remove focus from internal input elements of SearchBox */
@@ -68,7 +72,7 @@
   .fui-NavItem:focus-visible,
   .fui-NavItem:focus-visible > *,
   .fui-NavItem > *:focus-visible {
-    outline: 3px solid var(--ring) !important;
+    outline: 3px solid #0066cc !important;
     outline-offset: -3px !important;
     border: none !important;
     box-shadow: none !important;
@@ -363,4 +367,51 @@
   top: 0 !important;
   outline: 3px solid white !important;
   outline-offset: -3px !important;
+}
+
+/* Ensure input field text is visible in all themes (fixes Aquatic/Desert mode visibility) */
+input,
+textarea,
+select,
+.fui-Input,
+[class*="fui-Input"] {
+  color: var(--foreground) !important;
+  caret-color: var(--foreground) !important;
+  background-color: inherit !important;
+}
+
+/* Ensure close buttons and action icons are always visible */
+button svg,
+[role="button"] svg,
+[class*="close"] svg,
+[class*="icon"] svg {
+  color: inherit !important;
+  fill: currentColor !important;
+}
+
+/* Ensure placeholder text is visible */
+input::placeholder,
+textarea::placeholder,
+select::placeholder {
+  color: inherit !important;
+  opacity: 0.6 !important;
+}
+
+/* Aquatic (light) mode: enforce contrast for typed text and close/action icons */
+:where([data-appearance="light"], [data-color-mode="light"], .light) input[type="text"],
+:where([data-appearance="light"], [data-color-mode="light"], .light) input[type="email"],
+:where([data-appearance="light"], [data-color-mode="light"], .light) input[type="password"],
+:where([data-appearance="light"], [data-color-mode="light"], .light) input[type="search"],
+:where([data-appearance="light"], [data-color-mode="light"], .light) textarea {
+  color: #111827 !important;
+  caret-color: #111827 !important;
+}
+
+:where([data-appearance="light"], [data-color-mode="light"], .light) button svg,
+:where([data-appearance="light"], [data-color-mode="light"], .light) [role="button"] svg,
+:where([data-appearance="light"], [data-color-mode="light"], .light) [class*="close"] svg,
+:where([data-appearance="light"], [data-color-mode="light"], .light) [class*="icon"] svg {
+  color: #111827 !important;
+  fill: #111827 !important;
+  stroke: #111827 !important;
 }

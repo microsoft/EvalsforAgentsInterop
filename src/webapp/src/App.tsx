@@ -75,10 +75,11 @@ function App() {
               <Navigation />
               <main
                 id="main-content"
-                className="flex-1 p-4 sm:p-6 md:p-8 lg:p-12 overflow-auto"
+                className="flex-1 p-4 sm:p-6 md:p-8 lg:p-12 overflow-y-auto overflow-x-hidden"
                 style={{
                   height: "100vh",
                   minWidth: 0,
+                  overflowX: "hidden",
                 }}
               >
                 <Routes>

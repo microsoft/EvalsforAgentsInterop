@@ -22,6 +22,8 @@ const useStyles = makeStyles({
     alignItems: "center",
     gap: tokens.spacingHorizontalM,
     flexWrap: "wrap", // Allow wrapping on smaller screens for accessibility
+    width: "100%",
+    minWidth: 0,
   },
   statusMessage: {
     marginBottom: "16px",
@@ -35,10 +37,11 @@ const useStyles = makeStyles({
     flexWrap: "wrap", // Allow wrapping on smaller screens for accessibility
     flex: "1 1 auto", // Allow to grow and shrink but maintain minimum size
     minWidth: 0, // Allow shrinking below content size
+    width: "100%",
   },
   searchBox: {
-    width: "400px",
-    minWidth: "200px", // Reduced min-width for better responsiveness
+    width: "min(400px, 100%)",
+    minWidth: 0,
     maxWidth: "100%", // Prevent overflow on small screens
     minHeight: "40px",
     backgroundColor: tokens.colorNeutralBackground1,
@@ -50,8 +53,8 @@ const useStyles = makeStyles({
     },
   },
   filterDropdown: {
-    minWidth: "180px",
-    maxWidth: "250px",
+    minWidth: "140px",
+    maxWidth: "100%",
     minHeight: "40px",
     backgroundColor: tokens.colorNeutralBackground1,
     border: `${tokens.strokeWidthThin} solid ${tokens.colorNeutralStroke2}`,
@@ -84,6 +87,30 @@ const useStyles = makeStyles({
     whiteSpace: "nowrap", // Keep button text on one line
     "&:hover": {
       backgroundColor: tokens.colorNeutralBackground1Hover,
+    },
+  },
+
+  "@media (max-width: 640px)": {
+    searchContainer: {
+      alignItems: "stretch",
+    },
+    leftControls: {
+      alignItems: "stretch",
+      gap: tokens.spacingVerticalS,
+    },
+    searchBox: {
+      width: "100%",
+      minWidth: 0,
+    },
+    filterDropdown: {
+      width: "100%",
+      minWidth: 0,
+      maxWidth: "100%",
+      flex: "1 1 100%",
+    },
+    sortButton: {
+      width: "100%",
+      justifyContent: "center",
     },
   },
 });
@@ -216,7 +243,7 @@ export function SearchFilterControls({
           <Dropdown
             key={filter.key}
             className={styles.filterDropdown}
-            style={{ minWidth: filter.minWidth || "180px", maxWidth: "250px" }}
+            style={{ minWidth: filter.minWidth || "140px", maxWidth: "100%" }}
             placeholder={filter.placeholder}
             aria-label={ariaLabel}
             multiselect={filter.multiselect}

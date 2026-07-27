@@ -703,7 +703,7 @@ export function TestCaseResultPage() {
                           <div className="text-xs font-medium text-muted-foreground">
                             Actual Value:
                           </div>
-                          <pre className="text-xs font-mono whitespace-pre-wrap text-muted-foreground">
+                          <pre className="text-xs font-mono whitespace-pre-wrap break-words overflow-x-hidden text-muted-foreground">
                             {formatJsonForDisplay(actualArg.value)}
                           </pre>
                         </div>
@@ -813,7 +813,7 @@ export function TestCaseResultPage() {
               <div className="text-sm font-medium text-muted-foreground mb-2">
                 Original Assertion:
               </div>
-              <p className="text-sm whitespace-pre-wrap">{originalAssertion}</p>
+              <p className="text-sm whitespace-pre-wrap break-words overflow-x-hidden">{originalAssertion}</p>
             </div>
           )}
 
@@ -844,7 +844,7 @@ export function TestCaseResultPage() {
                 <div className="text-xs font-medium text-muted-foreground mb-1">
                   LLM Judge Response:
                 </div>
-                <p className="text-sm whitespace-pre-wrap text-muted-foreground">
+                <p className="text-sm whitespace-pre-wrap break-words overflow-x-hidden text-muted-foreground">
                   {item.content}
                 </p>
               </div>
@@ -977,7 +977,7 @@ export function TestCaseResultPage() {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 overflow-x-hidden w-full">
       <div className="flex items-start justify-between gap-4">
         <div className="space-y-1 flex-1">
           <Breadcrumb aria-label="Test case result navigation" className="mb-4">
@@ -1182,7 +1182,7 @@ export function TestCaseResultPage() {
             </CardTitle>
           </CardHeader>
           <CardContent className="flex-1 flex flex-col">
-            <div className="text-sm bg-gray-50 p-4 rounded-md whitespace-pre-wrap flex-1 overflow-y-auto border min-h-[120px] max-h-[300px]">
+            <div className="text-sm bg-gray-50 p-4 rounded-md whitespace-pre-wrap break-words flex-1 overflow-y-auto overflow-x-hidden border min-h-[120px] max-h-[300px]">
               {testCase?.input || "No input available"}
             </div>
           </CardContent>
@@ -1196,7 +1196,7 @@ export function TestCaseResultPage() {
             </CardTitle>
           </CardHeader>
           <CardContent className="flex-1 flex flex-col">
-            <div className="text-sm bg-gray-50 p-4 rounded-md whitespace-pre-wrap flex-1 overflow-y-auto border min-h-[120px] max-h-[300px]">
+            <div className="text-sm bg-gray-50 p-4 rounded-md whitespace-pre-wrap break-words flex-1 overflow-y-auto overflow-x-hidden border min-h-[120px] max-h-[300px]">
               {testCaseResult.response_from_agent || "No response available"}
             </div>
           </CardContent>
