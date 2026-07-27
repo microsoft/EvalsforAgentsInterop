@@ -9,6 +9,8 @@ jobs:
   validate:
     name: Validate CODEOWNERS syntax
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -18,4 +20,4 @@ jobs:
         with:
           checks: "files,owners,duppatterns"
           owner_checker_allow_unowned_patterns: "false"
-          github_access_token: ${{ github.token }}
+          github_access_token: ${{ secrets.GITHUB_TOKEN }}
