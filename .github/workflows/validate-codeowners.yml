@@ -18,5 +18,4 @@ jobs:
         with:
           checks: "files,owners,duppatterns"
           owner_checker_allow_unowned_patterns: "false"
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          github_access_token: ${{ github.token }}
