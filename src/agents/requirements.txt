@@ -7,7 +7,7 @@ azure-identity>=1.25.0
 openai>=2.4.0
 
 # MCP support
-mcp>=1.17.0
+mcp>=1.17.0,<2
 
 # Utilities
 pydantic>=2.12.0
